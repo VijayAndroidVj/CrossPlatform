@@ -51,21 +51,25 @@ public class catAdapter extends RecyclerView.Adapter<catAdapter.MyViewHolderone>
                .override(500, 400)
                 .into(holder.img);
 
-        if(selectedPosition==position)
-            holder.itemView.setBackgroundColor(Color.parseColor("#009688"));
-        else
-            holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
+        if(selectedPosition==position) {
+            holder.linCat.setBackgroundColor(Color.parseColor("#009688"));
+            //  holder.catite.setBackgroundColor(Color.parseColor("#009688"));
+        }
+        else {
+            holder.linCat.setBackgroundColor(Color.parseColor("#ffffff"));
+            // holder.catite.setBackgroundColor(Color.parseColor("#ffffff"));
+        }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.catite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedPosition=position;
+                //selectedPosition=tpos;
                 notifyDataSetChanged();
 
             }
         });
 
-        holder.tvTwo.setTag(position);
+        holder.linCat.setTag(position);
 
       //  holder.btnAccept.setTag(position);
 
@@ -81,19 +85,22 @@ public class catAdapter extends RecyclerView.Adapter<catAdapter.MyViewHolderone>
     public class MyViewHolderone extends RecyclerView.ViewHolder {
         private TextView tvTwo;
         private ImageView img;
-        private LinearLayout linCat;
+        private LinearLayout linCat,catite;
         public MyViewHolderone(View view) {
             super(view);
 
             tvTwo = (TextView)view.findViewById(R.id.tvTwo);
             img=(ImageView)view.findViewById(R.id.img);
-            linCat=(LinearLayout) view.findViewById(R.id.linCat);
+            linCat=(LinearLayout) view.findViewById(R.id.catlayout);
+            catite=(LinearLayout) view.findViewById(R.id.linCat);
 
-            tvTwo.setOnClickListener(new View.OnClickListener() {
+            linCat.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int pos = (int) view.getTag();
+                    selectedPosition=pos;
                   listener.adapterActionListener(LIST_TAG,pos);
+
                 }
             });
 

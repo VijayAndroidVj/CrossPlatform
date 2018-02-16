@@ -1,5 +1,6 @@
 package com.example.chandru.laundry;
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +40,7 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
     private List<delivery> maintain = new ArrayList<>();
     private deliveryAdapter bAdapter;
     private RecyclerView recycler_view;
-    private String dataOne;
+    private String dataOne,dataTwos,Billno,bamt;
     private TextView cname, bill, phone, address, qty, amt, advance, balance;
 
     @Override
@@ -61,12 +63,20 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void run() {
 
-                        Toast.makeText(DeliveryActivity.this, "Delivered successfully", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(DeliveryActivity.this, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                        finish();
-                        findViewById(R.id.progress).setVisibility(View.GONE);
+                        EditText re=(EditText)findViewById(R.id.receive) ;
+                        EditText remar=(EditText)findViewById(R.id.remark) ;
+                        String receive=re.getText().toString();
+                        String remark=remar.getText().toString();
+                        //http://demo.adityametals.com/api/update_delivery.php?bill="+Billno+"&paid="+bamt+"&summary="+remark+"&recieve="+receive
+                        String Url = "http://demo.adityametals.com/api/update_delivery.php?bill="+Billno+"&paid="+bamt+"&summary="+remark+"&recieve="+receive;
+                        new customerentry().execute(Url);
+
+//                        Toast.makeText(DeliveryActivity.this, "Delivered successfully", Toast.LENGTH_SHORT).show();
+//                        Intent intent = new Intent(DeliveryActivity.this, MainActivity.class);
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                        startActivity(intent);
+//                        finish();
+//                        findViewById(R.id.progress).setVisibility(View.GONE);
                     }
                 }, 1500);
             }
@@ -96,22 +106,16 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private class serverUpload extends AsyncTask<String, Void, Boolean> {
-
         ProgressDialog dialog;
-
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
             dialog = new ProgressDialog(DeliveryActivity.this);
             dialog.setMessage("Loading in.., please wait");
             dialog.setTitle("");
             // dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_animation;
             dialog.show();
             dialog.setCancelable(false);
-
-
         }
 
         @Override
@@ -137,8 +141,6 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
         protected void onPostExecute(Boolean aBoolean) {
             dialog.dismiss();
             try {
-
-
                 String[] separated = dataOne.split("\\}\\{");
                 String one = separated[0] + "}";
                 String two = separated[1] + "}";
@@ -150,12 +152,12 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
                     JSONObject jssOne = jsonOneArrayOne.getJSONObject(i);
 //cname,bill,phone,address,qty,amt,advance,balance
                     String Cname = jssOne.getString("customer_name");
-                    String Billno = jssOne.getString("order_id");
+                     Billno = jssOne.getString("order_id");
                     String phones = jssOne.getString("customer_phone");
                     String addresss = jssOne.getString("customer_address");
                     String amtt = jssOne.getString("total_amount");
                     String adamt = jssOne.getString("advance_amount");
-                    String bamt = jssOne.getString("balance_amount");
+                     bamt = jssOne.getString("balance_amount");
                     String qtyts = jssOne.getString("total_laundry");
 
                     cname.setText(Cname);
@@ -221,6 +223,77 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
                 bAdapter = new deliveryAdapter(maintain, DeliveryActivity.this, DeliveryActivity.this);
                 recycler_view.setAdapter(bAdapter);
                 bAdapter.notifyDataSetChanged();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+    public void next(View view) {
+        EditText re=(EditText)findViewById(R.id.receive) ;
+        EditText remar=(EditText)findViewById(R.id.remark) ;
+        String receive=re.getText().toString();
+        String remark=remar.getText().toString();
+        //http://demo.adityametals.com/api/update_delivery.php?bill="+Billno+"&paid="+bamt+"&summary="+remark+"&recieve="+receive
+        String Url = "http://demo.adityametals.com/api/update_delivery.php?bill="+Billno+"&paid="+bamt+"&summary="+remark+"&recieve="+receive;
+        new customerentry().execute(Url);
+    }
+
+    private class customerentry extends AsyncTask<String, Void, Boolean> {
+
+
+        ProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(DeliveryActivity.this);
+            dialog.setMessage("Loading in.., please wait");
+            dialog.setTitle("");
+            dialog.show();
+            dialog.setCancelable(false);
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            try {
+                HttpGet httppost = new HttpGet(params[0]);
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpResponse response = httpclient.execute(httppost);
+                HttpEntity entity = response.getEntity();
+                dataTwos = (EntityUtils.toString(entity));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            dialog.dismiss();
+            try {
+                JSONObject jsono = new JSONObject(dataTwos);
+                String msg = jsono.getString("error");
+
+                if (msg.equals("false")) {
+                  //   Toast.makeText(DeliveryActivity.this, "Successfully updated", Toast.LENGTH_SHORT).show();
+                  //  Intent myIntent = new Intent(DeliveryActivity.this, MainActivity.class);
+                  //  ActivityOptions options =
+                   //      ActivityOptions.makeCustomAnimation(DeliveryActivity.this, R.anim.left_enter, R.anim.left_out);
+                   // startActivity(myIntent, options.toBundle());
+
+                    Toast.makeText(DeliveryActivity.this, "Delivered successfully", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(DeliveryActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+                    findViewById(R.id.progress).setVisibility(View.GONE);
+                } else {
+                    Toast.makeText(DeliveryActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                }
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

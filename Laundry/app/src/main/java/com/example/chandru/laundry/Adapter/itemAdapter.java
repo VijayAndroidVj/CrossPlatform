@@ -43,23 +43,26 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.MyViewHolderon
         holder.tvTwo.setText("Rs."+dboard.getLaundry_price());
         holder.img.setText(dboard.getLaundry_item());
 
-        holder.itemlayout.setTag(position);
 
 
 
-        if(selectedPosition==position)
-            holder.itemView.setBackgroundColor(Color.parseColor("#009688"));
-        else
-            holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
 
+        if(selectedPosition==position) {
+            holder.catie.setBackgroundColor(Color.parseColor("#009688"));
+            holder.img.setTextColor(Color.parseColor("#FFFFFF"));
+        }else {
+            holder.catie.setBackgroundColor(Color.parseColor("#FFFFFF"));
+            holder.img.setTextColor(Color.parseColor("#000000"));
+        }
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedPosition=position;
+               // selectedPosition=position;
                 notifyDataSetChanged();
 
             }
         });
+        holder.itemlayout.setTag(position);
 
 
 
@@ -74,7 +77,7 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.MyViewHolderon
 
     public class MyViewHolderone extends RecyclerView.ViewHolder {
         private TextView tvTwo,img;
-        private LinearLayout itemlayout;
+        private LinearLayout itemlayout,catie;
 
         public MyViewHolderone(View view) {
             super(view);
@@ -82,12 +85,15 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.MyViewHolderon
             tvTwo = (TextView)view.findViewById(R.id.tvTwo);
             img = (TextView)view.findViewById(R.id.img);
             itemlayout=(LinearLayout)view.findViewById(R.id.itemlayout);
+            catie=(LinearLayout)view.findViewById(R.id.catie);
 
             itemlayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int pos = (int) view.getTag();
+                    selectedPosition=pos;
                     listener.adapterActionListener(LIST_TAGr,pos);
+                    notifyDataSetChanged();
                 }
             });
            // img=(ImageView)view.findViewById(R.id.img);

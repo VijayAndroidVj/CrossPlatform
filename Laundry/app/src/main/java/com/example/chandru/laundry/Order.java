@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -59,9 +61,9 @@ import java.util.Locale;
 
 public class Order extends AppCompatActivity implements View.OnClickListener, AdapterListener {
 
-    private static EditText edittext, editdate, edittextOne, edittextTwo, fullName, mobileNumber, location;
+    private static EditText edittext, editdate, edittextOne,  fullName, mobileNumber, location;
     private static Button signUpBtn;
-    private static TextView forgotPassword, signUp, itemname;
+    private static TextView forgotPassword, signUp, itemname,edittextTwo;
     private static CheckBox show_hide_password;
     private static LinearLayout loginLayout;
     private static Animation shakeAnimation;
@@ -101,7 +103,8 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
         edittext = (EditText) findViewById(R.id.editText3);
         editdate = (EditText) findViewById(R.id.editText4);
         edittextOne = (EditText) findViewById(R.id.editText1);
-        edittextTwo = (EditText) findViewById(R.id.editText2);
+        edittextOne.addTextChangedListener(watch);
+        edittextTwo = (TextView) findViewById(R.id.editText2);
         itemname = (TextView) findViewById(R.id.itemname);
         edittext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -216,48 +219,101 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
 
     public void adddata(View view) {
 
-        bill dboard = new bill();
-        dboard.setServiceId(serviceId);
-        dboard.setItemid(Itemid);
-        dboard.setServiceName(serviceName);
-        dboard.setItem(itemData);
-        dboard.setQty(String.valueOf(qty));
-        dboard.setUnit("" + unit + "0");
-        dboard.setAmt("" + mul + "0");
-        billist.add(dboard);
-        recycler_view_final = (RecyclerView) findViewById(R.id.recycler_view_one);
-        LinearLayoutManager bmanager = new LinearLayoutManager(Order.this);
-        recycler_view_final.setLayoutManager(bmanager);
-        bAdapter = new billAdapter(billist, Order.this, Order.this);
-        recycler_view_final.setAdapter(bAdapter);
-        bAdapter.notifyDataSetChanged();
+        if(qty ==0 || unit  ==0.0 || mul ==0.0 ){
+            Toast.makeText(getApplicationContext(), "Please add item", Toast.LENGTH_SHORT).show();
 
-        int abc = 0;
-        int cba = 0;
-        for (int i = 0; i < billist.size(); i++) {
+        }else {
 
-            abc = abc + (int) Float.parseFloat(billist.get(i).getQty());
-            cba = cba + (int) Float.parseFloat(billist.get(i).getAmt());
+            bill dboard = new bill();
+            dboard.setServiceId(serviceId);
+            dboard.setItemid(Itemid);
+            dboard.setServiceName(serviceName);
+            dboard.setItem(itemData);
+            dboard.setQty(String.valueOf(qty));
+            dboard.setUnit("" + unit + "0");
+            dboard.setAmt("" + mul + "0");
+            billist.add(dboard);
+            recycler_view_final = (RecyclerView) findViewById(R.id.recycler_view_one);
+            LinearLayoutManager bmanager = new LinearLayoutManager(Order.this);
+            recycler_view_final.setLayoutManager(bmanager);
+            bAdapter = new billAdapter(billist, Order.this, Order.this);
+            recycler_view_final.setAdapter(bAdapter);
+            bAdapter.notifyDataSetChanged();
+
+            int abc = 0;
+            int cba = 0;
+            for (int i = 0; i < billist.size(); i++) {
+
+                abc = abc + (int) Float.parseFloat(billist.get(i).getQty());
+                cba = cba + (int) Float.parseFloat(billist.get(i).getAmt());
+
+            }
+            TextView tq = (TextView) findViewById(R.id.tq);
+            TextView tt = (TextView) findViewById(R.id.tt);
+
+            tq.setText("Total qty:  " + abc);
+            tt.setText("Total amt:Rs." + cba);
+            TextView unitty = (TextView) findViewById(R.id.findUnit);
+            TextView amt = (TextView) findViewById(R.id.findtotal);
+            unitty.setText("0");
+            amt.setText("0");
+            itemData = "";
+            qty = 0;
+            unit = 0;
+            mul = 0;
+            display(0);
+            serviceId = "";
+            serviceName = "";
+            Itemid = "";
 
         }
-        TextView tq = (TextView) findViewById(R.id.tq);
-        TextView tt = (TextView) findViewById(R.id.tt);
 
-        tq.setText("Total qty:  " + abc);
-        tt.setText("Total amt:Rs." + cba);
-        TextView unitty = (TextView) findViewById(R.id.findUnit);
-        TextView amt = (TextView) findViewById(R.id.findtotal);
-        unitty.setText("0");
-        amt.setText("0");
-        itemData = "";
-        qty = 0;
-        unit = 0;
-        mul = 0;
-        display(0);
-        serviceId = "";
-        serviceName = "";
-        Itemid = "";
+
     }
+
+    TextWatcher watch = new TextWatcher(){
+
+        @Override
+        public void afterTextChanged(Editable arg0) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                                      int arg3) {
+            // TODO Auto-generated method stub
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int a, int b, int c) {
+            // TODO Auto-generated method stub
+s=s.toString();
+
+if(s.equals("")){
+
+}else {
+    float f1 = Float.parseFloat((String) s);
+    int cba = 0;
+    for (int i = 0; i < billist.size(); i++) {
+
+        cba = cba + (int) Float.parseFloat(billist.get(i).getAmt());
+
+    }
+    f1=cba-f1;
+    edittextTwo.setText(""+((int)f1));
+    if(f1<0){
+        Toast.makeText(getApplicationContext(), "Maximum Limit Reached", Toast.LENGTH_SHORT).show();
+    }
+
+}
+
+
+
+
+
+        }};
 
     public void next(View view) {
         // final String json =formatDataAsJSON();
@@ -270,7 +326,7 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
 
         editdate = (EditText) findViewById(R.id.editText4);
         edittextOne = (EditText) findViewById(R.id.editText1);
-        edittextTwo = (EditText) findViewById(R.id.editText2);
+        edittextTwo = (TextView) findViewById(R.id.editText2);
 
         int abc = 0;
         int cba = 0;
