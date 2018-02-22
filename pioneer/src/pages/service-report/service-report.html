@@ -1,0 +1,248 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons left>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      UPLOADS
+    </ion-title>
+    <ion-buttons right>
+      <button (click)="goback()" ion-button >
+        <ion-icon name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+  
+  <ion-content padding>
+    <ion-item>
+      <p>{{imageURIs}}</p>
+      <button ion-button color="secondary" (click)="getserviceReport()">Get Service Report</button>
+    </ion-item>
+    <ion-item>
+      <button ion-button (click)="uploadFile()">Upload</button>
+    </ion-item>
+
+
+    <!-- <h3>Reports</h3>
+    
+        <form (ngSubmit)="getEnqReport()">
+          <ion-list>
+             
+            
+            <ion-item>
+              <ion-label floating>Start Date</ion-label>
+              <ion-datetime displayFormat="D MMM YYYY" pickerFormat="MM/D/YYYY" [(ngModel)]="custome.start_date" name="custome.start_date"></ion-datetime>
+            </ion-item>
+           
+            <ion-item>
+              <ion-label floating>End Date</ion-label>
+              <ion-datetime displayFormat="D MMM YYYY" pickerFormat="MM/D/YYYY" [(ngModel)]="custome.end_date" name="custome.end_date"></ion-datetime>
+            </ion-item>
+            <ion-item>
+              <button ion-button type="submit" (click)="getEnqReport()" full round>Submit</button>
+            </ion-item>
+          </ion-list>
+        </form>
+
+
+<div *ngIf="tagOne">
+        <div id="table-scroll" class="table-scroll">
+          <div class="table-wrap">
+            <table class="main-table">
+              <thead>
+                <tr>
+                  <th scope="col">DATE</th>
+                  <th scope="col">INVOICE NO</th>
+                  <th scope="col">JOB NO</th>
+                  <th scope="col">PARTY</th>
+                  <th scope="col">MODEL</th>
+                  <th scope="col">TAXABLE</th>
+                  <th scope="col">LABOUR AMOUNT</th>
+                  <th scope="col">GST</th>
+                  <th scope="col">SERVICE TAX</th>
+                  <th scope="col">CESS</th>
+                  <th scope="col">UW AMOUNT</th>
+                  <th scope="col">OTHERS</th> 
+                  <th scope="col">DISC</th>
+                  <th scope="col">NET AMOUNT</th> 
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of postList">
+                  <td>{{data.date}}</td>
+                  <td>{{data.invoiceno}}</td>
+                  <td>{{data.jobno}}</td>
+                  <td>{{data.party}}</td>
+                  <td>{{data.model}}</td>
+                  <td>{{data.taxable}}</td>
+                  <td>{{data.labr_amount}}</td>
+                  <td>{{data.gst}}</td>
+                  <td>{{data.service_tax}}</td>
+                  <td>{{data.cess}}</td>
+                  <td>{{data.uw_amount}}</td>
+                  <td>{{data.others}}</td>
+                  <td>{{data.disc}}</td>
+                  <td>{{data.net_amount}}</td>
+                </tr>
+              </tbody>
+              
+            </table>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="tagTwo">
+        <div id="table-scroll" class="table-scroll">
+          <div class="table-wrap">
+              <table class="main-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">R/O NO</th>
+                      <th scope="col">R/O DATE</th>
+                      <th scope="col">REG NO</th>
+                      <th scope="col">MODAL</th>
+                      <th scope="col">SALE DATE</th>
+                      <th scope="col">WORK TYPE</th>
+                      <th scope="col">SERVICE ADV</th>
+                      <th scope="col">MAIN TECH</th>
+                      <th scope="col">SPECIAL MSG</th>
+                      <th scope="col">VISIT TYPE</th>
+                      <th scope="col">STATUS</th>
+                      <th scope="col">TOTAL</th> 
+                      <th scope="col">LABOUR AMT</th>
+                      <th scope="col">PART AMT</th> 
+                      <th scope="col">ESTIMATE NO</th>
+                      <th scope="col">ESTIMATE AMT</th>
+                      <th scope="col">USER NAME</th>
+                      <th scope="col">QUICK SERVICE</th>
+                      <th scope="col">MOBILE SERVICE</th>
+                      <th scope="col">SMS STATUS</th>
+                      <th scope="col">R/O DATE AND TIME</th>
+                      <th scope="col">GATE PASSTIME</th>
+                      <th scope="col">INS COMP NAME</th> 
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of postListOne">
+                      <td>{{data.ro_no}}</td>
+                      <td>{{data.ro_date}}</td>
+                      <td>{{data.reg_no}}</td>
+                      <td>{{data.model}}</td>
+                      <td>{{data.sale_date}}</td>
+                      <td>{{data.work_type}}</td>
+                      <td>{{data.service_advis}}</td>
+                      <td>{{data.main_tech}}</td>
+                      <td>{{data.special_msg}}</td>
+                      <td>{{data.visit_type}}</td>
+                      <td>{{data.status}}</td>
+                      <td>{{data.total}}</td>
+                      <td>{{data.labour_amount}}</td>
+                      <td>{{data.part_amount}}</td>
+                      <td>{{data.estimate_no}}</td>
+                      <td>{{data.estimate_amount}}</td>
+                      <td>{{data.user_name}}</td>
+                      <td>{{data.quick}}</td>
+                      <td>{{data.mobile}}</td>
+                      <td>{{data.sms}}</td>
+                      <td>{{data.ro_date_and_time}}</td>
+                      <td>{{data.gate_passtime}}</td>
+                      <td>{{data.ins_company_name}}</td>
+                    </tr>
+                  </tbody>
+                  
+                </table>
+            
+          </div>
+        </div>
+      </div>
+      <div *ngIf="tagThree">
+        <div id="table-scroll" class="table-scroll">
+          <div class="table-wrap">
+            <table class="main-table">
+              <thead>
+                <tr>
+                  <th scope="col">NAME</th>
+                  <th scope="col">MOBILE</th>
+                  <th scope="col">EMAIL</th>
+                  <th scope="col">ENQ DATE</th>
+                  <th scope="col">VEHICLE</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of postList">
+                  <td>{{data.name}}</td>
+                  <td>{{data.mobile}}</td>
+                  <td>{{data.email}}</td>
+                  <td>{{data.enquiry_date}}</td>
+                  <td>{{data.vehicle}}</td>
+                </tr>
+              </tbody>
+              
+            </table>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="tagFour">
+        <div id="table-scroll" class="table-scroll">
+          <div class="table-wrap">
+              <table class="main-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">DEALER CODE</th>
+                      <th scope="col">DEALER NAME</th>
+                      <th scope="col">ZONE</th>
+                      <th scope="col">STATE</th>
+                      <th scope="col">CITY</th>
+                      <th scope="col">CHASSIS NO</th>
+                      <th scope="col">SERVICE TYPE</th>
+                      <th scope="col">SERVICE NO</th>
+                      <th scope="col">CUSTOMER ID</th>
+                      <th scope="col">MODEL CODE </th>
+                      <th scope="col">MADEL NAME</th>
+                      <th scope="col">SERVICE DATE</th> 
+                      <th scope="col">JOB CARD NO</th>
+                      <th scope="col">ACTUAL KMS</th> 
+                      <th scope="col">STATUS</th>
+                      <th scope="col">PRINT REQUEST NO</th>
+                      <th scope="col">PRINT REQUEST DATE</th>
+                      <th scope="col">DSC NO</th>
+                      <th scope="col">DSC DATE</th>
+                      <th scope="col">MOBILE NUMBER</th>
+                     
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let data of postListThree">
+                      <td>{{data.deeler_code}}</td>
+                      <td>{{data.deeler_name}}</td>
+                      <td>{{data.zone}}</td>
+                      <td>{{data.state}}</td>
+                      <td>{{data.city}}</td>
+                      <td>{{data.chassis_no}}</td>
+                      <td>{{data.service_type}}</td>
+                      <td>{{data.service_no}}</td>
+                      <td>{{data.customer_id}}</td>
+                      <td>{{data.model_code}}</td>
+                      <td>{{data.model_name}}</td>
+                      <td>{{data.service_date}}</td>
+                      <td>{{data.job_caard_no}}</td>
+                      <td>{{data.actual_kms}}</td>
+                      <td>{{data.status}}</td>
+                      <td>{{data.print_request_number}}</td>
+                      <td>{{data.print_request_date}}</td>
+                      <td>{{data.dsc_no}}</td>
+                      <td>{{data.dsc_no}}</td>
+                      <td>{{data.mobile_number}}</td>
+                      
+                    </tr>
+                  </tbody>
+                  
+                </table>
+          </div>
+        </div>
+      </div> -->
+  </ion-content>

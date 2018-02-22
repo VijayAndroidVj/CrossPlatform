@@ -48,7 +48,7 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.MyViewHolderon
 
 
         if(selectedPosition==position) {
-            holder.catie.setBackgroundColor(Color.parseColor("#009688"));
+            holder.catie.setBackgroundColor(Color.parseColor("#1578CB"));
             holder.img.setTextColor(Color.parseColor("#FFFFFF"));
         }else {
             holder.catie.setBackgroundColor(Color.parseColor("#FFFFFF"));

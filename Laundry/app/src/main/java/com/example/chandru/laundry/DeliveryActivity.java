@@ -47,6 +47,7 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delivery_details);
+        getSupportActionBar().setTitle("Delivey Details");
         cname = (TextView) findViewById(R.id.cname);
         bill = (TextView) findViewById(R.id.bill);
         phone = (TextView) findViewById(R.id.phone);
@@ -143,7 +144,7 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
             try {
                 String[] separated = dataOne.split("\\}\\{");
                 String one = separated[0] + "}";
-                String two = separated[1] + "}";
+                String two = "{"+ separated[1] ;
                 Log.d("success", one);
                 maintain.clear();
                 JSONObject jsono = new JSONObject(one);

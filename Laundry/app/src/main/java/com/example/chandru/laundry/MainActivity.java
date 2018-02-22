@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,8 +18,19 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.chandru.laundry.Adapter.cutomerAdapter;
+import com.example.chandru.laundry.Adapter.deliveryAdapter;
+import com.example.chandru.laundry.Pojo.delivery;
+import com.example.chandru.laundry.Pojo.landingcutomer;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     TextView count;
+    private List<landingcutomer> maintain = new ArrayList<>();
+    private cutomerAdapter cAdapter;
+    private RecyclerView recycler_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

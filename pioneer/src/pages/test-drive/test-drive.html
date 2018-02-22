@@ -1,0 +1,67 @@
+<!--
+  Generated template for the FeedbackPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-buttons left>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      TEST DRIVE
+    </ion-title>
+    <ion-buttons right>
+      <button (click)="goback()" ion-button >
+        <ion-icon name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+    <div id="table-scroll" class="table-scroll">
+        <div class="table-wrap">
+          <table class="main-table">
+            <thead>
+              <tr>
+                <th scope="col">CustomerName </th>
+                <th scope="col">Mobile</th>
+                <th scope="col">Email</th>
+                <th scope="col">Model</th>
+                <th scope="col">FuelType</th>
+                <th scope="col">PreferedDate</th>
+                <th scope="col">State</th>
+                <th scope="col">City</th>
+                <th scope="col">Location</th>
+                <th scope="col">Vehicle</th>
+                <th scope="col">Comment</th>
+                <th scope="col">Created_date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let property of postList">
+                <td scope="col">{{property.name}}</td>
+                <td scope="col">{{property.mobile}}</td>
+                <td scope="col">{{property.email}}</td>
+                <td scope="col">{{property.model}}</td>
+                <td scope="col">{{property.fuel_type}}</td>
+                <td scope="col">{{property.prefered_date}}</td>
+                <td scope="col">{{property.state}}</td>
+                <td scope="col">{{property.city}}</td>
+                <td scope="col">{{property.location}}</td>
+                <td scope="col">{{property.vehile}}</td>
+                <td scope="col">{{property.comment}}</td>
+                <td scope="col">{{property.created_date}}</td>
+              </tr>
+            </tbody>
+            
+          </table>
+        </div>
+      </div>
+
+</ion-content>

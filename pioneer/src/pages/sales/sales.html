@@ -1,0 +1,211 @@
+<!--
+  Generated template for the SalesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+      <ion-buttons left>
+        <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>
+        SALES
+      </ion-title>
+      <ion-buttons end>
+          <button ion-button icon-only (click)="clear()">
+            <ion-icon name="close"></ion-icon>
+          </button>
+        </ion-buttons>
+        <ion-buttons right>
+          <button (click)="goback()" ion-button >
+            <ion-icon name="home"></ion-icon>
+          </button>
+        </ion-buttons>
+     
+    </ion-navbar>
+  </ion-header>
+
+<ion-content id="listScroll" padding>
+    <!-- <ion-card>
+        <ion-card-header>
+          GRAPH REPRESENTATION
+        </ion-card-header>
+        <ion-card-content>
+          <canvas style='height:100%;width:100%' #barCanvas></canvas>
+        </ion-card-content>
+      </ion-card> -->
+      <ion-card>
+        <ion-card-header>
+          GRAPH REPRESENTATION
+        </ion-card-header>
+        <ion-card-content>
+          <canvas style="height:100%;width:100%" #doughnutCanvas></canvas>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- <div style="display: block">
+        <canvas baseChart
+                    [data]="doughnutChartData"
+                    [labels]="doughnutChartLabels"
+                    [chartType]="doughnutChartType"
+                    (chartHover)="chartHovered($event)"
+                    (chartClick)="chartClicked($event)"></canvas>
+      </div> -->
+
+ 
+        <ion-list>
+
+            <ion-item *ngIf="flas">
+                <ion-label>Admin</ion-label>
+                <ion-select  [(ngModel)]="custome.aid" name="custome.aid" >
+                  <ion-option [value]="leadscs.aid"  *ngFor="let leadscs of postListfive" >{{leadscs.name}}</ion-option>
+                </ion-select>
+              </ion-item>
+
+          <ion-item>
+            <ion-label floating>Start Date</ion-label>
+            <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD-MM-YYYY" [(ngModel)]="custome.start_date " name="custome.start_date"></ion-datetime>
+          </ion-item>
+         
+          <ion-item>
+            <ion-label floating>End Date</ion-label>
+            <ion-datetime displayFormat="DD MMM YYYY" pickerFormat="DD-MM-YYYY" [(ngModel)]="custome.end_date" name="custome.end_date"></ion-datetime>
+          </ion-item>
+
+          <ion-list  radio-group [(ngModel)]="relationship">
+              <ion-item>
+                <ion-radio (ionSelect)="mcqAnswer(1)" value="modal" checked></ion-radio>
+                <ion-label >By MODEL</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-radio (ionSelect)="mcqAnswer(2)" value="color"></ion-radio>
+                <ion-label >By COLOR</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-radio (ionSelect)="mcqAnswer(3)" value="pincode" [disabled]="isDisabled"></ion-radio>
+                <ion-label  >By PINCODE</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-radio (ionSelect)="mcqAnswer(4)" value="net_amt" [disabled]="isDisabled"></ion-radio>
+                <ion-label  >By NET AMOUNT</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-radio (ionSelect)="mcqAnswer(5)" value="extended_warrenty" [disabled]="isDisabled"></ion-radio>
+                <ion-label  >By EXTENDED WARRENTY</ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-radio (ionSelect)="mcqAnswer(6)" value="teflon" [disabled]="isDisabled"></ion-radio>
+                <ion-label  >By TEFLON</ion-label>
+              </ion-item>
+            </ion-list>
+            
+         
+
+             
+              
+                 
+                  
+          <!--   
+             <ion-item> 
+            <ion-label>Model</ion-label>
+            <ion-select [(ngModel)]="custome.model" name="custome.model" >
+                <ion-option [value]="leadscs.modelname"  *ngFor="let leadscs of postListone" >{{leadscs.modelname}}</ion-option>
+              </ion-select>
+           <ion-input type="text" [(ngModel)]="custome.model"  name="custome.model"></ion-input> 
+          </ion-item>
+          <ion-item>
+            <ion-label>Color</ion-label>
+            <ion-select [(ngModel)]="custome.color" name="custome.color" >
+                <ion-option (click)="test()" [value]="leadscs.colorname"  *ngFor="let leadscs of postListtwo" >{{leadscs.colorname}}</ion-option>
+              </ion-select>
+            
+          </ion-item>
+          <ion-item>
+            <ion-label>Pincode</ion-label>
+            <ion-select [(ngModel)]="custome.pincode" name="custome.pincode" >
+                <ion-option [value]="leadscs.pincode"  *ngFor="let leadscs of postListthree" >{{leadscs.pincode}}</ion-option>
+              </ion-select>
+            
+          </ion-item> -->
+          
+          <ion-item>
+            <button ion-button type="submit" (click)="getEnqReport()" full round>Submit</button>
+          </ion-item>
+          <ion-item >
+            <h2 style="text-align: right">GRAND TOTAL :RS.{{total}}.00</h2>
+          </ion-item>
+        </ion-list>
+
+        
+    
+  
+
+
+        
+  
+                  <div id="table-scroll" class="table-scroll">
+                    <div class="table-wrap">
+                      <table class="main-table">
+                        <thead>
+                          <tr>
+                           
+                            <th scope="col">date</th>
+                            <th scope="col">invoice_no</th>
+                            <th scope="col">party</th>
+                            <th scope="col">address</th>
+                            <th scope="col">pincode</th>
+                            <th scope="col">financer</th>
+                            <th scope="col">model</th>
+                            <th scope="col">color</th>
+                            <th scope="col">fram_no</th>
+                            <th scope="col">engine_no</th>
+                            <th scope="col">gross_amt</th>
+                            <th scope="col">others</th>
+                            <th scope="col">net_amt</th>
+                            <th scope="col">extended_warrenty</th>
+                            <th scope="col">teflon</th>
+                            <th scope="col">mobile</th>
+                            <th scope="col">email</th>
+                            <th scope="col">refer code</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let data of postList">
+                           
+                            <td>{{data.date}}</td>
+                            <td>{{data.invoice_no}}</td>
+                            <td>{{data.party}}</td>
+                            <td>{{data.address}}</td>
+                            <td>{{data.pincode}}</td>
+                            <td>{{data.financer}}</td>
+                            <td>{{data.model}}</td>
+                            <td>{{data.color}}</td>
+                            <td>{{data.fram_no}}</td>
+                            <td>{{data.engine_no}}</td>
+                            <td>{{data.gross_amt}}</td>
+                            <td>{{data.others}}</td>
+                            <td>{{data.net_amt}}</td>
+                            <td>{{data.extended_warrenty}}</td>
+                            <td>{{data.teflon}}</td>
+                            <td>{{data.mobile}}</td>
+                            <td>{{data.email}}</td>
+                            <td>{{data.refer_code}}</td>
+                            
+                          </tr>
+                         
+                        </tbody>
+                        
+                      </table>
+                    </div>
+                  </div>
+                  <div *ngIf="postList?.length > 0">
+                    <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+                      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+                    </ion-infinite-scroll>
+                  </div>
+                 
+
+</ion-content>

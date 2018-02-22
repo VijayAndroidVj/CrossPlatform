@@ -1,0 +1,42 @@
+<!--
+  Generated template for the UserdashboardPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-buttons left>
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>
+      OFFERS
+    </ion-title>
+    <ion-buttons right>
+      <button (click)="goback()" ion-button >
+        <ion-icon name="home"></ion-icon>
+      </button>
+    </ion-buttons>
+   
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <h2>OFFER DETAILS</h2>
+
+    <ion-list>
+                <button ion-item *ngFor="let broker of postList" (click)="openLEADpage(broker)">
+                    <!-- <ion-avatar item-left>
+                        <img src="assets/imgs/pioneet.png"/>
+                    </ion-avatar> -->
+                    <h2><b>{{broker.title}}</b></h2>
+                    <p>{{broker.description}}</p>
+                    <img [src]="broker.image">
+                </button>
+        
+            </ion-list> 
+
+</ion-content>

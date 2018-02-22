@@ -1,0 +1,142 @@
+<!--
+  Generated template for the AdminCustomerPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    
+      <ion-navbar>
+        <ion-title>ADMIN DETAILS</ion-title>
+        <ion-buttons right>
+            <button (click)="goback()" ion-button >
+              <ion-icon name="home"></ion-icon>
+            </button>
+          </ion-buttons>
+      </ion-navbar>
+      
+    
+    </ion-header>
+
+
+<ion-content padding>
+        <ion-fab bottom right>
+                <button (click)="openLeadCustChat()" ion-fab mini>
+                        <img src="assets/imgs/login.png"/>
+
+                 <!--<ion-icon item-start [name]="md-add" >+</ion-icon> -->
+                </button>
+              </ion-fab>
+
+<div class="broker">
+
+<ion-card>
+
+        <ion-card-content>
+            <img src="assets/imgs/login.png"/>
+            <h2>Admin :{{custome.name}}</h2>
+            <h3 *ngFor="let broker of List">Branch : <br/>{{broker.door_no}},{{broker.street}},<br/>{{broker.city}},<br/>{{broker.state}},<br/>{{broker.pincode}}. </h3>
+          
+        </ion-card-content>
+
+        <ion-list>
+                <a  href="tel:{{custome.mobile}}" ion-item>
+                        <ion-icon name="contact" item-left></ion-icon>
+                        <p>Username</p>
+                        <h2>{{custome.username}}</h2>
+                    </a>
+                    <a  href="tel:{{custome.mobile}}" ion-item>
+                            <ion-icon name="lock" item-left></ion-icon>
+                            <p>Passsword</p>
+                            <h2>{{custome.password}}</h2>
+                        </a>
+                    <a  href="tel:{{custome.mobile}}" ion-item>
+                            <ion-icon name="call" item-left></ion-icon>
+                            <p>Call Office</p>
+                            <h2>{{custome.mobile}}</h2>
+                        </a>
+            <a  href="tel:{{custome.mobile}}" ion-item>
+                <ion-icon name="call" item-left></ion-icon>
+                <p>Call Office</p>
+                <h2>{{custome.mobile}}</h2>
+            </a>
+            <a   href="tel:{{custome.mobile}}"  ion-item>
+                <ion-icon name="call" item-left></ion-icon>
+                <p>Call Mobile</p>
+                <h2>{{custome.mobile}}</h2>
+            </a>
+            <a   href="sms:{{custome.mobile}}"  ion-item>
+                <ion-icon name="text" item-left></ion-icon>
+                <p>Text</p>
+                <h2>{{custome.mobile}}</h2>
+            </a>
+            <a    href="mailto:{{custome.email}}" ion-item>
+                <ion-icon name="mail" item-left></ion-icon>
+                <p>Email</p>
+                <h2>{{custome.email}}</h2>
+            </a>
+
+         
+
+
+        </ion-list>
+
+    </ion-card>
+
+</div>
+
+
+
+
+
+<!--
+<h3>Visits Reports</h3>
+
+        <ion-list>
+          
+                   <ion-item *ngFor="let data of visitList">
+                    
+                      <h2>No :{{data.id}}</h2>
+                     
+                      <h2 >Visit type : {{data.type}}</h2>
+                     
+                      <h2 >Name :{{data.name}}</h2>
+                    
+                      <h2 >Location :{{data.location}}</h2>
+                     
+                      <h2 >Time :{{data.visit_time}}</h2>
+                     
+                      <h2 >Require :{{data.requirement}}</h2>
+                     
+                      <h2 >Status :{{data.status}}</h2>
+
+                      <h2 >Notes :{{data.notes}}</h2>
+                      <h2 >Next visit  :{{data.next_visit}}</h2>
+                      </ion-item>
+    
+                    </ion-list>
+
+
+<h3>Visits Reports</h3>
+<div class="row header">
+        <div class="col">No</div>
+        <div class="col">Visit type</div>
+        <div class="col">Name</div>
+        <div class="col">Location</div>
+        <div class="col">Time</div>
+        <div class="col">Require</div>
+        <div class="col">Status</div>
+        <div class="col">Notes</div>
+      </div>
+      <div class="row"*ngFor="let data of visitList" >
+        <div class="col">{{data.id}}</div>
+        <div class="col">{{data.type}}</div>
+        <div class="col">{{data.name}}</div>
+        <div class="col">{{data.location}}</div>
+        <div class="col">{{data.visit_time}}</div>
+        <div class="col">{{data.requirement}}</div>                
+        <div class="col">{{data.status}}</div>
+        <div class="col">{{data.notes}}</div>  
+      </div> -->
+
+</ion-content>

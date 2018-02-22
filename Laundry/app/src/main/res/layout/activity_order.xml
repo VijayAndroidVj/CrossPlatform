@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white_greyish"
     tools:context="com.example.chandru.laundry.Order">
 
     <android.support.v7.widget.Toolbar
@@ -43,13 +44,15 @@
             <LinearLayout
                 android:layout_weight="0.7"
                 android:orientation="vertical"
+                android:layout_margin="5dp"
+
+                android:background="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
                 <TextView
-                    android:text="Service"
-                    android:background="@color/background_color"
+                    android:text="SERVICE"
                     android:textSize="15sp"
-                    android:textColor="#ffffff"
+                    android:textColor="#616161"
                     android:textStyle="bold"
                     android:paddingTop="10dp"
                     android:layout_marginTop="10dp"
@@ -61,32 +64,44 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view_ten"
                     android:scrollbars="vertical"
-                    android:layout_margin="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
             </LinearLayout>
 
-            <TextView
-                android:text="Laundry Item :"
-                android:background="@color/background_color"
-                android:textSize="15sp"
-                android:textColor="#ffffff"
-                android:textStyle="bold"
-                android:paddingTop="10dp"
-                android:layout_marginTop="10dp"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_margin="5dp"
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view_two"
-                android:scrollbars="vertical"
-                android:layout_marginTop="10dp"
+                android:background="@color/white"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="wrap_content">
 
-            <TextView
+                <TextView
+                    android:text="LAUNDRY ITEMS"
+                    android:textSize="15sp"
+
+                    android:textColor="#616161"
+                    android:textStyle="bold"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_two"
+                    android:scrollbars="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </LinearLayout>
+
+
+
+          <!--  <TextView
                 android:id="@+id/itemname"
                 android:text="Item details :"
                 android:background="@color/background_color"
@@ -98,14 +113,37 @@
                 android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content" />-->
+
+
+
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_margin="5dp"
+                android:background="@color/white"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/itemname"
+                    android:text="ITEM DETAILS"
+                    android:textSize="15sp"
+                    android:textColor="#616161"
+                    android:textStyle="bold"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="0.13"
                 android:weightSum="3"
-                android:layout_marginTop="10dp"
+
                 android:orientation="horizontal">
                 <LinearLayout
                     android:layout_weight="1"
@@ -199,14 +237,35 @@
             <Button
                 android:id="@+id/adddata"
                 android:text="Add"
+                android:textColor="@color/white"
+                android:background="@color/background_color"
                 android:layout_margin="15dp"
                 android:onClick="adddata"
+                android:padding="2dp"
                 android:layout_width="match_parent"
-                android:layout_height="40dp" />
+                android:layout_height="wrap_content" />
 
+            </LinearLayout>
 
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_margin="5dp"
+                android:background="@color/white"
+                android:layout_height="wrap_content">
 
-            <TextView
+                <TextView
+                    android:text="BILL DETAILS"
+                    android:textSize="15sp"
+                    android:textColor="#616161"
+                    android:textStyle="bold"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            <!--<TextView
                 android:text="Order Bill :"
                 android:background="@color/background_color"
                 android:textSize="15sp"
@@ -217,14 +276,14 @@
                 android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content" />-->
 
             <LinearLayout
                 android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:orientation="horizontal"
-                android:background="#086643"
+                android:background="@color/background_color"
                 android:weightSum="4">
 
                 <TextView
@@ -310,10 +369,30 @@
 
 
             </LinearLayout>
+        </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_margin="5dp"
+                android:background="@color/white"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="PAYMENT DETAILS"
+                    android:textSize="15sp"
+                    android:textColor="#616161"
+                    android:textStyle="bold"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -388,6 +467,8 @@
                 android:layout_margin="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="40dp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

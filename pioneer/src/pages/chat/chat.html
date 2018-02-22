@@ -1,0 +1,41 @@
+<!--
+  Generated template for the ChatPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+    <ion-navbar>
+      <ion-buttons left>
+        <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>
+       CHAT
+      </ion-title>
+      <ion-buttons right>
+        <button (click)="goback()" ion-button >
+          <ion-icon name="home"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+
+
+<ion-content padding>
+
+    <ion-list>
+        
+                <button ion-item *ngFor="let broker of postList" (click)="openChat(broker.mobile,broker.name)">
+                    <ion-avatar item-left>
+                        <img src="assets/imgs/login.png"/>
+                    </ion-avatar>
+                    <h2>{{broker.name}}</h2>
+                    <p>{{broker.designation}}</p>
+                    <ion-badge *ngIf="broker.message > 0"  item-end>{{broker.message}}</ion-badge>
+                </button>
+        
+            </ion-list> 
+
+</ion-content>

@@ -52,7 +52,7 @@ public class catAdapter extends RecyclerView.Adapter<catAdapter.MyViewHolderone>
                 .into(holder.img);
 
         if(selectedPosition==position) {
-            holder.linCat.setBackgroundColor(Color.parseColor("#009688"));
+            holder.linCat.setBackgroundColor(Color.parseColor("#1578CB"));
             //  holder.catite.setBackgroundColor(Color.parseColor("#009688"));
         }
         else {

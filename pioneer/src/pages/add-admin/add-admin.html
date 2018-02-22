@@ -1,0 +1,147 @@
+<!--
+  Generated template for the AddCustomerPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<!-- <ion-header>
+  
+    <ion-navbar>
+      <ion-title>ADD ADMIN</ion-title>
+      <ion-buttons end>
+        <button (click)="home()"  ion-button>
+          <ion-icon name="home"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  
+  </ion-header> -->
+  <ion-header>
+    <ion-navbar>
+      <ion-title>
+        ADD ADMIN
+      </ion-title>
+      <ion-buttons right>
+        <button (click)="goback()" ion-button >
+          <ion-icon name="home"></ion-icon>
+        </button>
+      </ion-buttons>
+    
+    </ion-navbar>
+  </ion-header>
+  
+  
+  <ion-content padding>
+
+      <form novalidate (ngSubmit)="onSubmit(user)" [formGroup]="user">
+
+          <ion-item>
+              <ion-label>Branch</ion-label>
+              <ion-select  formControlName="bid" name="bid" >
+                <ion-option [value]="leadscs.bid"  *ngFor="let leadscs of postList" >{{leadscs.door_no}},{{leadscs.street}},{{leadscs.city}},{{leadscs.state}},{{leadscs.pincode}}.</ion-option>
+              </ion-select>
+            </ion-item>
+            <ion-item no-lines *ngIf="( user.get('bid').hasError('nullValidator') || user.get('bid').hasError('required') ) && user.get('bid').touched">
+              
+              <div class="error" *ngIf="user.get('bid').hasError('required') && user.get('bid').touched">
+              Branch  is required
+              </div>
+              </ion-item>
+
+
+
+        <ion-item>
+          <ion-label>Name</ion-label>
+          <ion-input type="text" formControlName="name"   name="name"></ion-input>
+        </ion-item>
+        <ion-item no-lines *ngIf="( user.get('name').hasError('nullValidator') || user.get('name').hasError('required') ) && user.get('name').touched">
+          
+          <div class="error" *ngIf="user.get('name').hasError('required') && user.get('name').touched">
+          Name is required
+          </div>
+          </ion-item>
+        
+       
+        <ion-item>
+          <ion-label>Email</ion-label>
+          <ion-input type="text" formControlName="email"   name="username"></ion-input>
+        </ion-item>
+        <ion-item no-lines *ngIf="( user.get('email').hasError('required') || user.get('email').hasError('email') ) && user.get('email').touched">
+          
+          
+          
+          <div class="error" *ngIf="user.get('email').hasError('required') && user.get('email').touched">
+          email is required
+          </div>
+          
+          <div class="error" *ngIf="user.get('email').hasError('email') && user.get('email').touched">
+          Please enter valid email
+          </div>
+          
+          </ion-item>
+  
+        <ion-item>
+          <ion-label>Mobile</ion-label>
+          <ion-input type="email" formControlName="mobile"   name="email"></ion-input>
+        </ion-item>
+        <ion-item no-lines *ngIf="( user.get('mobile').hasError('required') || user.get('mobile').hasError('minlength') || user.get('mobile').hasError('maxlength'))&& user.get('mobile').touched">
+          
+          
+          
+          <div class="error" *ngIf="user.get('mobile').hasError('required') && user.get('email').touched">
+          mobile no is required
+          </div>
+          <div class="error" *ngIf="user.get('mobile').hasError('minlength') && user.get('email').touched">
+          Please enter valid mobile number
+          </div>
+          
+          <div class="error" *ngIf="user.get('mobile').hasError('maxlength') && user.get('email').touched">
+          Please enter valid mobile number
+          </div>
+          
+          
+          </ion-item>
+
+
+        <ion-item>
+          <ion-label>Username</ion-label>
+          <ion-input type="text" formControlName="username" name="username"></ion-input>
+        </ion-item>
+    
+      <ion-item no-lines *ngIf="( user.get('username').hasError('nullValidator') || user.get('username').hasError('required') ) && user.get('username').touched">
+        
+        <div class="error" *ngIf="user.get('username').hasError('required') && user.get('username').touched">
+        Username is required
+        </div>
+        </ion-item>
+        <ion-item>
+          <ion-label>Password</ion-label>
+          <ion-input type="text" formControlName="password" name="password"></ion-input>
+        </ion-item>
+    
+      <ion-item no-lines *ngIf="( user.get('password').hasError('nullValidator') || user.get('password').hasError('required') ) && user.get('password').touched">
+        
+        <div class="error" *ngIf="user.get('password').hasError('required') && user.get('password').touched">
+        Password is required
+        </div>
+        </ion-item>
+       <!-- <ion-item>
+          <ion-label>Status</ion-label>
+          <ion-input type="tezt " [(ngModel)]="customer.status"  name="address"></ion-input>
+        </ion-item> -->
+  
+       
+  
+        
+        <button ion-button [disabled]="user.invalid" type="submit"(click)="addleadServer()" block>Add Customer</button>
+      </form> 
+      <style type="text/css">
+        .error
+        {
+        color:red;
+        }
+        
+        </style>
+  
+  </ion-content>
+  

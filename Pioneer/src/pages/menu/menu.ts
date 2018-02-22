@@ -1,8 +1,10 @@
 import { Component,ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, Nav } from 'ionic-angular';
-import { HomePage } from '../home/home';
+import { IonicPage, NavController, NavParams, Nav , ViewController,App} from 'ionic-angular';
 import { LoginPage } from '../login/login';
-import { AddReportPage } from '../add-report/add-report';
+import { DashboardPage } from '../dashboard/dashboard';
+import { MenuController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
+
 
 /**
  * Generated class for the MenuPage page.
@@ -24,18 +26,33 @@ export interface PageInterface {
   templateUrl: 'menu.html',
 })
 export class MenuPage {
-  rootPage = HomePage;
+  rootPage = DashboardPage;
   @ViewChild(Nav) nav: Nav;
+  name;
+  designation;
   
    pages: PageInterface[] = [
-     { title: 'DASHBOARD', pageName: 'testOne', tabComponent: 'testOne', index: 0, icon: 'home' },
-     { title: 'ADD REPORT', pageName: 'AddReportPage', tabComponent: 'AddReportPage', index: 1, icon: 'md-people' },
-     { title: 'CUSTOMER MANAGEMENT', pageName: 'CustomerPage',tabComponent:'CustomerPage', icon: 'contacts' },
-     { title: 'SETTING', pageName: 'CustomerPage',tabComponent:'CustomerPage',index: 1, icon: 'settings' },
+     { title: 'DASHBOARD', pageName: 'DashboardPage', tabComponent: 'DashboardPage', index: 0, icon: 'home' },
+      { title: 'SALES REPORT', pageName: 'SalesPage', tabComponent: 'SalesPage', index: 1, icon: 'md-paper' },
+      { title: 'SERVICE REPORT', pageName: 'ServicesPage', tabComponent: 'ServicesPage', index: 1, icon: 'md-people' },
+      { title: 'STOCK REPORT', pageName: 'StockPage', tabComponent: 'StockPage', index: 1, icon: 'md-people' },
+     { title: 'USER MANAGEMENT', pageName: 'AdminPage',tabComponent:'AdminPage', icon: 'contacts' },
+     { title: 'BRANCH MANAGEMENT', pageName: 'BranchPage',tabComponent:'BranchPage',index: 1, icon: 'settings' },
+     { title: 'OFFER', pageName: 'OfferPage',tabComponent:'OfferPage',index: 1, icon: 'settings' },
      { title: 'LOGOUT', pageName: 'test',tabComponent:'test', icon: 'md-log-out' }
    ];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,private storage: Storage,public appCtrl: App, public viewCtrl: ViewController,public menuCtrl: MenuController) {
+    this.menuCtrl.enable(true, 'authenticated');
+
+
+    storage.get('designation').then((vals) => {
+this.designation=vals;
+    });
+
+    storage.get('name').then((vals) => {
+      this.name=vals;
+          });
   }
 
   ionViewDidLoad() {
@@ -44,11 +61,20 @@ export class MenuPage {
 
   openPage(page: PageInterface) {
     let params = {};
+   
 
     if(page.pageName == "test"){
+      
+      this.storage.set('status',"");
+      this.storage.set('designation',"");
+      this.storage.set('name',"");
+
+      this.rootPage=null;
       this.navCtrl.setRoot(LoginPage);
-    }else if(page.pageName == "testOne"){
-      this.nav.setRoot(HomePage);
+    // this.navCtrl.push(LoginPage).then(()=>{this.navCtrl.remove(-1)});
+   // this.appCtrl.getRootNav().setRoot(DashboardPage);
+    //this.appCtrl.getRootNav().setRoot(LoginPage);
+    //this.navCtrl.remove(1);
     }else{
       this.nav.setRoot(page.pageName);
       if (page.index) {
@@ -61,7 +87,10 @@ export class MenuPage {
       } else {
         // Tabs are not active, so reset the root page 
         // In this case: moving to or from SpecialPage
-        this.nav.setRoot(page.pageName, params);
+        this.viewCtrl.dismiss();
+
+        this.appCtrl.getRootNav().setRoot(page.pageName, params);
+        
       }
     }
    // this.navCtrl.setRoot(page.pageName);
@@ -75,9 +104,15 @@ export class MenuPage {
 
 
   }
+/*
+  openPage(page) {
+    // Reset the content nav to have just this page
+    // we wouldn't want the back button to show in this scenario
+    this.nav.setRoot(page.component);
+  }*/
 
  
-  isActive(page: PageInterface) {
+isActive(page: PageInterface) {
     // Again the Tabs Navigation
     if(page.pageName == "test"){
      // this.navCtrl.setRoot(LoginPage);
@@ -101,7 +136,6 @@ export class MenuPage {
     }
  
   }
-
 }
 
 

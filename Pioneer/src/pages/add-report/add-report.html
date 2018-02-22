@@ -1,9 +1,3 @@
-<!--
-  Generated template for the AddReportPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
   <ion-navbar>
     <ion-buttons left>
@@ -12,21 +6,99 @@
       </button>
     </ion-buttons>
     <ion-title>
-     ADD REPORT
+      STOCK UPLOADS
     </ion-title>
+    <ion-buttons right>
+      <button (click)="goback()" ion-button >
+        <ion-icon name="home"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
-
-
-<ion-content padding>
+  
+  <ion-content padding>
     <ion-item>
-        <p>{{imageURI}}</p>
-        <button ion-button color="secondary" (click)="filechooser()">Get Image</button>
-      </ion-item>
-      <ion-item>
-        <button ion-button (click)="uploadFile()">Upload</button>
-      </ion-item>
+      <p>{{imageURI}}</p>
+      <button ion-button color="secondary" (click)="getFile()">Get Stock Report</button>
+      <button ion-button (click)="uploadFile()">Upload</button>
+    </ion-item>
+
+    <!-- <h3>Reports</h3>
+
+    <form (ngSubmit)="getEnqReport()">
+      <ion-list>
+         
+        
+        <ion-item>
+          <ion-label floating>Start Date</ion-label>
+          <ion-datetime displayFormat="D MMM YYYY" pickerFormat="DD/MM/YYYY" [(ngModel)]="custome.start_date " name="custome.start_date"></ion-datetime>
+        </ion-item>
+       
+        <ion-item>
+          <ion-label floating>End Date</ion-label>
+          <ion-datetime displayFormat="D MMM YYYY" pickerFormat="DD/MM/YYYY" [(ngModel)]="custome.end_date" name="custome.end_date"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <button ion-button type="submit" (click)="getEnqReport()" full round>Submit</button>
+        </ion-item>
+      </ion-list>
+    </form> -->
 
 
+   <!-- <ion-list>
+      
+               <ion-item *ngFor="let data of postList">
+                
+               
+                 
+                 
+                  <h2 >Name :{{data.name}}</h2>
+                
+                  <h2 >Mobile :{{data.mobile}}</h2>
+                 
+                  <h2 >Email :{{data.email}}</h2>
+                 
+                  <h2 >Enquiry Date :{{data.enquiry_date}}</h2>
+                 
+                  <h2 >Vehicle :{{data.vehicle}}</h2>
+                  </ion-item>
 
-</ion-content>
+                </ion-list> -->
+
+                <!-- <div id="table-scroll" class="table-scroll">
+                  <div class="table-wrap">
+                    <table class="main-table">
+                      <thead>
+                        <tr>
+                        
+                          <th scope="col">NAME</th>
+                          <th scope="col">MOBILE</th>
+                          <th scope="col">EMAIL</th>
+                          <th scope="col">ENQ DATE</th>
+                          <th scope="col">VEHICLE</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let data of postList">
+                         
+                          <td>{{data.name}}</td>
+                          <td>{{data.mobile}}</td>
+                          <td>{{data.email}}</td>
+                          <td>{{data.enquiry_date}}</td>
+                          <td>{{data.vehicle}}</td>
+                        </tr>
+                      </tbody>
+                      
+                    </table>
+                  </div>
+                </div> -->
+
+
+    <!--<ion-item>
+      <h4>Image Preview</h4>
+      <img src="{{imageFileName}}" *ngIf="imageFileName" alt="Ionic File" width="300" />
+    </ion-item> 
+    <ion-item>
+      <button ion-button (click)="uploadFile()">Upload</button>
+    </ion-item>-->
+  </ion-content>

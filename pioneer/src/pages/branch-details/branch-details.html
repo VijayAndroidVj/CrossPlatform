@@ -1,0 +1,78 @@
+<!--
+  Generated template for the AdminCustomerPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  
+    <ion-navbar>
+      <ion-title>BRANCH DETAILS</ion-title>
+      <ion-buttons right>
+          <button (click)="Update()" ion-button >
+            <ion-icon name="md-create"></ion-icon>
+          </button>
+        </ion-buttons>
+        <ion-buttons right>
+            <button (click)="goback()" ion-button >
+              <ion-icon name="home"></ion-icon>
+            </button>
+          </ion-buttons>
+    </ion-navbar>
+    
+  
+  </ion-header>
+
+
+<ion-content padding>
+      <!-- <ion-fab bottom right>
+              <button (click)="openLeadCustChat()" ion-fab mini>
+                      <img src="assets/imgs/login.png"/>
+
+               <!--<ion-icon item-start [name]="md-add" >+</ion-icon> 
+              </button>
+            </ion-fab> -->
+
+<div class="broker">
+
+<!-- <ion-card-content>
+          <img src="assets/imgs/login.png"/>
+          <h2>Admin :{{custome.name}}</h2>
+          <h3 *ngFor="let broker of List">Branch : <br/>{{broker.door_no}},{{broker.street}},<br/>{{broker.city}},<br/>{{broker.state}},<br/>{{broker.pincode}}. </h3>
+        
+      </ion-card-content> -->
+
+      <ion-list>
+              <a   ion-item>
+                      <ion-icon name="md-grid" item-left></ion-icon>
+                      <p>Door No</p>
+                      <h2>{{custome.door_no}}</h2>
+                  </a>
+                  <a   ion-item>
+                          <ion-icon name="ios-book-outline" item-left></ion-icon>
+                          <p>Street</p>
+                          <h2>{{custome.street}}</h2>
+                      </a>
+                  <a   ion-item>
+                          <ion-icon name="ios-book-outline" item-left></ion-icon>
+                          <p>City</p>
+                          <h2>{{custome.city}}</h2>
+                      </a>
+          <a   ion-item>
+              <ion-icon name="ios-book-outline" item-left></ion-icon>
+              <p>State</p>
+              <h2>{{custome.state}}</h2>
+          </a>
+          <a     ion-item>
+              <ion-icon name="ios-book-outline" item-left></ion-icon>
+              <p>Pincode</p>
+              <h2>{{custome.pincode}}</h2>
+          </a>
+
+      </ion-list>
+
+
+</div>
+
+
+</ion-content>

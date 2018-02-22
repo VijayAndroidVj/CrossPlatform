@@ -1,0 +1,110 @@
+<!--
+  Generated template for the ViewTaskPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>TASK DETAILS</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  
+        <!-- <ion-list>
+            <ion-item>
+                <ion-label>Lead</ion-label>
+               <h3>{{broker.name}}</h3>
+               <ion-input type="text" [(ngModel)]="event.name" name="event.name"></ion-input>
+              </ion-item>
+          <ion-item>
+            <ion-label floating>Task</ion-label>
+            <h3>{{broker.task}}</h3>
+            <ion-input type="text" [(ngModel)]="event.task" name="event.task"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label floating>Start Date</ion-label>
+            <h3>{{broker.start_date}}</h3>
+            <ion-datetime  [(ngModel)]="event.start_date" name="event.start_date"></ion-datetime>
+          </ion-item>
+          <ion-item>
+              <ion-label floating>Start time</ion-label>
+              <h3>{{broker.start_time}}</h3>
+              <ion-datetime class="datetime datetime-ios" displayFormat="hh:mm:ss A" pickerFormat="hh:mm:ss A" [(ngModel)]="event.start_time" name="event.start_time"></ion-datetime>
+            </ion-item>
+            <ion-item>
+                <ion-label floating> End time</ion-label>
+                <h3>{{broker.end_time}}</h3>
+                <ion-datetime class="datetime datetime-ios" displayFormat="hh:mm:ss A" pickerFormat="hh:mm:ss A" [(ngModel)]="event.end_time" name="event.end_time"></ion-datetime>
+              </ion-item>
+          <ion-item>
+            <ion-label floating>End Date</ion-label>
+            <h3>{{broker.end_date}}</h3>
+             <ion-datetime  [(ngModel)]="event.end_date" name="event.end_date"></ion-datetime>
+          </ion-item>
+          <ion-item>
+              <ion-label floating>status</ion-label>
+              <h3>{{broker.status}}</h3>
+              <ion-datetime  [(ngModel)]="event.status" name="event.status"></ion-datetime> 
+            </ion-item>
+          
+            <ion-item>
+              <ion-label floating>Feedback</ion-label>
+              <ion-input type="text"  [(ngModel)]="broker.feedback"  name="broker.feedback"></ion-input>
+            </ion-item>
+          <ion-item>
+            <button ion-button (click)="updatetaskstatus()" type="submit" full round>Close Task</button>
+          </ion-item>
+        </ion-list> -->
+
+        <div class="broker">
+          
+            <ion-card>
+                      <ion-list>
+                          <a  ion-item>
+                              <ion-icon name="call" item-left></ion-icon>
+                              <p>START TIME</p>
+                              <h2>{{broker.start_date}}</h2>
+                          </a>
+                          <a ion-item>
+                              <ion-icon name="call" item-left></ion-icon>
+                              <p>START DATE</p>
+                              <h2>{{broker.start_time}}</h2>
+                          </a>
+                          <a ion-item>
+                              <ion-icon name="text" item-left></ion-icon>
+                              <p>END TIME</p>
+                              <h2>{{broker.end_time}}</h2>
+                          </a>
+                          <a  ion-item>
+                              <ion-icon name="mail" item-left></ion-icon>
+                              <p>END DATE</p>
+                              <h2>{{broker.end_date}}</h2>
+                          </a>
+                          <a  ion-item>
+                            <ion-icon name="mail" item-left></ion-icon>
+                            <p>STATUS</p>
+                            <h2>{{broker.status}}</h2>
+                        </a>
+
+
+            <ion-item>
+              <ion-label floating>Feedback</ion-label>
+              <ion-input type="text"  [(ngModel)]="broker.feedback"  name="broker.feedback"></ion-input>
+            </ion-item>
+          <ion-item>
+            <button ion-button (click)="updatetaskstatus()" type="submit" full round>Close Task</button>
+          </ion-item>
+                      </ion-list>
+              
+                  </ion-card>
+              </div>
+
+
+    
+
+</ion-content>
