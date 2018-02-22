@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 public class cat {
 
 
-
     @SerializedName("id")
     private String id;
     @SerializedName("category_name")
@@ -18,18 +17,17 @@ public class cat {
     @SerializedName("icon_image")
     private String icon_image;
 
-    public cat(){
+    public cat() {
 
     }
 
 
-    public cat(String id, String category_name,String category_description, String randuniq, String icon_image) {
+    public cat(String id, String category_name, String category_description, String randuniq, String icon_image) {
         this.id = id;
         this.category_name = category_name;
         this.category_description = category_description;
         this.randuniq = randuniq;
         this.icon_image = icon_image;
-
 
 
     }
