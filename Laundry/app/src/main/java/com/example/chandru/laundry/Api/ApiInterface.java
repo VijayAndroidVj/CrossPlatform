@@ -25,6 +25,9 @@ public interface ApiInterface {
     @GET("add_customer.php?")
     Call<customer> getCustomer(@Query("name") String name,@Query("address") String address,@Query("contact") String contact);
 
+    @GET("add_location.php?")
+    Call<customer> getlocation(@Query("location_name") String name,@Query("description") String address);
+
     @GET("service.php?")
     Call<cat> getCat();
 

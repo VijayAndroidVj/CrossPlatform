@@ -87,21 +87,7 @@ public class AddService extends AppCompatActivity {
         String des=decription.getText().toString();
 
 
-        ApiInterface.savePost(nme, des, 1).enqueue(new Callback<addservice>() {
-            @Override
-            public void onResponse(Call<addservice> call, Response<addservice> response) {
 
-                if(response.isSuccessful()) {
-                    showResponse(response.body().toString());
-                    Log.i("Success", "post submitted to API." + response.body().toString());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<addservice> call, Throwable t) {
-                Log.e("Success", "Unable to submit post to API.");
-            }
-        });
     }
 
     public void showResponse(String response) {
