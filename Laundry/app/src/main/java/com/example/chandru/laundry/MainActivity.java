@@ -2,12 +2,16 @@ package com.example.chandru.laundry;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +27,17 @@ import com.example.chandru.laundry.Adapter.deliveryAdapter;
 import com.example.chandru.laundry.Pojo.delivery;
 import com.example.chandru.laundry.Pojo.landingcutomer;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,16 +46,19 @@ public class MainActivity extends AppCompatActivity {
     private List<landingcutomer> maintain = new ArrayList<>();
     private cutomerAdapter cAdapter;
     private RecyclerView recycler_view;
+    private String dataOne;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getSupportActionBar().setTitle("Home");
+        getSupportActionBar().setTitle("Dashboard");
 
         ImageView add=(ImageView)findViewById(R.id.btnADD);
         ImageView delivery=(ImageView)findViewById(R.id.btndelivery);
+        ImageView addservice=(ImageView)findViewById(R.id.btnADDItem);
+        ImageView additem=(ImageView)findViewById(R.id.btnaddproduct);
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -64,6 +82,27 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        addservice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent addscat=new Intent(MainActivity.this,AddService.class);
+                startActivity(addscat);
+
+            }
+        });
+        additem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent addscat=new Intent(MainActivity.this,AddProduct.class);
+                startActivity(addscat);
+
+            }
+        });
+
+        String Url = "http://demo.adityametals.com/api/dashboard.php" ;
+        new serverUpload().execute(Url);
     }
 
     @Override
@@ -153,5 +192,82 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .show();
+    }
+
+
+    private class serverUpload extends AsyncTask<String, Void, Boolean> {
+        ProgressDialog dialog;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(MainActivity.this);
+            dialog.setMessage("Loading in.., please wait");
+            dialog.setTitle("");
+            // dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_animation;
+            dialog.show();
+            dialog.setCancelable(false);
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            try {
+                //String url = params[0].replace(" ", "%20");
+                HttpGet httppost = new HttpGet(params[0]);
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpResponse response = httpclient.execute(httppost);
+
+
+                HttpEntity entity = response.getEntity();
+                dataOne = (EntityUtils.toString(entity));
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            dialog.dismiss();
+            try {
+               // String[] separated = dataOne.split("\\}\\{");
+               // String one = separated[0] + "}";
+                //String two = "{"+ separated[1] ;
+                //Log.d("success", one);
+                //maintain.clear();
+                JSONObject jsono = new JSONObject(dataOne);
+                String Cname = jsono.getString("open_status");
+                String CnameOne = jsono.getString("delivered_status");
+                String CnameTwo = jsono.getString("customer_count");
+                String CnameThree = jsono.getString("total_order");
+                TextView tone=(TextView)findViewById(R.id.TextViewID);
+                TextView ttwo=(TextView)findViewById(R.id.TextViewOne);
+                TextView tthree=(TextView)findViewById(R.id.TextViewTwo);
+                TextView tfour=(TextView)findViewById(R.id.TextViewThree);
+                tone.setText(Cname);
+                ttwo.setText(CnameOne);
+                tthree.setText(CnameTwo);
+                tfour.setText(CnameThree);
+
+              //  JSONArray jsonOneArrayOne = jsono.getJSONArray("details");
+              //  for (int i = 0; i < jsono.length(); i++) {
+                   // JSONObject jssOne = jsono.getJSONObject(i);
+                   // String Cname = jssOne.getString("customer_name");
+                   // Billno = jssOne.getString("order_id");
+                  //  String phones = jssOne.getString("customer_phone");
+                  //  String addresss = jssOne.getString("customer_address");
+                   // String amtt = jssOne.getString("total_amount");
+                   // String adamt = jssOne.getString("advance_amount");
+                   // bamt = jssOne.getString("balance_amount");
+                   // String qtyts = jssOne.getString("total_laundry");
+
+
+               // }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

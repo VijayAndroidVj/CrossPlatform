@@ -3,6 +3,7 @@
     package="com.example.chandru.laundry">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -31,7 +32,8 @@
             android:name=".Delivery"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".DeliveryActivity" />
-
+        <activity android:name=".AddService" />
+        <activity android:name=".AddProduct"></activity>
     </application>
 
 </manifest>
