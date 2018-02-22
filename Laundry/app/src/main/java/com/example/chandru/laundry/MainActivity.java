@@ -21,6 +21,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.chandru.laundry.Adapter.cutomerAdapter;
 import com.example.chandru.laundry.Adapter.deliveryAdapter;
@@ -59,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         ImageView delivery=(ImageView)findViewById(R.id.btndelivery);
         ImageView addservice=(ImageView)findViewById(R.id.btnADDItem);
         ImageView additem=(ImageView)findViewById(R.id.btnaddproduct);
+
+
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -122,9 +125,11 @@ public class MainActivity extends AppCompatActivity {
 //            count=(TextView)findViewById(R.id.textView);
 //            count.setText("Nothing is selected");
 //            return(true);
-//        case R.id.about:
-//            Toast.makeText(this, "test", Toast.LENGTH_LONG).show();
-//            return(true);
+        case R.id.about:
+           // Toast.makeText(this, "test", Toast.LENGTH_LONG).show();
+            showOptiontAlert(MainActivity.this, "Choose", "")
+            ;
+            return(true);
         case R.id.exit:
            // finish();
             showMeetingtAlert(MainActivity.this, "Logout", "Are you sure want to logout?")
@@ -166,6 +171,64 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
+
+            }
+        });
+        alertDialog.show();
+    }
+
+
+    public void showOptiontAlert(Activity activity, String title, String message) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(activity);
+        LayoutInflater inflater = activity.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.custome_option, null);
+        alertDialogBuilder.setView(dialogView);
+
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        final Button addservices = (Button) dialogView.findViewById(R.id.btnaddservice);
+        final Button additems = (Button) dialogView.findViewById(R.id.btnadditem);
+        Button addlocations = (Button) dialogView.findViewById(R.id.btnaddlocation);
+
+        TextView txtTitle = (TextView) dialogView.findViewById(R.id.dialog_title);
+        TextView txtMessage = (TextView) dialogView.findViewById(R.id.dialog_message);
+
+       // txtTitle.setText(title);
+       // txtMessage.setText(message);
+        addservices.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               alertDialog.dismiss();
+                Intent intent = new Intent(MainActivity.this, AddService.class);
+
+                startActivity(intent);
+//                PreferenceUtil preferenceUtil = new PreferenceUtil(MainActivity.this);
+//                preferenceUtil.logout();
+//                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                startActivity(intent);
+//                finish();
+            }
+        });
+        additems.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                Intent intent = new Intent(MainActivity.this, AddProduct.class);
+
+                startActivity(intent);
+
+            }
+        });
+
+        addlocations.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+
+                Intent intent = new Intent(MainActivity.this, AddProduct.class);
+
+                startActivity(intent);
 
             }
         });
