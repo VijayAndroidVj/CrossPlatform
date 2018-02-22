@@ -3,11 +3,8 @@ package com.example.chandru.laundry.Api;
 
 import com.example.chandru.laundry.Pojo.ServiceMain;
 import com.example.chandru.laundry.Pojo.addservice;
-import com.example.chandru.laundry.Pojo.cat;
 import com.example.chandru.laundry.Pojo.customer;
 import com.example.chandru.laundry.Pojo.login;
-
-import java.util.ArrayList;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -29,6 +26,9 @@ public interface ApiInterface {
 
     @GET("service.php")
     Call<ServiceMain> getService();
+
+    @GET("add_location.php?")
+    Call<customer> getlocation(@Query("location_name") String name, @Query("description") String address);
 
 
     @POST("/posts")

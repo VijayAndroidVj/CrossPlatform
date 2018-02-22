@@ -117,17 +117,26 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) { switch(item.getItemId()) {
-//        case R.id.add:
-//            count=(TextView)findViewById(R.id.textView);
-//            count.setText("Add is clicked");
-//            return(true);
-//        case R.id.reset:
-//            count=(TextView)findViewById(R.id.textView);
-//            count.setText("Nothing is selected");
-//            return(true);
+        case R.id.add:
+            Intent intent = new Intent(MainActivity.this, AddService.class);
+
+            startActivity(intent);
+           // count=(TextView)findViewById(R.id.textView);
+            //count.setText("Add is clicked");
+            return(true);
+        case R.id.reset:
+            Intent intents = new Intent(MainActivity.this, AddProduct.class);
+
+            startActivity(intents);
+           // count=(TextView)findViewById(R.id.textView);
+           // count.setText("Nothing is selected");
+            return(true);
         case R.id.about:
+            Intent intentd = new Intent(MainActivity.this, AddLocation.class);
+
+            startActivity(intentd);
            // Toast.makeText(this, "test", Toast.LENGTH_LONG).show();
-            showOptiontAlert(MainActivity.this, "Choose", "")
+           // showOptiontAlert(MainActivity.this, "Choose", "")
             ;
             return(true);
         case R.id.exit:
@@ -226,7 +235,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 alertDialog.dismiss();
 
-                Intent intent = new Intent(MainActivity.this, AddProduct.class);
+                Intent intent = new Intent(MainActivity.this, AddLocation.class);
 
                 startActivity(intent);
 

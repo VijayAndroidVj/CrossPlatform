@@ -15,8 +15,10 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -54,6 +56,12 @@ public class AddService extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_service);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Add Service");
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         image_view = (ImageView) findViewById(R.id.image_view);
         name = (EditText) findViewById(R.id.name);
         decription = (EditText) findViewById(R.id.description);
@@ -64,6 +72,17 @@ public class AddService extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
     public void choose(View view) {
         ArrayList<String> pendingPermissions = PermissionCheck.checkPermission(AddService.this, PermissionCheck.getAllPermissions());
