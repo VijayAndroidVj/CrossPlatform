@@ -453,7 +453,7 @@ public class AddProduct extends AppCompatActivity {
                     public void onFailure(Call<customer> call, Throwable t) {
                         // Log error here since request failed
                         closeProgress();
-                        Toast.makeText(AddProduct.this, "Failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddProduct.this, "Failed add laundry item..", Toast.LENGTH_SHORT).show();
                     }
                 });
 //        upload(file);

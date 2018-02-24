@@ -367,7 +367,7 @@ public class AddService extends AppCompatActivity {
                     public void onFailure(Call<customer> call, Throwable t) {
                         // Log error here since request failed
                         closeProgress();
-                        Toast.makeText(AddService.this, "Failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddService.this, "Failed to add service information..", Toast.LENGTH_SHORT).show();
                     }
                 });
 //        upload(file);

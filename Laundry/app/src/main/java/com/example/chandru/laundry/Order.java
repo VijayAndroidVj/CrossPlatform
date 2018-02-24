@@ -220,7 +220,7 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
     public void adddata(View view) {
 
         if(qty ==0 || unit  ==0.0 || mul ==0.0 ){
-            Toast.makeText(getApplicationContext(), "Please add item", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Please add Laundry item", Toast.LENGTH_SHORT).show();
 
         }else {
 

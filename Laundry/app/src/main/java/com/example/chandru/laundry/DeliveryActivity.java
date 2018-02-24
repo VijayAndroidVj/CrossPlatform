@@ -292,7 +292,7 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
                     finish();
                     findViewById(R.id.progress).setVisibility(View.GONE);
                 } else {
-                    Toast.makeText(DeliveryActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DeliveryActivity.this, "Could not Connect To the Server..", Toast.LENGTH_SHORT).show();
                 }
 
             } catch (JSONException e) {

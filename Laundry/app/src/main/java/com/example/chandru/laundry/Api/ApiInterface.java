@@ -27,6 +27,12 @@ public interface ApiInterface {
     @GET("service.php")
     Call<ServiceMain> getService();
 
+    @GET("location.php")
+    Call<ServiceMain> location();
+
+    @GET("customer_details.php")
+    Call<ServiceMain> customer_details();
+
     @GET("add_location.php?")
     Call<customer> getlocation(@Query("location_name") String name, @Query("description") String address);
 

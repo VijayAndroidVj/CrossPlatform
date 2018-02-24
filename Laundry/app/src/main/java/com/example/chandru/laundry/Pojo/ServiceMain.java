@@ -10,8 +10,30 @@ import java.util.ArrayList;
 
 public class ServiceMain {
 
+    @SerializedName("location")
+    private ArrayList<LocationModel> location;
+
+    @SerializedName("customer")
+    private ArrayList<CustomerModel> customer;
+
     @SerializedName("item")
     private ArrayList<cat> item;
+
+    public ArrayList<LocationModel> getLocation() {
+        return location;
+    }
+
+    public void setLocation(ArrayList<LocationModel> location) {
+        this.location = location;
+    }
+
+    public ArrayList<CustomerModel> getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(ArrayList<CustomerModel> customer) {
+        this.customer = customer;
+    }
 
     public ArrayList<cat> getItem() {
         return item;

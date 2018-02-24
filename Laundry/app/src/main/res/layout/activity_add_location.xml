@@ -17,12 +17,16 @@
         android:padding="10dp"
         android:layout_gravity="center"
         android:layout_height="wrap_content">
+
         <TextView
-            android:text="Location"
-            android:paddingLeft="10dp"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:text="Location"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
         <EditText
             android:id="@+id/location"
             android:layout_weight="1"
@@ -38,12 +42,15 @@
         android:padding="10dp"
         android:layout_gravity="center"
         android:layout_height="wrap_content">
+
         <TextView
-            android:text="Description :"
-            android:paddingLeft="10dp"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:text="Description :"
+            android:textColor="@color/black"
+            android:textSize="17sp" />
         <EditText
             android:id="@+id/description"
             android:layout_weight="1"
@@ -53,12 +60,14 @@
 
 
     <Button
-        android:textColor="@color/white"
-        android:background="@color/background_color"
-        android:text="Add Location"
-        android:onClick="addlocate"
-        android:layout_margin="20dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@color/background_color"
+        android:onClick="addlocate"
+        android:text="Add Location"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
 </LinearLayout>

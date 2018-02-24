@@ -32,7 +32,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingLeft="10dp"
-                    android:text="Name" />
+                    android:text="Name"
+                    android:textColor="@android:color/black"
+                    android:textSize="17sp" />
 
                 <EditText
                     android:id="@+id/name"
@@ -55,7 +57,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:paddingLeft="10dp"
-                    android:text="Description :" />
+                    android:text="Description :"
+                    android:textColor="@android:color/black"
+                    android:textSize="17sp" />
 
                 <EditText
                     android:id="@+id/description"
@@ -71,19 +75,22 @@
                 android:padding="10dp">
 
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="363dp"
                     android:layout_height="wrap_content"
                     android:background="#44B65C"
                     android:onClick="choose"
                     android:padding="5dp"
                     android:text="Choose Image"
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
                 <ImageView
                     android:id="@+id/image_view"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:layout_marginTop="10dp" />
+                    android:layout_marginTop="10dp"
+                    android:background="?attr/colorButtonNormal" />
 
 
             </LinearLayout>
@@ -95,7 +102,9 @@
                 android:layout_margin="20dp"
                 android:background="@color/background_color"
                 android:text="Add Service"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

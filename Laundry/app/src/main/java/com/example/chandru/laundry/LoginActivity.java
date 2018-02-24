@@ -133,7 +133,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
 
         }else if(getEmailId.equals("chan") && getPassword.equals("chan") ){
-            Toast.makeText(this, "Successfull loged in.", Toast.LENGTH_SHORT)
+            Toast.makeText(this, "Successfully loged in..", Toast.LENGTH_SHORT)
                     .show();
 
 
@@ -169,7 +169,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     }else{
                         loginLayout.startAnimation(shakeAnimation);
-                        Toast.makeText(LoginActivity.this, "Invalid username and password", Toast.LENGTH_SHORT)
+                        Toast.makeText(LoginActivity.this, "Invalid username and password! try again..", Toast.LENGTH_SHORT)
                           .show();
                     }
                 }

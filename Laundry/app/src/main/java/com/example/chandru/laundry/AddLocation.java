@@ -3,15 +3,24 @@ package com.example.chandru.laundry;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.chandru.laundry.Api.Api;
 import com.example.chandru.laundry.Api.ApiInterface;
+import com.example.chandru.laundry.Pojo.LocationModel;
+import com.example.chandru.laundry.Pojo.ServiceMain;
 import com.example.chandru.laundry.Pojo.customer;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -20,6 +29,7 @@ import retrofit2.Response;
 public class AddLocation extends AppCompatActivity {
 
     private EditText location, description;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +43,10 @@ public class AddLocation extends AppCompatActivity {
 
         location = (EditText) findViewById(R.id.location);
         description = (EditText) findViewById(R.id.description);
+
+
     }
+
 
 
     @Override
@@ -49,7 +62,15 @@ public class AddLocation extends AppCompatActivity {
     public void addlocate(View view) {
 
         String loca = location.getText().toString();
-        String dest = location.getText().toString();
+        String dest = description.getText().toString();
+        if (TextUtils.isEmpty(loca)) {
+            location.setError("Enter Location.");
+            return;
+        }
+        if (TextUtils.isEmpty(dest)) {
+            description.setError("Enter Description.");
+            return;
+        }
 
         ApiInterface apiService =
                 Api.getClient().create(ApiInterface.class);
@@ -73,7 +94,7 @@ public class AddLocation extends AppCompatActivity {
                     //startActivity(myIntent, options.toBundle());
                 } else {
                     // loginLayout.startAnimation(shakeAnimation);
-                    Toast.makeText(AddLocation.this, "Insert error", Toast.LENGTH_SHORT)
+                    Toast.makeText(AddLocation.this, "Error while adding location..", Toast.LENGTH_SHORT)
                             .show();
                 }
             }
