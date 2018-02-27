@@ -27,9 +27,9 @@
                 android:id="@+id/img"
                 android:layout_width="100dp"
                 android:layout_height="60dp"
-                android:tint="@color/colorPrimaryDark"
+                android:padding="10dp"
                 android:src="@drawable/logo"
-                android:padding="10dp" />
+                android:tint="@color/colorPrimaryDark" />
 
             <TextView
                 android:id="@+id/tvTwo"

@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.example.chandru.laundry.Adapter.deliverylistAdapter;
 import com.example.chandru.laundry.Listener.AdapterListener;
@@ -30,7 +31,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Delivery extends AppCompatActivity implements View.OnClickListener,AdapterListener {
+public class Delivery extends AppCompatActivity implements View.OnClickListener, AdapterListener {
 
     private List<deliverylist> maintain = new ArrayList<>();
     private deliverylistAdapter bAdapter;
@@ -48,8 +49,14 @@ public class Delivery extends AppCompatActivity implements View.OnClickListener,
             window.setStatusBarColor(this.getResources().getColor(R.color.background_color));
         }
 
-        String Url = "http://demo.adityametals.com/api/order_list.php";
-        new serverUpload().execute(Url);
+        if (CommonUtil.isNetworkAvailable(Delivery.this)) {
+            String Url = "http://demo.adityametals.com/api/order_list.php";
+            new serverUpload().execute(Url);
+        } else {
+            Toast.makeText(Delivery.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
     @Override
@@ -61,10 +68,10 @@ public class Delivery extends AppCompatActivity implements View.OnClickListener,
     public void adapterActionListener(int state, Object data) {
         if (state == deliverylistAdapter.LIST_TAG && data != null) {
             int pois = (int) data;
-           // String Url = "http://demo.adityametals.com/api/items.php?service_id="+maintain.get(pois).getId();
-           // new Order.update().execute(Url);
+            // String Url = "http://demo.adityametals.com/api/items.php?service_id="+maintain.get(pois).getId();
+            // new Order.update().execute(Url);
 
-            Intent detail =new Intent(this,DeliveryActivity.class);
+            Intent detail = new Intent(this, DeliveryActivity.class);
             detail.putExtra("message", maintain.get(pois).getOrder_id());
             startActivity(detail);
         }
@@ -147,9 +154,12 @@ public class Delivery extends AppCompatActivity implements View.OnClickListener,
                 recycler_view = (RecyclerView) findViewById(R.id.recycler_view);
                 LinearLayoutManager lmanager = new LinearLayoutManager(Delivery.this);
                 recycler_view.setLayoutManager(lmanager);
-                bAdapter = new deliverylistAdapter(maintain,Delivery.this,Delivery.this);
+                bAdapter = new deliverylistAdapter(maintain, Delivery.this, Delivery.this);
                 recycler_view.setAdapter(bAdapter);
                 bAdapter.notifyDataSetChanged();
+                if (maintain.size() == 0) {
+                    Toast.makeText(Delivery.this, "No list available", Toast.LENGTH_SHORT).show();
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }

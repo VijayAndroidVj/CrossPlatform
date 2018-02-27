@@ -3,15 +3,17 @@ package com.example.chandru.laundry;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,8 +26,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.chandru.laundry.Adapter.cutomerAdapter;
-import com.example.chandru.laundry.Adapter.deliveryAdapter;
-import com.example.chandru.laundry.Pojo.delivery;
 import com.example.chandru.laundry.Pojo.landingcutomer;
 
 import org.apache.http.HttpEntity;
@@ -34,7 +34,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,18 +47,28 @@ public class MainActivity extends AppCompatActivity {
     private cutomerAdapter cAdapter;
     private RecyclerView recycler_view;
     private String dataOne;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         getSupportActionBar().setTitle("Dashboard");
 
-        ImageView add=(ImageView)findViewById(R.id.btnADD);
-        ImageView delivery=(ImageView)findViewById(R.id.btndelivery);
-        ImageView addservice=(ImageView)findViewById(R.id.btnADDItem);
-        ImageView additem=(ImageView)findViewById(R.id.btnaddproduct);
+        ImageView add = (ImageView) findViewById(R.id.btnADD);
+        ImageView delivery = (ImageView) findViewById(R.id.btndelivery);
+        ImageView addservice = (ImageView) findViewById(R.id.btnADDItem);
+        ImageView additem = (ImageView) findViewById(R.id.btnaddproduct);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
 
         Window window = this.getWindow();
@@ -72,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent addscat=new Intent(MainActivity.this,AddCustomer.class);
+                Intent addscat = new Intent(MainActivity.this, AddCustomer.class);
                 startActivity(addscat);
             }
         });
@@ -80,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent addscat=new Intent(MainActivity.this,Delivery.class);
+                Intent addscat = new Intent(MainActivity.this, Delivery.class);
                 startActivity(addscat);
 
             }
@@ -89,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent addscat=new Intent(MainActivity.this,AddService.class);
+                Intent addscat = new Intent(MainActivity.this, AddService.class);
                 startActivity(addscat);
 
             }
@@ -98,14 +107,42 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent addscat=new Intent(MainActivity.this,AddProduct.class);
+                Intent addscat = new Intent(MainActivity.this, AddProduct.class);
                 startActivity(addscat);
 
             }
         });
 
-        String Url = "http://demo.adityametals.com/api/dashboard.php" ;
-        new serverUpload().execute(Url);
+        if (CommonUtil.isNetworkAvailable(MainActivity.this)) {
+            String Url = "http://demo.adityametals.com/api/dashboard.php";
+            new serverUpload().execute(Url);
+        } else {
+            Toast.makeText(MainActivity.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
+        }
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Refresh items
+                if (CommonUtil.isNetworkAvailable(MainActivity.this)) {
+                    String Url = "http://demo.adityametals.com/api/dashboard.php";
+                    new serverUpload().execute(Url);
+                } else {
+                    hideRefresh();
+                    Toast.makeText(MainActivity.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
+
+    public void hideRefresh() {
+        try {
+            if (swipeRefreshLayout != null)
+                swipeRefreshLayout.setRefreshing(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -116,36 +153,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) { switch(item.getItemId()) {
-        case R.id.add:
-            Intent intent = new Intent(MainActivity.this, AddService.class);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add:
+                Intent intent = new Intent(MainActivity.this, AddService.class);
 
-            startActivity(intent);
-           // count=(TextView)findViewById(R.id.textView);
-            //count.setText("Add is clicked");
-            return(true);
-        case R.id.reset:
-            Intent intents = new Intent(MainActivity.this, AddProduct.class);
+                startActivity(intent);
+                // count=(TextView)findViewById(R.id.textView);
+                //count.setText("Add is clicked");
+                return (true);
+            case R.id.reset:
+                Intent intents = new Intent(MainActivity.this, AddProduct.class);
 
-            startActivity(intents);
-           // count=(TextView)findViewById(R.id.textView);
-           // count.setText("Nothing is selected");
-            return(true);
-        case R.id.about:
-            Intent intentd = new Intent(MainActivity.this, AddLocation.class);
+                startActivity(intents);
+                // count=(TextView)findViewById(R.id.textView);
+                // count.setText("Nothing is selected");
+                return (true);
+            case R.id.about:
+                Intent intentd = new Intent(MainActivity.this, AddLocation.class);
 
-            startActivity(intentd);
-           // Toast.makeText(this, "test", Toast.LENGTH_LONG).show();
-           // showOptiontAlert(MainActivity.this, "Choose", "")
-            ;
-            return(true);
-        case R.id.exit:
-           // finish();
-            showMeetingtAlert(MainActivity.this, "Logout", "Are you sure want to logout?")
-;            return(true);
+                startActivity(intentd);
+                // Toast.makeText(this, "test", Toast.LENGTH_LONG).show();
+                // showOptiontAlert(MainActivity.this, "Choose", "")
+                ;
+                return (true);
+            case R.id.exit:
+                // finish();
+                showMeetingtAlert(MainActivity.this, "Logout", "Are you sure want to logout?")
+                ;
+                return (true);
 
-    }
-        return(super.onOptionsItemSelected(item));
+        }
+        return (super.onOptionsItemSelected(item));
     }
 
 
@@ -176,7 +215,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        }); dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
+        });
+        dialogButtonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 alertDialog.dismiss();
@@ -202,12 +242,12 @@ public class MainActivity extends AppCompatActivity {
         TextView txtTitle = (TextView) dialogView.findViewById(R.id.dialog_title);
         TextView txtMessage = (TextView) dialogView.findViewById(R.id.dialog_message);
 
-       // txtTitle.setText(title);
-       // txtMessage.setText(message);
+        // txtTitle.setText(title);
+        // txtMessage.setText(message);
         addservices.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               alertDialog.dismiss();
+                alertDialog.dismiss();
                 Intent intent = new Intent(MainActivity.this, AddService.class);
 
                 startActivity(intent);
@@ -250,7 +290,7 @@ public class MainActivity extends AppCompatActivity {
         builder
 
                 .setMessage("Are you sure?")
-                .setPositiveButton("Yes",  new DialogInterface.OnClickListener() {
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         // Yes-code
@@ -259,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog,int id) {
+                    public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }
                 })
@@ -269,15 +309,24 @@ public class MainActivity extends AppCompatActivity {
 
     private class serverUpload extends AsyncTask<String, Void, Boolean> {
         ProgressDialog dialog;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new ProgressDialog(MainActivity.this);
-            dialog.setMessage("Loading in.., please wait");
-            dialog.setTitle("");
-            // dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_animation;
-            dialog.show();
-            dialog.setCancelable(false);
+            try {
+
+
+                dialog = new ProgressDialog(MainActivity.this);
+                dialog.setMessage("Loading in.., please wait");
+                dialog.setTitle("");
+                // dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_animation;
+                dialog.show();
+                dialog.setCancelable(false);
+            } catch (Exception c) {
+                Toast.makeText(MainActivity.this, "Network Error ,  try again..", Toast.LENGTH_SHORT)
+                        .show();
+            }
+
         }
 
         @Override
@@ -295,6 +344,7 @@ public class MainActivity extends AppCompatActivity {
 
             } catch (IOException e) {
                 e.printStackTrace();
+
             }
             return false;
         }
@@ -302,9 +352,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             dialog.dismiss();
+            hideRefresh();
             try {
-               // String[] separated = dataOne.split("\\}\\{");
-               // String one = separated[0] + "}";
+                // String[] separated = dataOne.split("\\}\\{");
+                // String one = separated[0] + "}";
                 //String two = "{"+ separated[1] ;
                 //Log.d("success", one);
                 //maintain.clear();
@@ -313,29 +364,29 @@ public class MainActivity extends AppCompatActivity {
                 String CnameOne = jsono.getString("delivered_status");
                 String CnameTwo = jsono.getString("customer_count");
                 String CnameThree = jsono.getString("total_order");
-                TextView tone=(TextView)findViewById(R.id.TextViewID);
-                TextView ttwo=(TextView)findViewById(R.id.TextViewOne);
-                TextView tthree=(TextView)findViewById(R.id.TextViewTwo);
-                TextView tfour=(TextView)findViewById(R.id.TextViewThree);
+                TextView tone = (TextView) findViewById(R.id.TextViewID);
+                TextView ttwo = (TextView) findViewById(R.id.TextViewOne);
+                TextView tthree = (TextView) findViewById(R.id.TextViewTwo);
+                TextView tfour = (TextView) findViewById(R.id.TextViewThree);
                 tone.setText(Cname);
                 ttwo.setText(CnameOne);
                 tthree.setText(CnameTwo);
                 tfour.setText(CnameThree);
 
-              //  JSONArray jsonOneArrayOne = jsono.getJSONArray("details");
-              //  for (int i = 0; i < jsono.length(); i++) {
-                   // JSONObject jssOne = jsono.getJSONObject(i);
-                   // String Cname = jssOne.getString("customer_name");
-                   // Billno = jssOne.getString("order_id");
-                  //  String phones = jssOne.getString("customer_phone");
-                  //  String addresss = jssOne.getString("customer_address");
-                   // String amtt = jssOne.getString("total_amount");
-                   // String adamt = jssOne.getString("advance_amount");
-                   // bamt = jssOne.getString("balance_amount");
-                   // String qtyts = jssOne.getString("total_laundry");
+                //  JSONArray jsonOneArrayOne = jsono.getJSONArray("details");
+                //  for (int i = 0; i < jsono.length(); i++) {
+                // JSONObject jssOne = jsono.getJSONObject(i);
+                // String Cname = jssOne.getString("customer_name");
+                // Billno = jssOne.getString("order_id");
+                //  String phones = jssOne.getString("customer_phone");
+                //  String addresss = jssOne.getString("customer_address");
+                // String amtt = jssOne.getString("total_amount");
+                // String adamt = jssOne.getString("advance_amount");
+                // bamt = jssOne.getString("balance_amount");
+                // String qtyts = jssOne.getString("total_laundry");
 
 
-               // }
+                // }
 
             } catch (JSONException e) {
                 e.printStackTrace();

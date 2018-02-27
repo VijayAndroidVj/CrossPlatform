@@ -26,7 +26,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".LoginActivity"
+	      android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".AddCustomer"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
