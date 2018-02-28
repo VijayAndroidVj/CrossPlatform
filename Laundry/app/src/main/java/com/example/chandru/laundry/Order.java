@@ -61,9 +61,9 @@ import java.util.Locale;
 
 public class Order extends AppCompatActivity implements View.OnClickListener, AdapterListener {
 
-    private static EditText edittext, editdate, edittextOne, fullName, mobileNumber, location;
+    private static EditText edittext, editdate, edittextOne,  fullName, mobileNumber, location;
     private static Button signUpBtn;
-    private static TextView forgotPassword, signUp, itemname, edittextTwo;
+    private static TextView forgotPassword, signUp, itemname,edittextTwo;
     private static CheckBox show_hide_password;
     private static LinearLayout loginLayout;
     private static Animation shakeAnimation;
@@ -125,18 +125,13 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
 
             }
         });
-        if (CommonUtil.isNetworkAvailable(Order.this)) {
-            String Url = "http://demo.adityametals.com/api/service.php";
-            new serverUpload().execute(Url);
-            getDateTime();
+        String Url = "http://demo.adityametals.com/api/service.php";
+        new serverUpload().execute(Url);
+        getDateTime();
 
-//            String Urlss = "http://demo.adityametals.com/api/items.php?service_id=5";
-//            new update().execute(Urlss);
-            new getBillNo().execute("http://demo.adityametals.com/api/bill_no.php?");
-        } else {
-            Toast.makeText(Order.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
-        }
-
+        String Urlss = "http://demo.adityametals.com/api/items.php?service_id=5";
+        new update().execute(Urlss);
+        new getBillNo().execute("http://demo.adityametals.com/api/bill_no.php?");
 
     }
 
@@ -206,11 +201,9 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
     }
 
     public void decreaseInteger(View view) {
-        if (minteger > 1) {
-            minteger = minteger - 1;
-            qty = minteger;
-            display(minteger);
-        }
+        minteger = minteger - 1;
+        qty = minteger;
+        display(minteger);
     }
 
     private void display(int number) {
@@ -226,11 +219,11 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
 
     public void adddata(View view) {
 
-        if (qty == 0 || unit == 0.0 || mul == 0.0) {
+        if(qty ==0 || unit  ==0.0 || mul ==0.0 ){
             Toast.makeText(getApplicationContext(), "Please add Laundry item", Toast.LENGTH_SHORT).show();
 
-        } else {
-            minteger = 0;
+        }else {
+
             bill dboard = new bill();
             dboard.setServiceId(serviceId);
             dboard.setItemid(Itemid);
@@ -278,7 +271,7 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
 
     }
 
-    TextWatcher watch = new TextWatcher() {
+    TextWatcher watch = new TextWatcher(){
 
         @Override
         public void afterTextChanged(Editable arg0) {
@@ -296,29 +289,31 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
         @Override
         public void onTextChanged(CharSequence s, int a, int b, int c) {
             // TODO Auto-generated method stub
-            s = s.toString();
+s=s.toString();
 
-            if (s.equals("")) {
+if(s.equals("")){
 
-            } else {
-                float f1 = Float.parseFloat((String) s);
-                int cba = 0;
-                for (int i = 0; i < billist.size(); i++) {
+}else {
+    float f1 = Float.parseFloat((String) s);
+    int cba = 0;
+    for (int i = 0; i < billist.size(); i++) {
 
-                    cba = cba + (int) Float.parseFloat(billist.get(i).getAmt());
+        cba = cba + (int) Float.parseFloat(billist.get(i).getAmt());
 
-                }
-                f1 = cba - f1;
-                edittextTwo.setText("" + ((int) f1));
-                if (f1 < 0) {
-                    Toast.makeText(getApplicationContext(), "Maximum Limit Reached", Toast.LENGTH_SHORT).show();
-                }
+    }
+    f1=cba-f1;
+    edittextTwo.setText(""+((int)f1));
+    if(f1<0){
+        Toast.makeText(getApplicationContext(), "Maximum Limit Reached", Toast.LENGTH_SHORT).show();
+    }
 
-            }
+}
 
 
-        }
-    };
+
+
+
+        }};
 
     public void next(View view) {
         // final String json =formatDataAsJSON();
@@ -408,11 +403,7 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
                 lAdapter = new catAdapter(maintain, Order.this, Order.this);
                 recycler_view.setAdapter(lAdapter);
                 lAdapter.notifyDataSetChanged();
-
-
-                String Url = "http://demo.adityametals.com/api/items.php?service_id=" + maintain.get(0).getId();
-                new update().execute(Url);
-            } catch (Exception e) {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
