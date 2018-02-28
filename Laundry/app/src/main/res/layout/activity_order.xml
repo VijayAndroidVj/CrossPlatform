@@ -383,7 +383,7 @@
                         android:textAlignment="textEnd"
                         android:textAllCaps="true"
                         android:textColor="@android:color/holo_red_dark"
-                        android:textSize="16dp"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -396,7 +396,7 @@
                         android:textAlignment="textEnd"
                         android:textAllCaps="true"
                         android:textColor="@android:color/holo_red_dark"
-                        android:textSize="16dp"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
 
 

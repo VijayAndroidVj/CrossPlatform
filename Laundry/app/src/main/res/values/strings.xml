@@ -5,6 +5,7 @@
     <string name="email">Username</string>
     <string name="passowrd">Password</string>
     <string name="login">LOGIN</string>
+    <string name="Rs">\u20B9</string>
     <string name="show_pwd">Show Password</string>
     <string name="hide_pwd">Hide Password</string>
     <string name="forgot">Forgot password?</string>

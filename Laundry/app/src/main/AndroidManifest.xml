@@ -26,8 +26,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".LoginActivity"
-	      android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".AddCustomer"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
@@ -46,7 +47,11 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".AddLocation"
-            android:windowSoftInputMode="adjustPan"></activity>
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".Setting" />
+        <activity android:name=".ViewService" />
+        <activity android:name=".ViewLocation" />
+        <activity android:name=".ViewItems" />
     </application>
 
 </manifest>
