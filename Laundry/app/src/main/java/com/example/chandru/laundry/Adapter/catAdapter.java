@@ -53,15 +53,15 @@ public class catAdapter extends RecyclerView.Adapter<catAdapter.MyViewHolderone>
 
         if (selectedPosition == position) {
             holder.tvTwo.setTextColor(Color.parseColor("#FFFFFF"));
-            holder.linCat.setBackgroundColor(Color.parseColor("#1578CB"));
-            //  holder.catite.setBackgroundColor(Color.parseColor("#009688"));
+            holder.catlayout.setBackgroundColor(Color.parseColor("#1578CB"));
+            //  holder.linCat.setBackgroundColor(Color.parseColor("#009688"));
         } else {
             holder.tvTwo.setTextColor(Color.parseColor("#000000"));
-            holder.linCat.setBackgroundColor(Color.parseColor("#ffffff"));
-            // holder.catite.setBackgroundColor(Color.parseColor("#ffffff"));
+            holder.catlayout.setBackgroundColor(Color.parseColor("#ffffff"));
+            // holder.linCat.setBackgroundColor(Color.parseColor("#ffffff"));
         }
 
-        holder.catite.setOnClickListener(new View.OnClickListener() {
+        holder.linCat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //selectedPosition=tpos;
@@ -70,7 +70,7 @@ public class catAdapter extends RecyclerView.Adapter<catAdapter.MyViewHolderone>
             }
         });
 
-        holder.linCat.setTag(position);
+        holder.catlayout.setTag(position);
 
         //  holder.btnAccept.setTag(position);
 
@@ -85,17 +85,17 @@ public class catAdapter extends RecyclerView.Adapter<catAdapter.MyViewHolderone>
     public class MyViewHolderone extends RecyclerView.ViewHolder {
         private TextView tvTwo;
         private ImageView img;
-        private LinearLayout linCat, catite;
+        private LinearLayout catlayout, linCat;
 
         public MyViewHolderone(View view) {
             super(view);
 
             tvTwo = (TextView) view.findViewById(R.id.tvTwo);
             img = (ImageView) view.findViewById(R.id.img);
-            linCat = (LinearLayout) view.findViewById(R.id.catlayout);
-            catite = (LinearLayout) view.findViewById(R.id.linCat);
+            catlayout = (LinearLayout) view.findViewById(R.id.catlayout);
+            linCat = (LinearLayout) view.findViewById(R.id.linCat);
 
-            linCat.setOnClickListener(new View.OnClickListener() {
+            catlayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int pos = (int) view.getTag();

@@ -3,27 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white_greyish"
+    android:orientation="vertical"
     tools:context="com.example.chandru.laundry.Order">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:minHeight="?attr/actionBarSize"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
         android:backgroundTint="@color/background_color"
-        android:background="?attr/colorPrimary">
+        android:minHeight="?attr/actionBarSize">
 
         <TextView
             android:id="@+id/toolbar_title"
+            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Order Entry"
-            android:textColor="@android:color/white"
-            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
             android:layout_gravity="center"
-            />
+            android:text="Order Entry"
+            android:textColor="@android:color/white" />
 
     </android.support.v7.widget.Toolbar>
 
@@ -440,7 +439,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:hint="Advance" />
+                            android:hint="Advance"
+                            android:inputType="number" />
 
                         <TextView
                             android:id="@+id/editText2"
@@ -504,6 +504,4 @@
     </ScrollView>
 
 
-
-
-    </LinearLayout>
+</LinearLayout>

@@ -1,6 +1,5 @@
 package com.example.chandru.laundry;
 
-import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -40,7 +39,7 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
     private List<delivery> maintain = new ArrayList<>();
     private deliveryAdapter bAdapter;
     private RecyclerView recycler_view;
-    private String dataOne,dataTwos,Billno,bamt;
+    private String dataOne, dataTwos, Billno, bamt;
     private TextView cname, bill, phone, address, qty, amt, advance, balance;
 
     @Override
@@ -56,6 +55,12 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
         amt = (TextView) findViewById(R.id.amt);
         advance = (TextView) findViewById(R.id.advance);
         balance = (TextView) findViewById(R.id.balance);
+        findViewById(R.id.cancelbtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         findViewById(R.id.btnDelivery).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,12 +69,12 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
                     @Override
                     public void run() {
 
-                        EditText re=(EditText)findViewById(R.id.receive) ;
-                        EditText remar=(EditText)findViewById(R.id.remark) ;
-                        String receive=re.getText().toString();
-                        String remark=remar.getText().toString();
+                        EditText re = (EditText) findViewById(R.id.receive);
+                        EditText remar = (EditText) findViewById(R.id.remark);
+                        String receive = re.getText().toString();
+                        String remark = remar.getText().toString();
                         //http://demo.adityametals.com/api/update_delivery.php?bill="+Billno+"&paid="+bamt+"&summary="+remark+"&recieve="+receive
-                        String Url = "http://demo.adityametals.com/api/update_delivery.php?bill="+Billno+"&paid="+bamt+"&summary="+remark+"&recieve="+receive;
+                        String Url = "http://demo.adityametals.com/api/update_delivery.php?bill=" + Billno + "&paid=" + bamt + "&summary=" + remark + "&recieve=" + receive;
                         new customerentry().execute(Url);
 
 //                        Toast.makeText(DeliveryActivity.this, "Delivered successfully", Toast.LENGTH_SHORT).show();
@@ -108,6 +113,7 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
 
     private class serverUpload extends AsyncTask<String, Void, Boolean> {
         ProgressDialog dialog;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -144,7 +150,7 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
             try {
                 String[] separated = dataOne.split("\\}\\{");
                 String one = separated[0] + "}";
-                String two = "{"+ separated[1] ;
+                String two = "{" + separated[1];
                 Log.d("success", one);
                 maintain.clear();
                 JSONObject jsono = new JSONObject(one);
@@ -153,12 +159,12 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
                     JSONObject jssOne = jsonOneArrayOne.getJSONObject(i);
 //cname,bill,phone,address,qty,amt,advance,balance
                     String Cname = jssOne.getString("customer_name");
-                     Billno = jssOne.getString("order_id");
+                    Billno = jssOne.getString("order_id");
                     String phones = jssOne.getString("customer_phone");
                     String addresss = jssOne.getString("customer_address");
                     String amtt = jssOne.getString("total_amount");
                     String adamt = jssOne.getString("advance_amount");
-                     bamt = jssOne.getString("balance_amount");
+                    bamt = jssOne.getString("balance_amount");
                     String qtyts = jssOne.getString("total_laundry");
 
                     cname.setText(Cname);
@@ -231,14 +237,13 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-
     public void next(View view) {
-        EditText re=(EditText)findViewById(R.id.receive) ;
-        EditText remar=(EditText)findViewById(R.id.remark) ;
-        String receive=re.getText().toString();
-        String remark=remar.getText().toString();
+        EditText re = (EditText) findViewById(R.id.receive);
+        EditText remar = (EditText) findViewById(R.id.remark);
+        String receive = re.getText().toString();
+        String remark = remar.getText().toString();
         //http://demo.adityametals.com/api/update_delivery.php?bill="+Billno+"&paid="+bamt+"&summary="+remark+"&recieve="+receive
-        String Url = "http://demo.adityametals.com/api/update_delivery.php?bill="+Billno+"&paid="+bamt+"&summary="+remark+"&recieve="+receive;
+        String Url = "http://demo.adityametals.com/api/update_delivery.php?bill=" + Billno + "&paid=" + bamt + "&summary=" + remark + "&recieve=" + receive;
         new customerentry().execute(Url);
     }
 
@@ -279,11 +284,11 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
                 String msg = jsono.getString("error");
 
                 if (msg.equals("false")) {
-                  //   Toast.makeText(DeliveryActivity.this, "Successfully updated", Toast.LENGTH_SHORT).show();
-                  //  Intent myIntent = new Intent(DeliveryActivity.this, MainActivity.class);
-                  //  ActivityOptions options =
-                   //      ActivityOptions.makeCustomAnimation(DeliveryActivity.this, R.anim.left_enter, R.anim.left_out);
-                   // startActivity(myIntent, options.toBundle());
+                    //   Toast.makeText(DeliveryActivity.this, "Successfully updated", Toast.LENGTH_SHORT).show();
+                    //  Intent myIntent = new Intent(DeliveryActivity.this, MainActivity.class);
+                    //  ActivityOptions options =
+                    //      ActivityOptions.makeCustomAnimation(DeliveryActivity.this, R.anim.left_enter, R.anim.left_out);
+                    // startActivity(myIntent, options.toBundle());
 
                     Toast.makeText(DeliveryActivity.this, "Delivered successfully", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(DeliveryActivity.this, MainActivity.class);

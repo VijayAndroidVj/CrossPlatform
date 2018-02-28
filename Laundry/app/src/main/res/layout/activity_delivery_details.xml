@@ -4,8 +4,8 @@
     android:id="@+id/activity_delivery_details"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white_greyish"
+    android:orientation="vertical"
     tools:context="com.example.chandru.laundry.DeliveryActivity">
 
     <ScrollView
@@ -448,6 +448,7 @@
 
 
                     <LinearLayout
+
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
@@ -456,7 +457,7 @@
                         android:weightSum="2">
 
                         <Button
-
+                            android:id="@+id/cancelbtn"
                             android:layout_width="match_parent"
                             android:layout_height="38dp"
                             android:background="@color/background_color"

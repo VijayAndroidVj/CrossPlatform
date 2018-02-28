@@ -21,19 +21,21 @@ public class item {
     @SerializedName("service")
     private String service;
 
-    public item(){
+    @SerializedName("icon_image")
+    private String icon_image;
+
+    public item() {
 
     }
 
 
-    public item(String id, String laundry_item,String laundry_price, String laundry_quantity, String laundry_id, String service) {
+    public item(String id, String laundry_item, String laundry_price, String laundry_quantity, String laundry_id, String service) {
         this.id = id;
         this.laundry_item = laundry_item;
         this.laundry_price = laundry_price;
         this.laundry_quantity = laundry_quantity;
         this.laundry_id = laundry_id;
         this.service = service;
-
 
 
     }
@@ -68,6 +70,14 @@ public class item {
 
     public void setLaundry_quantity(String laundry_quantity) {
         this.laundry_quantity = laundry_quantity;
+    }
+
+    public String getIcon_image() {
+        return icon_image;
+    }
+
+    public void setIcon_image(String icon_image) {
+        this.icon_image = icon_image;
     }
 
     public String getLaundry_id() {

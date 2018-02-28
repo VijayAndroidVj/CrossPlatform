@@ -278,6 +278,8 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
 
     }
 
+    boolean dontallowChange = false;
+
     TextWatcher watch = new TextWatcher() {
 
         @Override
@@ -299,19 +301,27 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
             s = s.toString();
 
             if (s.equals("")) {
-
-            } else {
-                float f1 = Float.parseFloat((String) s);
-                int cba = 0;
                 for (int i = 0; i < billist.size(); i++) {
-
-                    cba = cba + (int) Float.parseFloat(billist.get(i).getAmt());
-
+                    int total = (int) Float.parseFloat(billist.get(i).getAmt());
+                    edittextTwo.setText("" + total);
                 }
-                f1 = cba - f1;
-                edittextTwo.setText("" + ((int) f1));
-                if (f1 < 0) {
-                    Toast.makeText(getApplicationContext(), "Maximum Limit Reached", Toast.LENGTH_SHORT).show();
+            } else {
+                if (!dontallowChange) {
+                    float f1 = Float.parseFloat((String) s);
+                    int cba = 0;
+                    for (int i = 0; i < billist.size(); i++) {
+                        cba = cba + (int) Float.parseFloat(billist.get(i).getAmt());
+                    }
+                    f1 = cba - f1;
+                    if (f1 < 0) {
+                        dontallowChange = true;
+                        edittextOne.setText(s.toString().substring(0, s.toString().length() - 1));
+                        edittextOne.setSelection(edittextOne.getText().toString().length());
+                        dontallowChange = false;
+                        Toast.makeText(getApplicationContext(), "Maximum Limit Reached", Toast.LENGTH_SHORT).show();
+                    } else {
+                        edittextTwo.setText("" + ((int) f1));
+                    }
                 }
 
             }
@@ -580,6 +590,7 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
                     dboards.setLaundry_price(jss.getString("laundry_price"));
                     dboards.setLaundry_quantity(jss.getString("laundry_quantity"));
                     dboards.setService(jss.getString("service"));
+                    dboards.setIcon_image(jss.getString("icon_image"));
                     maintainlist.add(dboards);
                 }
                 recycler_view = (RecyclerView) findViewById(R.id.recycler_view_two);
