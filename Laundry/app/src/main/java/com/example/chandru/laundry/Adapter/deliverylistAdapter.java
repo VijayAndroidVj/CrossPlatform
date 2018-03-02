@@ -47,6 +47,13 @@ public class deliverylistAdapter extends RecyclerView.Adapter<deliverylistAdapte
         holder.tvFour.setText(dboard.getTotal_laundry());
         holder.tvFive.setText(dboard.getCustomer_phone());
         holder.tvSix.setText(dboard.getTotal_amount());
+        holder.tvSeven.setText(dboard.getDelivery_status());
+
+        if(dboard.getDelivery_status().equals("Open")){
+            holder.tvSeven.setBackgroundColor(Color.parseColor("#35D15B"));
+        }else {
+            holder.tvSeven.setBackgroundColor(Color.parseColor("#DE4F4F"));
+        }
 
 
 
@@ -80,7 +87,7 @@ public class deliverylistAdapter extends RecyclerView.Adapter<deliverylistAdapte
     }
 
     public class MyViewHolderone extends RecyclerView.ViewHolder {
-        private TextView tvTwo,tvThree,tvFour,tvFive,tvSix,btnAccept;
+        private TextView tvTwo,tvThree,tvFour,tvFive,tvSix,tvSeven,btnAccept;
 
         private LinearLayout linCat;
         public MyViewHolderone(View view) {
@@ -91,6 +98,7 @@ public class deliverylistAdapter extends RecyclerView.Adapter<deliverylistAdapte
             tvFour = (TextView)view.findViewById(R.id.tvFour);
             tvFive = (TextView)view.findViewById(R.id.tvFive);
             tvSix = (TextView)view.findViewById(R.id.tvSix);
+            tvSeven = (TextView)view.findViewById(R.id.tvSeven);
             btnAccept=(TextView)view.findViewById(R.id.btnAccept);
 
 

@@ -40,7 +40,7 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
     private deliveryAdapter bAdapter;
     private RecyclerView recycler_view;
     private String dataOne, dataTwos, Billno, bamt;
-    private TextView cname, bill, phone, address, qty, amt, advance, balance;
+    private TextView cname, bill, phone, address, qty, amt, advance, balance,pickup,delivery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +55,8 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
         amt = (TextView) findViewById(R.id.amt);
         advance = (TextView) findViewById(R.id.advance);
         balance = (TextView) findViewById(R.id.balance);
+        pickup = (TextView) findViewById(R.id.pick);
+        delivery = (TextView) findViewById(R.id.delivery);
         findViewById(R.id.cancelbtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -171,6 +173,8 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
                     String adamt = jssOne.getString("advance_amount");
                     bamt = jssOne.getString("balance_amount");
                     String qtyts = jssOne.getString("total_laundry");
+                    String pickupss = jssOne.getString("order_date");
+                    String deliveryss = jssOne.getString("delivery_date");
 
                     cname.setText(Cname);
                     bill.setText(Billno);
@@ -180,6 +184,8 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
                     amt.setText(amtt);
                     advance.setText(adamt);
                     balance.setText(bamt);
+                    pickup.setText(pickupss);
+                    delivery.setText(deliveryss);
 
 
 //                    deliverylist dboard = new deliverylist();

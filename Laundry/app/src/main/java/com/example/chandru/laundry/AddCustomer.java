@@ -44,6 +44,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnClickListen
     private static CheckBox show_hide_password;
     private static LinearLayout loginLayout;
     private static Animation shakeAnimation;
+    public boolean flag=true;
     ArrayList<CustomerModel> customerModelArrayList = new ArrayList<>();
     HashMap<String, CustomerModel> locationhashmap = new HashMap<>();
     AutoCompleteTextView mobileNumber;
@@ -87,6 +88,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnClickListen
 //                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     // attaching data adapter to spinner
                     mobileNumber.setAdapter(adapter);
+                    flag=true;
                 }
 
                 @Override
@@ -145,6 +147,14 @@ public class AddCustomer extends AppCompatActivity implements View.OnClickListen
             mobileNumber.setSelection(mobileNumber.getText().toString().length());
             mobileNumber.clearFocus();
             edtLocation.setText(customerModel.getCustomer_address());
+            flag=false;
+
+            SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString("cname", customerModel.getCustomer_name());
+            editor.putString("contact", customerModel.getCustomer_contact1());
+            editor.putString("address", customerModel.getCustomer_address());
+            editor.commit();
         }
         mobileNumber.dismissDropDown();
     }
@@ -200,68 +210,83 @@ public class AddCustomer extends AppCompatActivity implements View.OnClickListen
 
     private void checkValidation() {
 
-        final String name = fullName.getText().toString();
-        final String contact = mobileNumber.getText().toString();
-        final String address = edtLocation.getText().toString();
-
-        if (TextUtils.isEmpty(contact)) {
-            mobileNumber.setError("Enter Mobile.");
-            mobileNumber.requestFocus();
-            return;
-        }
-
-        if (TextUtils.isEmpty(name)) {
-            fullName.setError("Enter Name.");
-            fullName.requestFocus();
-            return;
-        }
+        if(flag == true){
 
 
-        {
-            ApiInterface apiService =
-                    Api.getClient().create(ApiInterface.class);
+            final String name = fullName.getText().toString();
+            final String contact = mobileNumber.getText().toString();
+            final String address = edtLocation.getText().toString();
 
-            Call<customer> call = apiService.getCustomer(name, address, contact);
-            call.enqueue(new Callback<customer>() {
-                @Override
-                public void onResponse(Call<customer> call, Response<customer> response) {
-                    String movies = response.body().getError();
-                    String msg = response.body().getError_msg();
+            if (TextUtils.isEmpty(contact)) {
+                mobileNumber.setError("Enter Mobile.");
+                mobileNumber.requestFocus();
+                return;
+            }
 
-                    Log.d("success", "Number of movies received: " + movies);
-                    if (movies.equals("false")) {
-                        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = pref.edit();
-                        editor.putString("cname", name);
-                        editor.putString("contact", contact);
-                        editor.putString("address", address);
-                        editor.commit();
-                        Toast.makeText(AddCustomer.this, msg, Toast.LENGTH_SHORT)
-                                .show();
+            if (TextUtils.isEmpty(name)) {
+                fullName.setError("Enter Name.");
+                fullName.requestFocus();
+                return;
+            }
 
-                        Intent myIntent = new Intent(AddCustomer.this, Order.class);
-                        ActivityOptions options =
-                                ActivityOptions.makeCustomAnimation(AddCustomer.this, R.anim.left_enter, R.anim.left_out);
-                        startActivity(myIntent, options.toBundle());
-                    } else {
-                        // loginLayout.startAnimation(shakeAnimation);
-                        Toast.makeText(AddCustomer.this, "Customer profile not added", Toast.LENGTH_SHORT)
-                                .show();
+
+            {
+                ApiInterface apiService =
+                        Api.getClient().create(ApiInterface.class);
+
+                Call<customer> call = apiService.getCustomer(name, address, contact);
+                call.enqueue(new Callback<customer>() {
+                    @Override
+                    public void onResponse(Call<customer> call, Response<customer> response) {
+                        String movies = response.body().getError();
+                        String msg = response.body().getError_msg();
+
+                        Log.d("success", "Number of movies received: " + movies);
+                        if (movies.equals("false")) {
+                            SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = pref.edit();
+                            editor.putString("cname", name);
+                            editor.putString("contact", contact);
+                            editor.putString("address", address);
+                            editor.commit();
+                            Toast.makeText(AddCustomer.this, msg, Toast.LENGTH_SHORT)
+                                    .show();
+
+                            Intent myIntent = new Intent(AddCustomer.this, Order.class);
+                            ActivityOptions options =
+                                    ActivityOptions.makeCustomAnimation(AddCustomer.this, R.anim.left_enter, R.anim.left_out);
+                            startActivity(myIntent, options.toBundle());
+                        } else {
+                            // loginLayout.startAnimation(shakeAnimation);
+                            Toast.makeText(AddCustomer.this, "Customer profile not added", Toast.LENGTH_SHORT)
+                                    .show();
+                        }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<customer> call, Throwable t) {
-                    // Log error here since request failed
-                    Log.e("error", t.toString());
-                }
-            });
-            // loginLayout.startAnimation(shakeAnimation);
-            //Toast.makeText(this, "Invalid username and password", Toast.LENGTH_SHORT)
-            //  .show();
+                    @Override
+                    public void onFailure(Call<customer> call, Throwable t) {
+                        // Log error here since request failed
+                        Log.e("error", t.toString());
+                    }
+                });
+                // loginLayout.startAnimation(shakeAnimation);
+                //Toast.makeText(this, "Invalid username and password", Toast.LENGTH_SHORT)
+                //  .show();
 //            Intent news=new Intent(this,MainActivity.class);
 //            startActivity(news);
+            }
+
+        }else {
+
+            Intent myIntent = new Intent(AddCustomer.this, Order.class);
+            ActivityOptions options =
+                    ActivityOptions.makeCustomAnimation(AddCustomer.this, R.anim.left_enter, R.anim.left_out);
+            startActivity(myIntent, options.toBundle());
+
+
+
         }
+
 
 
     }

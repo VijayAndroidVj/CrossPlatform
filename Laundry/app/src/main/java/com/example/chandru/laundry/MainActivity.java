@@ -19,6 +19,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recycler_view;
     private String dataOne;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private LinearLayout opencusomer,openservice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         ImageView delivery = (ImageView) findViewById(R.id.btndelivery);
         ImageView addservice = (ImageView) findViewById(R.id.btnADDItem);
         ImageView additem = (ImageView) findViewById(R.id.btnaddproduct);
+        opencusomer =(LinearLayout)findViewById(R.id.opencusomer);
+        openservice =(LinearLayout)findViewById(R.id.openservice);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
 
@@ -66,6 +70,23 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(this.getResources().getColor(R.color.background_color));
         }
+
+        opencusomer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent addscat = new Intent(MainActivity.this, ViewCustomer.class);
+                startActivity(addscat);
+            }
+        });
+
+        openservice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent addscat = new Intent(MainActivity.this, ViewService.class);
+                startActivity(addscat);
+            }
+        });
+
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,6 +170,14 @@ public class MainActivity extends AppCompatActivity {
                 Intent intentd = new Intent(MainActivity.this, Setting.class);
 
                 startActivity(intentd);
+                // Toast.makeText(this, "test", Toast.LENGTH_LONG).show();
+                // showOptiontAlert(MainActivity.this, "Choose", "")
+                ;
+                return (true);
+            case R.id.about1:
+                Intent about = new Intent(MainActivity.this, Aboutus.class);
+
+                startActivity(about);
                 // Toast.makeText(this, "test", Toast.LENGTH_LONG).show();
                 // showOptiontAlert(MainActivity.this, "Choose", "")
                 ;

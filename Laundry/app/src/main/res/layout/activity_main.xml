@@ -51,6 +51,7 @@
                         android:weightSum="2">
 
                         <android.support.v7.widget.CardView
+
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -81,7 +82,7 @@
                                     android:paddingTop="5dp"
                                     android:text="2"
                                     android:textColor="@android:color/black"
-                                    android:textSize="18sp"
+                                    android:textSize="15sp"
                                     android:textStyle="bold" />
 
 
@@ -130,7 +131,7 @@
                                     android:paddingTop="5dp"
                                     android:text="2"
                                     android:textColor="@android:color/black"
-                                    android:textSize="18sp"
+                                    android:textSize="15sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -138,7 +139,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="5dp"
                                     android:text="Delivered Orders"
-                                    android:textAlignment="textStart"
+                                    android:textAlignment="center"
                                     android:textColor="@android:color/black"
                                     android:textSize="15sp"
                                     android:textStyle="bold" />
@@ -159,6 +160,7 @@
                         android:weightSum="2">
 
                         <android.support.v7.widget.CardView
+
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -168,6 +170,7 @@
                             card_view:cardCornerRadius="3dp">
 
                             <LinearLayout
+                                android:id="@+id/opencusomer"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@android:color/holo_blue_light"
@@ -189,7 +192,7 @@
                                     android:paddingTop="5dp"
                                     android:text="12"
                                     android:textColor="@android:color/black"
-                                    android:textSize="18sp"
+                                    android:textSize="15sp"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -216,6 +219,7 @@
 
 
                             <LinearLayout
+                                android:id="@+id/openservice"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@android:color/holo_red_dark"

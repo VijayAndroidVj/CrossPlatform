@@ -52,6 +52,13 @@
         <activity android:name=".ViewService" />
         <activity android:name=".ViewLocation" />
         <activity android:name=".ViewItems" />
+        <activity
+            android:name=".Forgot"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".Aboutus"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".ViewCustomer"></activity>
     </application>
 
 </manifest>

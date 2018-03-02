@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,6 +38,7 @@ public class Delivery extends AppCompatActivity implements View.OnClickListener,
     private deliverylistAdapter bAdapter;
     private RecyclerView recycler_view;
     private String dataOne;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class Delivery extends AppCompatActivity implements View.OnClickListener,
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(this.getResources().getColor(R.color.background_color));
         }
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
         if (CommonUtil.isNetworkAvailable(Delivery.this)) {
             String Url = "http://demo.adityametals.com/api/order_list.php";
@@ -57,6 +60,33 @@ public class Delivery extends AppCompatActivity implements View.OnClickListener,
         }
 
 
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Refresh items
+
+                if (CommonUtil.isNetworkAvailable(Delivery.this)) {
+                    String Url = "http://demo.adityametals.com/api/order_list.php";
+                    new serverUpload().execute(Url);
+                } else {
+                    hideRefresh();
+                    Toast.makeText(Delivery.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
+                }
+
+
+            }
+        });
+
+
+    }
+
+    public void hideRefresh() {
+        try {
+            if (swipeRefreshLayout != null)
+                swipeRefreshLayout.setRefreshing(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -119,6 +149,7 @@ public class Delivery extends AppCompatActivity implements View.OnClickListener,
         @Override
         protected void onPostExecute(Boolean aBoolean) {
             dialog.dismiss();
+            hideRefresh();
             try {
                 JSONObject jsono = new JSONObject(dataOne);
                 maintain.clear();

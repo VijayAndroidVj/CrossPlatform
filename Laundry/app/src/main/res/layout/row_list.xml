@@ -13,7 +13,7 @@
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="#000"/>
+            android:background="@color/white_greyish" />
 
         <TextView
             android:id="@+id/tvTwo"
@@ -28,7 +28,7 @@
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="#000"/>
+            android:background="@color/white_greyish" />
         <TextView
             android:id="@+id/tvThree"
             android:layout_weight="1.1"
@@ -42,7 +42,7 @@
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="#000"/>
+            android:background="@color/white_greyish" />
         <TextView
             android:id="@+id/tvFour"
             android:layout_weight="1.1"
@@ -56,7 +56,7 @@
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="#000"/>
+            android:background="@color/white_greyish" />
         <TextView
             android:id="@+id/tvFive"
             android:layout_weight="1.1"
@@ -70,12 +70,12 @@
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="#000"/>
+            android:background="@color/white_greyish" />
 
 
     </LinearLayout>
     <View
-        android:background="#000000"
+        android:background="@color/white_greyish"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
 
