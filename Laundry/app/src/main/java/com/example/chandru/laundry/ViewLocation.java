@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.example.chandru.laundry.Adapter.ViewLocationAdapter;
 import com.example.chandru.laundry.Adapter.deliverylistAdapter;
@@ -80,8 +81,13 @@ public class ViewLocation extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        String Url = "http://demo.adityametals.com/api/location.php";
-        new serverUpload().execute(Url);
+        if (CommonUtil.isNetworkAvailable(ViewLocation.this)) {
+            String Url = "http://demo.adityametals.com/api/location.php";
+            new serverUpload().execute(Url);
+        } else {
+            Toast.makeText(ViewLocation.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override

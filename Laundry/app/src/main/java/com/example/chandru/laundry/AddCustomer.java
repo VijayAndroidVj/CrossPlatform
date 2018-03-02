@@ -204,15 +204,19 @@ public class AddCustomer extends AppCompatActivity implements View.OnClickListen
         final String contact = mobileNumber.getText().toString();
         final String address = edtLocation.getText().toString();
 
-        if (TextUtils.isEmpty(name)) {
-            fullName.setError("Enter Name.");
+        if (TextUtils.isEmpty(contact)) {
+            mobileNumber.setError("Enter Mobile.");
+            mobileNumber.requestFocus();
             return;
         }
 
-        if (TextUtils.isEmpty(contact)) {
-            mobileNumber.setError("Enter Mobile.");
+        if (TextUtils.isEmpty(name)) {
+            fullName.setError("Enter Name.");
+            fullName.requestFocus();
             return;
         }
+
+
         {
             ApiInterface apiService =
                     Api.getClient().create(ApiInterface.class);

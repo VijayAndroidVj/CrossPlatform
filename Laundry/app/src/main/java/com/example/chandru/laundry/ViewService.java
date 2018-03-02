@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.example.chandru.laundry.Adapter.ViewServiceAdapter;
 import com.example.chandru.laundry.Adapter.deliverylistAdapter;
@@ -69,8 +70,14 @@ public class ViewService extends AppCompatActivity implements View.OnClickListen
             }
         });
 
-        String Url = "http://demo.adityametals.com/api/service.php";
-        new serverUpload().execute(Url);
+        if (CommonUtil.isNetworkAvailable(this)) {
+            String Url = "http://demo.adityametals.com/api/service.php";
+            new serverUpload().execute(Url);
+        } else {
+            Toast.makeText(this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
+        }
+
+
     }
 
 

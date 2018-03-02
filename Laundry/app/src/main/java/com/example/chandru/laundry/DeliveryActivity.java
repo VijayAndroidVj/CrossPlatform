@@ -96,9 +96,14 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
         }
         Bundle bundle = getIntent().getExtras();
         String message = bundle.getString("message");
+        if (CommonUtil.isNetworkAvailable(DeliveryActivity.this)) {
+            String Url = "http://demo.adityametals.com/api/view_order.php?bill_no=" + message;
+            new serverUpload().execute(Url);
+        } else {
+            Toast.makeText(DeliveryActivity.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
+        }
 
-        String Url = "http://demo.adityametals.com/api/view_order.php?bill_no=" + message;
-        new serverUpload().execute(Url);
+
     }
 
     @Override
