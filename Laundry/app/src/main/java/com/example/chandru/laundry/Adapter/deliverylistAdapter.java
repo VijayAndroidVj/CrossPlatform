@@ -32,6 +32,14 @@ public class deliverylistAdapter extends RecyclerView.Adapter<deliverylistAdapte
         this.listener=listener;
     }
 
+    public void setSearchResult(List<deliverylist> maintain) {
+
+
+        this.list = maintain;
+        notifyDataSetChanged();
+    }
+
+
     @Override
     public MyViewHolderone onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(context).inflate(R.layout.row_list_one,parent,false);
@@ -85,6 +93,8 @@ public class deliverylistAdapter extends RecyclerView.Adapter<deliverylistAdapte
     public int getItemCount() {
         return list!=null?list.size():0;
     }
+
+
 
     public class MyViewHolderone extends RecyclerView.ViewHolder {
         private TextView tvTwo,tvThree,tvFour,tvFive,tvSix,tvSeven,btnAccept;

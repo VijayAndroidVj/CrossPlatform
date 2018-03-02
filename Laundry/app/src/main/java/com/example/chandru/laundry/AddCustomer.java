@@ -256,6 +256,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnClickListen
                             ActivityOptions options =
                                     ActivityOptions.makeCustomAnimation(AddCustomer.this, R.anim.left_enter, R.anim.left_out);
                             startActivity(myIntent, options.toBundle());
+                            finish();
                         } else {
                             // loginLayout.startAnimation(shakeAnimation);
                             Toast.makeText(AddCustomer.this, "Customer profile not added", Toast.LENGTH_SHORT)
@@ -283,7 +284,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnClickListen
                     ActivityOptions.makeCustomAnimation(AddCustomer.this, R.anim.left_enter, R.anim.left_out);
             startActivity(myIntent, options.toBundle());
 
-
+            finish();
 
         }
 

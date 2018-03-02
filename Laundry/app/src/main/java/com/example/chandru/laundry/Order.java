@@ -14,6 +14,8 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -224,6 +226,12 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
         amt.setText("" + mul + "0");
     }
 
+    public void  back (View view){
+        Intent backs = new Intent(Order.this,MainActivity.class);
+        startActivity(backs);
+        finish();
+    }
+
     public void adddata(View view) {
 
         if (qty == 0 || unit == 0.0 || mul == 0.0) {
@@ -265,13 +273,16 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
             unitty.setText("0");
             amt.setText("0");
             itemData = "";
-            qty = 0;
+
             unit = 0;
             mul = 0;
-            display(0);
+
             serviceId = "";
             serviceName = "";
             Itemid = "";
+            minteger =0;
+            qty = 0;
+            display(0);
 
         }
 
@@ -429,6 +440,8 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
     }
 
 
+
+
     @Override
     public void adapterActionListener(int state, Object data) {
 
@@ -437,6 +450,9 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
 
             String Url = "http://demo.adityametals.com/api/items.php?service_id=" + maintain.get(pois).getId();
             new update().execute(Url);
+            minteger =0;
+            qty = 0;
+            display(0);
         } else if (state == itemAdapter.LIST_TAGr && data != null) {
 
             int pos = (int) data;
@@ -458,6 +474,10 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
             TextView amt = (TextView) findViewById(R.id.findtotal);
             unitty.setText(maintainlist.get(pos).getLaundry_price());
             amt.setText(maintainlist.get(pos).getLaundry_price());
+
+            minteger =0;
+            qty = 0;
+            display(0);
         }
     }
 

@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         openservice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent addscat = new Intent(MainActivity.this, ViewService.class);
+                Intent addscat = new Intent(MainActivity.this, ViewOrders.class);
                 startActivity(addscat);
             }
         });

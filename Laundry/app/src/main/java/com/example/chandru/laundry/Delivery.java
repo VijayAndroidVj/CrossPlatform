@@ -1,14 +1,21 @@
 package com.example.chandru.laundry;
 
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -32,7 +39,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Delivery extends AppCompatActivity implements View.OnClickListener, AdapterListener {
+public class Delivery extends AppCompatActivity implements View.OnClickListener, AdapterListener, SearchView.OnQueryTextListener {
 
     private List<deliverylist> maintain = new ArrayList<>();
     private deliverylistAdapter bAdapter;
@@ -44,6 +51,7 @@ public class Delivery extends AppCompatActivity implements View.OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_delivery);
+        getSupportActionBar().setTitle("Delivery details");
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -80,6 +88,83 @@ public class Delivery extends AppCompatActivity implements View.OnClickListener,
 
     }
 
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.search, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+
+        SearchManager searchManager = (SearchManager) Delivery.this.getSystemService(Context.SEARCH_SERVICE);
+
+        SearchView searchView = null;
+        if (searchItem != null) {
+            searchView = (SearchView) searchItem.getActionView();
+
+            searchView.setOnQueryTextListener( Delivery.this);
+        }
+        if (searchView != null) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(Delivery.this.getComponentName()));
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.search, menu);
+//        final MenuItem item = menu.findItem(R.id.action_search);
+//        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+//        searchView.setOnQueryTextListener( Delivery.this);
+//
+//        item.setOnActionExpandListener( new MenuItem.OnActionExpandListener() {
+//
+//            @Override
+//            public boolean onMenuItemActionExpand(MenuItem item) {
+//
+//                return true;
+//            }
+//
+//            @Override
+//            public boolean onMenuItemActionCollapse(MenuItem item) {
+//                // Do something when collapsed
+//                bAdapter.setSearchResult(maintain);
+//                return true; // Return true to collapse action view
+//
+//
+//            }
+//
+//        });
+//        return true;
+//    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        final List<deliverylist> filteredModelList = filter(maintain, newText);
+        bAdapter.setSearchResult(filteredModelList);
+        return true;
+    }
+
+    private List<deliverylist> filter(List<deliverylist> maintain, String newText) {
+        newText = newText.toLowerCase();
+        final List<deliverylist> filteredModelList = new ArrayList<>();
+        for (deliverylist model : maintain) {
+            final String text = model.getOrder_id().toLowerCase();
+            if (text.contains(newText)) {
+                filteredModelList.add(model);
+            }
+        }
+
+        return filteredModelList;
+    }
+
+
+
+
     public void hideRefresh() {
         try {
             if (swipeRefreshLayout != null)
@@ -107,6 +192,8 @@ public class Delivery extends AppCompatActivity implements View.OnClickListener,
         }
 
     }
+
+    
 
     private class serverUpload extends AsyncTask<String, Void, Boolean> {
 
@@ -156,31 +243,37 @@ public class Delivery extends AppCompatActivity implements View.OnClickListener,
                 JSONArray jsonOneArray = jsono.getJSONArray("details");
                 for (int i = 0; i < jsonOneArray.length(); i++) {
                     JSONObject jss = jsonOneArray.getJSONObject(i);
-                    deliverylist dboard = new deliverylist();
-                    dboard.setId(jss.getString("id"));
-                    dboard.setOrder_id(jss.getString("order_id"));
-                    dboard.setStore_ref(jss.getString("store_ref"));
-                    dboard.setOrder_date(jss.getString("order_date"));
-                    dboard.setCustomer_name(jss.getString("customer_name"));
+                  //  String abc =jss.getString("delivery_status");
 
-                    dboard.setCustomer_phone(jss.getString("customer_phone"));
-                    dboard.setCustomer_address(jss.getString("customer_address"));
-                    dboard.setDelivery_status(jss.getString("delivery_status"));
-                    dboard.setLocation(jss.getString("location"));
-                    dboard.setLaundry_for(jss.getString("laundry_for"));
+                    if(jss.getString("delivery_status").equalsIgnoreCase("Delivered")){
+                        deliverylist dboard = new deliverylist();
+                        dboard.setId(jss.getString("id"));
+                        dboard.setOrder_id(jss.getString("order_id"));
+                        dboard.setStore_ref(jss.getString("store_ref"));
+                        dboard.setOrder_date(jss.getString("order_date"));
+                        dboard.setCustomer_name(jss.getString("customer_name"));
 
-                    dboard.setDelivery_date(jss.getString("delivery_date"));
-                    dboard.setTotal_laundry(jss.getString("total_laundry"));
-                    dboard.setTotal_amount(jss.getString("total_amount"));
-                    dboard.setAdvance_amount(jss.getString("advance_amount"));
-                    dboard.setBalance_amount(jss.getString("balance_amount"));
+                        dboard.setCustomer_phone(jss.getString("customer_phone"));
+                        dboard.setCustomer_address(jss.getString("customer_address"));
+                        dboard.setDelivery_status(jss.getString("delivery_status"));
+                        dboard.setLocation(jss.getString("location"));
+                        dboard.setLaundry_for(jss.getString("laundry_for"));
 
-                    dboard.setPaid(jss.getString("paid"));
-                    dboard.setDelivered_on(jss.getString("delivered_on"));
-                    dboard.setLaundry_(jss.getString("laundry_"));
-                    dboard.setCheck_(jss.getString("check_"));
-                    dboard.setSummary(jss.getString("summary"));
-                    maintain.add(dboard);
+                        dboard.setDelivery_date(jss.getString("delivery_date"));
+                        dboard.setTotal_laundry(jss.getString("total_laundry"));
+                        dboard.setTotal_amount(jss.getString("total_amount"));
+                        dboard.setAdvance_amount(jss.getString("advance_amount"));
+                        dboard.setBalance_amount(jss.getString("balance_amount"));
+
+                        dboard.setPaid(jss.getString("paid"));
+                        dboard.setDelivered_on(jss.getString("delivered_on"));
+                        dboard.setLaundry_(jss.getString("laundry_"));
+                        dboard.setCheck_(jss.getString("check_"));
+                        dboard.setSummary(jss.getString("summary"));
+                        maintain.add(dboard);
+
+                    }
+
                 }
                 recycler_view = (RecyclerView) findViewById(R.id.recycler_view);
                 LinearLayoutManager lmanager = new LinearLayoutManager(Delivery.this);
