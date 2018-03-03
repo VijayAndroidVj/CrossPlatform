@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -62,7 +63,7 @@ public class ViewLocationAdapter extends RecyclerView.Adapter<ViewLocationAdapte
             }
         });
 
-        // holder.btnAccept.setTag(position);
+        holder.btnAccept.setTag(position);
 
 
     }
@@ -74,6 +75,7 @@ public class ViewLocationAdapter extends RecyclerView.Adapter<ViewLocationAdapte
 
     public class MyViewHolderone extends RecyclerView.ViewHolder {
         private TextView tvTwo, tvThree;
+        private Button btnAccept;
 
         private LinearLayout linCat;
 
@@ -82,6 +84,16 @@ public class ViewLocationAdapter extends RecyclerView.Adapter<ViewLocationAdapte
 
             tvTwo = (TextView) view.findViewById(R.id.tvTwo);
             tvThree = (TextView) view.findViewById(R.id.tvThree);
+            btnAccept = (Button)view.findViewById(R.id.btnAccept);
+
+
+            btnAccept.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int pos = (int) view.getTag();
+                    listener.adapterActionListener(LIST_TAG,pos);
+                }
+            });
 
 
 //            btnAccept.setOnClickListener(new View.OnClickListener() {

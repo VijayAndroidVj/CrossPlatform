@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -50,6 +51,7 @@ public class AddService extends AppCompatActivity {
     private static int RESULT_LOAD_IMG = 1;
     private EditText name, decription;
     File destination;
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,9 @@ public class AddService extends AppCompatActivity {
                 addService();
             }
         });
+
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+        uid = (pref.getString("uid", ""));
     }
 
     @Override
@@ -338,9 +343,11 @@ public class AddService extends AppCompatActivity {
                 // MultipartBody.Part is used to send also the actual file name
                 MultipartBody.Part icon_image =
                         MultipartBody.Part.createFormData("icon_image", destination.getName(), requestFile);
+                MultipartBody.Part user_id =
+                        MultipartBody.Part.createFormData("user_id", uid);
 
                 // finally, execute the request
-                Call<customer> call = apiService.add_service(name, description, icon_image);
+                Call<customer> call = apiService.add_service(name, description, icon_image,user_id);
                 call.enqueue(new Callback<customer>() {
                     @Override
                     public void onResponse(Call<customer> call, retrofit2.Response<customer> response) {

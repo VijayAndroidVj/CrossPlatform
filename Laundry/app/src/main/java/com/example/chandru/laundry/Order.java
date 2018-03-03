@@ -3,6 +3,7 @@ package com.example.chandru.laundry;
 import android.app.ActivityOptions;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -26,6 +27,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.chandru.laundry.Adapter.billAdapter;
@@ -73,15 +75,16 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
     private itemAdapter kAdapter;
     private billAdapter bAdapter;
     private RecyclerView recycler_view, recycler_view_final;
-    private String dataOne, dataOnes, itemData, dataTwos, name, customer, contact, address, datathree, serviceId, serviceName, Itemid;
+    private String dataOne, dataOnes, itemData, dataTwos, name, customer, contact, address, datathree, serviceId, serviceName, Itemid,uid;
     private List<cat> maintain = new ArrayList<>();
     private List<item> maintainlist = new ArrayList<>();
     private List<bill> billist = new ArrayList<>();
     private int qty = 0;
     private float unit = 0, mul = 0;
     int minteger = 0;
-    String billno;
+    String billno,time;
     Calendar myCalendar = Calendar.getInstance();
+    private int mYear, mMonth, mDay, mHour, mMinute;
 
 
     @Override
@@ -96,7 +99,7 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
         }
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
-
+        uid = (pref.getString("uid", null));
         name = pref.getString("name", null);
         customer = pref.getString("cname", null);
         contact = pref.getString("contact", null);
@@ -121,6 +124,8 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
         editdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                updateLabel();
+
                 new DatePickerDialog(Order.this, ye, myCalendar
                         .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                         myCalendar.get(Calendar.DAY_OF_MONTH)).show();
@@ -128,13 +133,13 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
             }
         });
         if (CommonUtil.isNetworkAvailable(Order.this)) {
-            String Url = "http://demo.adityametals.com/api/service.php";
+            String Url = "http://demo.adityametals.com/api/service.php?user_id="+uid;
             new serverUpload().execute(Url);
             getDateTime();
 
 //            String Urlss = "http://demo.adityametals.com/api/items.php?service_id=5";
 //            new update().execute(Urlss);
-            new getBillNo().execute("http://demo.adityametals.com/api/bill_no.php?");
+            new getBillNo().execute("http://demo.adityametals.com/api/bill_no.php?user_id="+uid);
         } else {
             Toast.makeText(Order.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
         }
@@ -153,6 +158,8 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
             myCalendar.set(Calendar.MONTH, monthOfYear);
             myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
             updateLabel();
+
+
         }
 
     };
@@ -174,6 +181,9 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
 
 
     private void updateLabel() {
+
+
+
         String myFormat = "dd-MM-yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
@@ -181,10 +191,32 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
     }
 
     private void updateLabelOne() {
-        String myFormat = "dd-MM-yyyy"; //In which you need put here
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
-        editdate.setText(sdf.format(myCalendar.getTime()));
+        // Get Current Time
+        final Calendar c = Calendar.getInstance();
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+
+
+
+
+
+        // Launch Time Picker Dialog
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+                new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay,
+                                          int minute) {
+                        String myFormat = "dd-MM-yyyy"; //In which you need put here
+                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                        time=hourOfDay + ":" + minute+ ":" + "00" ;
+                        editdate.setText(sdf.format(myCalendar.getTime() )+time);
+                    }
+                }, mHour, mMinute, false);
+        timePickerDialog.show();
+
+
     }
 
 
@@ -362,7 +394,7 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
             cba = cba + (int) Float.parseFloat(billist.get(i).getAmt());
 
         }
-        String Url = "http://demo.adityametals.com/api/add_joborder.php?bill=" + billno + "&user=" + name + "&customer=" + customer + "&contact=" + contact + "&address=" + contact + "&quantity=" + abc + "&amount=" + cba + "&advance=" + adva + "&balance=" + bal + "&delivery=" + deldate;
+        String Url = "http://demo.adityametals.com/api/add_joborder.php?bill=" + billno + "&user=" + name + "&customer=" + customer + "&contact=" + contact + "&address=" + contact + "&quantity=" + abc + "&amount=" + cba + "&advance=" + adva + "&balance=" + bal + "&delivery=" + deldate+ "&user_id=" + uid;
         new customerentry().execute(Url);
 
     }
@@ -431,7 +463,7 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
                 lAdapter.notifyDataSetChanged();
 
 
-                String Url = "http://demo.adityametals.com/api/items.php?service_id=" + maintain.get(0).getId();
+                String Url = "http://demo.adityametals.com/api/items.php?service_id=" + maintain.get(1).getId()+"&user_id="+uid;
                 new update().execute(Url);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -448,7 +480,7 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
         if (state == catAdapter.LIST_TAG && data != null) {
             int pois = (int) data;
 
-            String Url = "http://demo.adityametals.com/api/items.php?service_id=" + maintain.get(pois).getId();
+            String Url = "http://demo.adityametals.com/api/items.php?service_id=" + maintain.get(pois).getId()+"&user_id="+uid;
             new update().execute(Url);
             minteger =0;
             qty = 0;
@@ -699,7 +731,7 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
             String jsonss = jsonOneArray.toString();
 //            jsonss = "\"" + jsonss + "\"";
             jsonss = URLEncoder.encode(jsonss);
-            String apiurl = "http://demo.adityametals.com/api/add_joborder_item.php?bill=" + billno + "&credintials=" + jsonss + "";
+            String apiurl = "http://demo.adityametals.com/api/add_joborder_item.php?bill=" + billno + "&credintials=" + jsonss + "&user_id="+uid;
             new customerItem(billno).execute(apiurl);
         } catch (JSONException el) {
             el.printStackTrace();

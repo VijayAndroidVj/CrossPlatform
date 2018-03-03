@@ -11,14 +11,22 @@ public class login {
     @SerializedName("u_id")
     private String u_id;
 
-//    @SerializedName("user")
-//    private List<user> results;
+    @SerializedName("user")
+    private user results;
 
     public login(String error, String u_id) {
         this.error = error;
         this.u_id = u_id;
       //  this.results = results;
 
+    }
+
+    public user getResults() {
+        return results;
+    }
+
+    public void setResults(user results) {
+        this.results = results;
     }
 
     public String getError() {
@@ -40,32 +48,5 @@ public class login {
 
 }
 
-class user{
-
-    @SerializedName("name")
-    private String name;
-    @SerializedName("type")
-    private String type;
-
-    public user(String name, String type) {
-        this.name = name;
-        this.type = type;
 
 
-    }
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-}

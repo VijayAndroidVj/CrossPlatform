@@ -2,6 +2,7 @@ package com.example.chandru.laundry;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,7 +40,7 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
     private List<delivery> maintain = new ArrayList<>();
     private deliveryAdapter bAdapter;
     private RecyclerView recycler_view;
-    private String dataOne, dataTwos, Billno, bamt;
+    private String dataOne, dataTwos, Billno, bamt,uid;
     private TextView cname, bill, phone, address, qty, amt, advance, balance,pickup,delivery;
 
     @Override
@@ -57,6 +58,12 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
         balance = (TextView) findViewById(R.id.balance);
         pickup = (TextView) findViewById(R.id.pick);
         delivery = (TextView) findViewById(R.id.delivery);
+
+
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+        uid = (pref.getString("uid", ""));
+
+
         findViewById(R.id.cancelbtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,7 +83,7 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
                         String receive = re.getText().toString();
                         String remark = remar.getText().toString();
                         //http://demo.adityametals.com/api/update_delivery.php?bill="+Billno+"&paid="+bamt+"&summary="+remark+"&recieve="+receive
-                        String Url = "http://demo.adityametals.com/api/update_delivery.php?bill=" + Billno + "&paid=" + bamt + "&summary=" + remark + "&recieve=" + receive;
+                        String Url = "http://demo.adityametals.com/api/update_delivery.php?bill=" + Billno + "&paid=" + bamt + "&summary=" + remark + "&recieve=" + receive+"&user_id="+uid;
                         new customerentry().execute(Url);
 
 //                        Toast.makeText(DeliveryActivity.this, "Delivered successfully", Toast.LENGTH_SHORT).show();
@@ -99,7 +106,7 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
         Bundle bundle = getIntent().getExtras();
         String message = bundle.getString("message");
         if (CommonUtil.isNetworkAvailable(DeliveryActivity.this)) {
-            String Url = "http://demo.adityametals.com/api/view_order.php?bill_no=" + message;
+            String Url = "http://demo.adityametals.com/api/view_order.php?bill_no=" + message+"&user_id="+uid;
             new serverUpload().execute(Url);
         } else {
             Toast.makeText(DeliveryActivity.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
@@ -254,7 +261,7 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
         String receive = re.getText().toString();
         String remark = remar.getText().toString();
         //http://demo.adityametals.com/api/update_delivery.php?bill="+Billno+"&paid="+bamt+"&summary="+remark+"&recieve="+receive
-        String Url = "http://demo.adityametals.com/api/update_delivery.php?bill=" + Billno + "&paid=" + bamt + "&summary=" + remark + "&recieve=" + receive;
+        String Url = "http://demo.adityametals.com/api/update_delivery.php?bill=" + Billno + "&paid=" + bamt + "&summary=" + remark + "&recieve=" + receive+"&user_id="+uid;
         new customerentry().execute(Url);
     }
 

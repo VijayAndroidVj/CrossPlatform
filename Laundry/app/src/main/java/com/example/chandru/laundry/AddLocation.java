@@ -1,5 +1,6 @@
 package com.example.chandru.laundry;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +30,7 @@ import retrofit2.Response;
 public class AddLocation extends AppCompatActivity {
 
     private EditText location, description;
+    private String uid ;
 
 
     @Override
@@ -43,6 +45,8 @@ public class AddLocation extends AppCompatActivity {
 
         location = (EditText) findViewById(R.id.location);
         description = (EditText) findViewById(R.id.description);
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+        uid = (pref.getString("uid", ""));
 
 
     }
@@ -75,7 +79,7 @@ public class AddLocation extends AppCompatActivity {
         ApiInterface apiService =
                 Api.getClient().create(ApiInterface.class);
 
-        Call<customer> call = apiService.getlocation(loca, dest);
+        Call<customer> call = apiService.getlocation(loca, dest,uid);
         call.enqueue(new Callback<customer>() {
             @Override
             public void onResponse(Call<customer> call, Response<customer> response) {

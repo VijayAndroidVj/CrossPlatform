@@ -8,7 +8,17 @@
     android:elevation="1dp"
     card_view:cardCornerRadius="3dp">
 
+
     <LinearLayout
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:layout_weight="1.9"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -16,7 +26,9 @@
         android:orientation="vertical"
         android:padding="10dp">
 
+
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -84,6 +96,21 @@
                 android:textSize="15sp"
                 android:textStyle="normal" />
         </LinearLayout>
+
+
+
+    </LinearLayout>
+        <Button
+            android:id="@+id/btnAccept"
+            android:layout_margin="10dp"
+            android:background="#ae3e2b"
+            android:text="Delete"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content" />
+
+
 
 
     </LinearLayout>

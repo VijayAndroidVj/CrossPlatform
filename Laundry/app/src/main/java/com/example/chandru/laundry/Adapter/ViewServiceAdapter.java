@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -72,7 +73,7 @@ public class ViewServiceAdapter extends RecyclerView.Adapter<ViewServiceAdapter.
             }
         });
 
-        // holder.btnAccept.setTag(position);
+         holder.btnAccept.setTag(position);
 
 
     }
@@ -84,6 +85,7 @@ public class ViewServiceAdapter extends RecyclerView.Adapter<ViewServiceAdapter.
 
     public class MyViewHolderone extends RecyclerView.ViewHolder {
         private TextView title, subtitle, subtitleone;
+        private Button btnAccept;
 
         private ImageView icon;
 
@@ -96,15 +98,16 @@ public class ViewServiceAdapter extends RecyclerView.Adapter<ViewServiceAdapter.
             subtitle = (TextView) view.findViewById(R.id.subtitle);
             subtitleone = (TextView) view.findViewById(R.id.subtitleone);
             icon = (ImageView) view.findViewById(R.id.icon);
+            btnAccept = (Button)view.findViewById(R.id.btnAccept);
 
 
-//            btnAccept.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    int pos = (int) view.getTag();
-//                    listener.adapterActionListener(LIST_TAG,pos);
-//                }
-//            });
+            btnAccept.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int pos = (int) view.getTag();
+                    listener.adapterActionListener(LIST_TAG,pos);
+                }
+            });
 
 
         }

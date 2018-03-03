@@ -6,28 +6,40 @@
     android:layout_margin="10dp"
     android:layout_weight="1"
     android:elevation="1dp"
+
     card_view:cardCornerRadius="3dp">
 
     <LinearLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:background="@color/white_greyish"
         android:clickable="true"
+        android:layout_margin="7dp"
         android:focusable="true"
         android:gravity="center"
         android:orientation="horizontal">
 
+
+
         <ImageView
             android:id="@+id/icon"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_margin="5dp" />
 
-        <LinearLayout
+    <LinearLayout
+        android:weightSum="2"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    <LinearLayout
+            android:layout_weight="1.9"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
@@ -69,6 +81,22 @@
 
 
         </LinearLayout>
+        <Button
+            android:id="@+id/btnAccept"
+            android:background="#ae3e2b"
+            android:text="Delete"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content" />
+
+
+
+
+    </LinearLayout>
+
 
     </LinearLayout>
 </android.support.v7.widget.CardView>

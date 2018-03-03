@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private List<landingcutomer> maintain = new ArrayList<>();
     private cutomerAdapter cAdapter;
     private RecyclerView recycler_view;
-    private String dataOne;
+    private String dataOne,uid;
     private SwipeRefreshLayout swipeRefreshLayout;
     private LinearLayout opencusomer,openservice;
 
@@ -63,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
         openservice =(LinearLayout)findViewById(R.id.openservice);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
-
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+        uid = (pref.getString("uid", ""));
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -124,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if (CommonUtil.isNetworkAvailable(MainActivity.this)) {
-            String Url = "http://demo.adityametals.com/api/dashboard.php";
+            String Url = "http://demo.adityametals.com/api/dashboard.php?user_id="+uid;
             new serverUpload().execute(Url);
         } else {
             Toast.makeText(MainActivity.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
@@ -135,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
             public void onRefresh() {
                 // Refresh items
                 if (CommonUtil.isNetworkAvailable(MainActivity.this)) {
-                    String Url = "http://demo.adityametals.com/api/dashboard.php";
+                    String Url = "http://demo.adityametals.com/api/dashboard.php?user_id="+uid;
                     new serverUpload().execute(Url);
                 } else {
                     hideRefresh();

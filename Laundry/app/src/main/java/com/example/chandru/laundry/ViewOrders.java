@@ -2,6 +2,7 @@ package com.example.chandru.laundry;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -37,7 +38,7 @@ public class ViewOrders extends AppCompatActivity implements View.OnClickListene
     private List<deliverylist> maintain = new ArrayList<>();
     private ViewOrderAdapter bAdapter;
     private RecyclerView recycler_view;
-    private String dataOne;
+    private String dataOne,uid;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
@@ -51,10 +52,15 @@ public class ViewOrders extends AppCompatActivity implements View.OnClickListene
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(this.getResources().getColor(R.color.background_color));
         }
+
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+        uid = (pref.getString("uid", ""));
+
+
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
         if (CommonUtil.isNetworkAvailable(ViewOrders.this)) {
-            String Url = "http://demo.adityametals.com/api/order_list.php";
+            String Url = "http://demo.adityametals.com/api/order_list.php?user_id="+uid;
             new serverUpload().execute(Url);
         } else {
             Toast.makeText(ViewOrders.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
@@ -67,7 +73,7 @@ public class ViewOrders extends AppCompatActivity implements View.OnClickListene
                 // Refresh items
 
                 if (CommonUtil.isNetworkAvailable(ViewOrders.this)) {
-                    String Url = "http://demo.adityametals.com/api/order_list.php";
+                    String Url = "http://demo.adityametals.com/api/order_list.php?user_id="+uid;
                     new serverUpload().execute(Url);
                 } else {
                     hideRefresh();

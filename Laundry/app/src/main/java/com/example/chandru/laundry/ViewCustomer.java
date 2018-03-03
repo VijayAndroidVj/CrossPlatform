@@ -2,6 +2,7 @@ package com.example.chandru.laundry;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
@@ -41,7 +42,7 @@ public class ViewCustomer extends AppCompatActivity implements View.OnClickListe
     private List<vcustomer> maintain = new ArrayList<>();
     private ViewCustomerAdapter vAdapter;
     private RecyclerView recycler_view;
-    private String dataOne;
+    private String dataOne,uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,8 @@ public class ViewCustomer extends AppCompatActivity implements View.OnClickListe
         actionBar.setHomeButtonEnabled(true);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+        uid = (pref.getString("uid", ""));
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -65,7 +67,7 @@ public class ViewCustomer extends AppCompatActivity implements View.OnClickListe
 
 
         if (CommonUtil.isNetworkAvailable(ViewCustomer.this)) {
-            String Url = "http://demo.adityametals.com/api/customer_details.php";
+            String Url = "http://demo.adityametals.com/api/customer_details.php?user_id="+uid;
             new serverUpload().execute(Url);
         } else {
             Toast.makeText(this, "Check your internet connection!", Toast.LENGTH_SHORT).show();

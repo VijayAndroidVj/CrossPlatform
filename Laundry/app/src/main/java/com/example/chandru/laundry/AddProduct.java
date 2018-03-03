@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -64,6 +65,7 @@ public class AddProduct extends AppCompatActivity {
     private Spinner spinner;
     ArrayList<cat> servicelist = new ArrayList<>();
     HashMap<String, String> servicelisthashmap = new HashMap<>();
+    private String uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +90,8 @@ public class AddProduct extends AppCompatActivity {
             }
         });
 
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+        uid = (pref.getString("uid", ""));
         getServiceList();
 
         // Spinner Drop down elements
@@ -99,7 +103,7 @@ public class AddProduct extends AppCompatActivity {
             ApiInterface apiService =
                     Api.getClient().create(ApiInterface.class);
 
-            Call<ServiceMain> call = apiService.getService();
+            Call<ServiceMain> call = apiService.getService(uid);
             call.enqueue(new Callback<ServiceMain>() {
                 @Override
                 public void onResponse(Call<ServiceMain> call, Response<ServiceMain> response) {
@@ -425,8 +429,11 @@ public class AddProduct extends AppCompatActivity {
                 MultipartBody.Part image =
                         MultipartBody.Part.createFormData("icon_image", destination.getName(), requestFile);
 
+                MultipartBody.Part user_id =
+                        MultipartBody.Part.createFormData("user_id", uid);
+
                 // finally, execute the request
-                Call<customer> call = apiService.add_product(enme, eqty, eprice, eservice, image);
+                Call<customer> call = apiService.add_product(enme, eqty, eprice, eservice, image,user_id);
                 call.enqueue(new Callback<customer>() {
                     @Override
                     public void onResponse(Call<customer> call, retrofit2.Response<customer> response) {

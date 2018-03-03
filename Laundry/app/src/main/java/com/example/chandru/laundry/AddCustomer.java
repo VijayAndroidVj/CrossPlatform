@@ -49,6 +49,8 @@ public class AddCustomer extends AppCompatActivity implements View.OnClickListen
     HashMap<String, CustomerModel> locationhashmap = new HashMap<>();
     AutoCompleteTextView mobileNumber;
 
+    private  String uid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +61,8 @@ public class AddCustomer extends AppCompatActivity implements View.OnClickListen
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             window.setStatusBarColor(this.getResources().getColor(R.color.background_color));
         }
-
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+        uid = (pref.getString("uid", ""));
         initViews();
         setListeners();
         getCustomerList();
@@ -70,7 +73,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnClickListen
             ApiInterface apiService =
                     Api.getClient().create(ApiInterface.class);
 
-            Call<ServiceMain> call = apiService.customer_details();
+            Call<ServiceMain> call = apiService.customer_details(uid);
             call.enqueue(new Callback<ServiceMain>() {
                 @Override
                 public void onResponse(Call<ServiceMain> call, Response<ServiceMain> response) {
@@ -234,7 +237,7 @@ public class AddCustomer extends AppCompatActivity implements View.OnClickListen
                 ApiInterface apiService =
                         Api.getClient().create(ApiInterface.class);
 
-                Call<customer> call = apiService.getCustomer(name, address, contact);
+                Call<customer> call = apiService.getCustomer(name, address, contact,uid);
                 call.enqueue(new Callback<customer>() {
                     @Override
                     public void onResponse(Call<customer> call, Response<customer> response) {

@@ -26,6 +26,10 @@ import android.widget.Toast;
 import com.example.chandru.laundry.Api.Api;
 import com.example.chandru.laundry.Api.ApiInterface;
 import com.example.chandru.laundry.Pojo.login;
+import com.example.chandru.laundry.Pojo.user;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,6 +44,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static CheckBox show_hide_password;
     private static LinearLayout loginLayout;
     private static Animation shakeAnimation;
+    private   List<user>list = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,13 +165,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             call.enqueue(new Callback<login>() {
                 @Override
                 public void onResponse(Call<login>call, Response<login> response) {
-                   String movies =response.body().getError();
+                    String movies =response.body().getError();
+                    String uid =response.body().getResults().getUnique_id();
+                   // Toast.makeText(LoginActivity.this, uid, Toast.LENGTH_SHORT).show();
 
                     Log.d("success", "Number of movies received: " + movies);
                     if(movies.equals("false")){
                         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                         SharedPreferences.Editor editor = pref.edit();
                         editor.putString("name", getEmailId);
+                        editor.putString("uid", uid);
                         editor.commit();
                         PreferenceUtil preferenceUtil = new PreferenceUtil(LoginActivity.this);
                         preferenceUtil.putBoolean("Loggedin", true);

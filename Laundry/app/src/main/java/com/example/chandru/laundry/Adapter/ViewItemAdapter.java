@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -72,7 +73,7 @@ public class ViewItemAdapter extends RecyclerView.Adapter<ViewItemAdapter.MyView
             }
         });
 
-        // holder.btnAccept.setTag(position);
+         holder.btnAccept.setTag(position);
 
 
     }
@@ -86,6 +87,7 @@ public class ViewItemAdapter extends RecyclerView.Adapter<ViewItemAdapter.MyView
         private TextView title, subtitle, subtitleone, subtitletwo;
 
         private ImageView icon;
+        private Button btnAccept;
 
         public MyViewHolderone(View view) {
             super(view);
@@ -96,6 +98,16 @@ public class ViewItemAdapter extends RecyclerView.Adapter<ViewItemAdapter.MyView
 
             subtitletwo = (TextView) view.findViewById(R.id.subtitletwo);
             icon = (ImageView) view.findViewById(R.id.icon);
+            btnAccept = (Button)view.findViewById(R.id.btnAccept);
+
+
+            btnAccept.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int pos = (int) view.getTag();
+                    listener.adapterActionListener(LIST_TAG,pos);
+                }
+            });
 
 
 //            btnAccept.setOnClickListener(new View.OnClickListener() {

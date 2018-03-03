@@ -22,19 +22,19 @@ public interface ApiInterface {
     Call<login> getLogin(@Query("username") String username, @Query("password") String password);
 
     @GET("add_customer.php?")
-    Call<customer> getCustomer(@Query("name") String name, @Query("address") String address, @Query("contact") String contact);
+    Call<customer> getCustomer(@Query("name") String name, @Query("address") String address, @Query("contact") String contact, @Query("user_id") String user_id);
 
-    @GET("service.php")
-    Call<ServiceMain> getService();
+    @GET("service.php?")
+    Call<ServiceMain> getService(@Query("user_id") String user_id);
 
     @GET("location.php")
     Call<ServiceMain> location();
 
-    @GET("customer_details.php")
-    Call<ServiceMain> customer_details();
+    @GET("customer_details.php?")
+    Call<ServiceMain> customer_details(@Query("user_id") String user_id);
 
     @GET("add_location.php?")
-    Call<customer> getlocation(@Query("location_name") String name, @Query("description") String address);
+    Call<customer> getlocation(@Query("location_name") String name, @Query("description") String address,@Query("user_id") String user_id);
 
 
     @POST("/posts")
@@ -49,7 +49,8 @@ public interface ApiInterface {
     Call<customer> add_service(
             @Part MultipartBody.Part name,
             @Part MultipartBody.Part description,
-            @Part MultipartBody.Part icon_image
+            @Part MultipartBody.Part icon_image,
+            @Part MultipartBody.Part user_id
 
     );
 
@@ -61,7 +62,8 @@ public interface ApiInterface {
             @Part MultipartBody.Part quantity,
             @Part MultipartBody.Part price,
             @Part MultipartBody.Part service_,
-            @Part MultipartBody.Part icon_image
+            @Part MultipartBody.Part icon_image,
+            @Part MultipartBody.Part user_id
 
     );
 }

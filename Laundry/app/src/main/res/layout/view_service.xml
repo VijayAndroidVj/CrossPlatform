@@ -25,43 +25,68 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="5dp" />
-
         <LinearLayout
+            android:weightSum="2"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:padding="3dp">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Category name"
-                android:textColor="@color/background_color"
-                android:textSize="20sp"
-                android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/subtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="test"
-                android:textColor="@color/black"
-                android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/subtitleone"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_weight="2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="test"
-                android:textColor="@color/black"
-                android:textSize="14sp"
-                android:visibility="gone" />
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="3dp">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Category name"
+                    android:textColor="@color/background_color"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="test"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/subtitleone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="test"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
+
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnAccept"
+                android:background="#ae3e2b"
+                android:text="Delete"
+                android:layout_margin="10dp"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content" />
+
+
 
 
         </LinearLayout>
+
+
 
     </LinearLayout>
 </android.support.v7.widget.CardView>
