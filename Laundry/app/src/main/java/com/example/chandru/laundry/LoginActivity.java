@@ -166,11 +166,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 @Override
                 public void onResponse(Call<login>call, Response<login> response) {
                     String movies =response.body().getError();
-                    String uid =response.body().getResults().getUnique_id();
+
                    // Toast.makeText(LoginActivity.this, uid, Toast.LENGTH_SHORT).show();
 
                     Log.d("success", "Number of movies received: " + movies);
                     if(movies.equals("false")){
+                        String uid =response.body().getResults().getUnique_id();
                         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                         SharedPreferences.Editor editor = pref.edit();
                         editor.putString("name", getEmailId);

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,7 +45,7 @@ public class Delivery extends AppCompatActivity implements View.OnClickListener,
     private List<deliverylist> maintain = new ArrayList<>();
     private deliverylistAdapter bAdapter;
     private RecyclerView recycler_view;
-    private String dataOne;
+    private String dataOne,uid;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
@@ -60,8 +61,11 @@ public class Delivery extends AppCompatActivity implements View.OnClickListener,
         }
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
+        SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+        uid = (pref.getString("uid", ""));
+
         if (CommonUtil.isNetworkAvailable(Delivery.this)) {
-            String Url = "http://demo.adityametals.com/api/order_list.php";
+            String Url = "http://demo.adityametals.com/api/order_list.php?user_id="+uid;;
             new serverUpload().execute(Url);
         } else {
             Toast.makeText(Delivery.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
@@ -74,7 +78,7 @@ public class Delivery extends AppCompatActivity implements View.OnClickListener,
                 // Refresh items
 
                 if (CommonUtil.isNetworkAvailable(Delivery.this)) {
-                    String Url = "http://demo.adityametals.com/api/order_list.php";
+                    String Url = "http://demo.adityametals.com/api/order_list.php?user_id="+uid;;
                     new serverUpload().execute(Url);
                 } else {
                     hideRefresh();
