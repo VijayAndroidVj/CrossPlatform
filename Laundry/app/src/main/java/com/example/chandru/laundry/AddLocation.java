@@ -8,20 +8,12 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.chandru.laundry.Api.Api;
 import com.example.chandru.laundry.Api.ApiInterface;
-import com.example.chandru.laundry.Pojo.LocationModel;
-import com.example.chandru.laundry.Pojo.ServiceMain;
 import com.example.chandru.laundry.Pojo.customer;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,7 +22,7 @@ import retrofit2.Response;
 public class AddLocation extends AppCompatActivity {
 
     private EditText location, description;
-    private String uid ;
+    private String uid;
 
 
     @Override
@@ -50,7 +42,6 @@ public class AddLocation extends AppCompatActivity {
 
 
     }
-
 
 
     @Override
@@ -79,7 +70,7 @@ public class AddLocation extends AppCompatActivity {
         ApiInterface apiService =
                 Api.getClient().create(ApiInterface.class);
 
-        Call<customer> call = apiService.getlocation(loca, dest,uid);
+        Call<customer> call = apiService.getlocation(loca, dest, uid);
         call.enqueue(new Callback<customer>() {
             @Override
             public void onResponse(Call<customer> call, Response<customer> response) {
@@ -91,6 +82,7 @@ public class AddLocation extends AppCompatActivity {
 
                     Toast.makeText(AddLocation.this, msg, Toast.LENGTH_SHORT)
                             .show();
+                    onBackPressed();
 
                     // Intent myIntent = new Intent(AddLocation.this, Order.class);
                     // ActivityOptions options =

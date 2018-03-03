@@ -259,8 +259,8 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
     }
 
     public void  back (View view){
-        Intent backs = new Intent(Order.this,MainActivity.class);
-        startActivity(backs);
+//        Intent backs = new Intent(Order.this,MainActivity.class);
+//        startActivity(backs);
         finish();
     }
 

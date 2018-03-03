@@ -5,10 +5,10 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -45,7 +45,7 @@ public class Delivery extends AppCompatActivity implements View.OnClickListener,
     private List<deliverylist> maintain = new ArrayList<>();
     private deliverylistAdapter bAdapter;
     private RecyclerView recycler_view;
-    private String dataOne,uid;
+    private String dataOne, uid;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
@@ -65,7 +65,8 @@ public class Delivery extends AppCompatActivity implements View.OnClickListener,
         uid = (pref.getString("uid", ""));
 
         if (CommonUtil.isNetworkAvailable(Delivery.this)) {
-            String Url = "http://demo.adityametals.com/api/order_list.php?user_id="+uid;;
+            String Url = "http://demo.adityametals.com/api/order_list.php?user_id=" + uid;
+            ;
             new serverUpload().execute(Url);
         } else {
             Toast.makeText(Delivery.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
@@ -78,7 +79,8 @@ public class Delivery extends AppCompatActivity implements View.OnClickListener,
                 // Refresh items
 
                 if (CommonUtil.isNetworkAvailable(Delivery.this)) {
-                    String Url = "http://demo.adityametals.com/api/order_list.php?user_id="+uid;;
+                    String Url = "http://demo.adityametals.com/api/order_list.php?user_id=" + uid;
+                    ;
                     new serverUpload().execute(Url);
                 } else {
                     hideRefresh();
@@ -103,8 +105,8 @@ public class Delivery extends AppCompatActivity implements View.OnClickListener,
         SearchView searchView = null;
         if (searchItem != null) {
             searchView = (SearchView) searchItem.getActionView();
-
-            searchView.setOnQueryTextListener( Delivery.this);
+            searchView.setBackgroundColor(Color.parseColor("#35D15B"));
+            searchView.setOnQueryTextListener(Delivery.this);
         }
         if (searchView != null) {
             searchView.setSearchableInfo(searchManager.getSearchableInfo(Delivery.this.getComponentName()));
@@ -167,8 +169,6 @@ public class Delivery extends AppCompatActivity implements View.OnClickListener,
     }
 
 
-
-
     public void hideRefresh() {
         try {
             if (swipeRefreshLayout != null)
@@ -197,7 +197,6 @@ public class Delivery extends AppCompatActivity implements View.OnClickListener,
 
     }
 
-    
 
     private class serverUpload extends AsyncTask<String, Void, Boolean> {
 
@@ -247,36 +246,36 @@ public class Delivery extends AppCompatActivity implements View.OnClickListener,
                 JSONArray jsonOneArray = jsono.getJSONArray("details");
                 for (int i = 0; i < jsonOneArray.length(); i++) {
                     JSONObject jss = jsonOneArray.getJSONObject(i);
-                  //  String abc =jss.getString("delivery_status");
+                    //  String abc =jss.getString("delivery_status");
 
-                    if(jss.getString("delivery_status").equalsIgnoreCase("Delivered")){
-                        deliverylist dboard = new deliverylist();
-                        dboard.setId(jss.getString("id"));
-                        dboard.setOrder_id(jss.getString("order_id"));
-                        dboard.setStore_ref(jss.getString("store_ref"));
-                        dboard.setOrder_date(jss.getString("order_date"));
-                        dboard.setCustomer_name(jss.getString("customer_name"));
+//                    if(jss.getString("delivery_status").equalsIgnoreCase("Delivered")){
+                    deliverylist dboard = new deliverylist();
+                    dboard.setId(jss.getString("id"));
+                    dboard.setOrder_id(jss.getString("order_id"));
+                    dboard.setStore_ref(jss.getString("store_ref"));
+                    dboard.setOrder_date(jss.getString("order_date"));
+                    dboard.setCustomer_name(jss.getString("customer_name"));
 
-                        dboard.setCustomer_phone(jss.getString("customer_phone"));
-                        dboard.setCustomer_address(jss.getString("customer_address"));
-                        dboard.setDelivery_status(jss.getString("delivery_status"));
-                        dboard.setLocation(jss.getString("location"));
-                        dboard.setLaundry_for(jss.getString("laundry_for"));
+                    dboard.setCustomer_phone(jss.getString("customer_phone"));
+                    dboard.setCustomer_address(jss.getString("customer_address"));
+                    dboard.setDelivery_status(jss.getString("delivery_status"));
+                    dboard.setLocation(jss.getString("location"));
+                    dboard.setLaundry_for(jss.getString("laundry_for"));
 
-                        dboard.setDelivery_date(jss.getString("delivery_date"));
-                        dboard.setTotal_laundry(jss.getString("total_laundry"));
-                        dboard.setTotal_amount(jss.getString("total_amount"));
-                        dboard.setAdvance_amount(jss.getString("advance_amount"));
-                        dboard.setBalance_amount(jss.getString("balance_amount"));
+                    dboard.setDelivery_date(jss.getString("delivery_date"));
+                    dboard.setTotal_laundry(jss.getString("total_laundry"));
+                    dboard.setTotal_amount(jss.getString("total_amount"));
+                    dboard.setAdvance_amount(jss.getString("advance_amount"));
+                    dboard.setBalance_amount(jss.getString("balance_amount"));
 
-                        dboard.setPaid(jss.getString("paid"));
-                        dboard.setDelivered_on(jss.getString("delivered_on"));
-                        dboard.setLaundry_(jss.getString("laundry_"));
-                        dboard.setCheck_(jss.getString("check_"));
-                        dboard.setSummary(jss.getString("summary"));
-                        maintain.add(dboard);
+                    dboard.setPaid(jss.getString("paid"));
+                    dboard.setDelivered_on(jss.getString("delivered_on"));
+                    dboard.setLaundry_(jss.getString("laundry_"));
+                    dboard.setCheck_(jss.getString("check_"));
+                    dboard.setSummary(jss.getString("summary"));
+                    maintain.add(dboard);
 
-                    }
+//                    }
 
                 }
                 recycler_view = (RecyclerView) findViewById(R.id.recycler_view);

@@ -61,6 +61,7 @@
                             card_view:cardCornerRadius="3dp">
 
                             <LinearLayout
+                                android:id="@+id/opencusomer1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@android:color/holo_orange_light"
@@ -110,6 +111,7 @@
                             card_view:cardCornerRadius="3dp">
 
                             <LinearLayout
+                                android:id="@+id/deliverycusomer"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@android:color/holo_green_light"

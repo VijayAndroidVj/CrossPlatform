@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.chandru.laundry.Delivery;
 import com.example.chandru.laundry.Listener.AdapterListener;
 import com.example.chandru.laundry.Pojo.deliverylist;
 import com.example.chandru.laundry.R;
@@ -25,26 +24,31 @@ public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.MyVi
     private Context context;
     private List<deliverylist> list;
     private AdapterListener listener;
-    public static final int LIST_TAG =5555;
-    int selectedPosition=-1;
+    public static final int LIST_TAG = 5555;
+    int selectedPosition = -1;
 
+
+    public void setSearchResult(List<deliverylist> maintain) {
+        this.list = maintain;
+        notifyDataSetChanged();
+    }
 
     public ViewOrderAdapter(List<deliverylist> list, ViewOrders mainActivity, AdapterListener listener) {
-        this.list=list;
-        this.context=mainActivity;
-        this.listener=listener;
+        this.list = list;
+        this.context = mainActivity;
+        this.listener = listener;
     }
 
     @Override
     public MyViewHolderone onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(context).inflate(R.layout.view_order,parent,false);
+        View itemView = LayoutInflater.from(context).inflate(R.layout.view_order, parent, false);
         return new MyViewHolderone(itemView);
     }
 
 
     @Override
     public void onBindViewHolder(MyViewHolderone holder, final int position) {
-        deliverylist dboard =list.get(position);
+        deliverylist dboard = list.get(position);
         holder.tvTwo.setText(dboard.getCustomer_name());
         holder.tvThree.setText(dboard.getOrder_id());
         holder.tvFour.setText(dboard.getTotal_laundry());
@@ -52,17 +56,14 @@ public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.MyVi
         holder.tvSix.setText(dboard.getTotal_amount());
         holder.tvSeven.setText(dboard.getDelivery_status());
 
-        if(dboard.getDelivery_status().equals("Open")){
+        if (dboard.getDelivery_status().equals("Open")) {
             holder.tvSeven.setBackgroundColor(Color.parseColor("#35D15B"));
-        }else {
+        } else {
             holder.tvSeven.setBackgroundColor(Color.parseColor("#DE4F4F"));
         }
 
 
-
-
-
-        if(selectedPosition==position)
+        if (selectedPosition == position)
             holder.itemView.setBackgroundColor(Color.parseColor("#009688"));
         else
             holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
@@ -70,38 +71,36 @@ public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.MyVi
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectedPosition=position;
+                selectedPosition = position;
                 notifyDataSetChanged();
 
             }
         });
 
-       // holder.btnAccept.setTag(position);
-
-
-
+        // holder.btnAccept.setTag(position);
 
 
     }
 
     @Override
     public int getItemCount() {
-        return list!=null?list.size():0;
+        return list != null ? list.size() : 0;
     }
 
     public class MyViewHolderone extends RecyclerView.ViewHolder {
-        private TextView tvTwo,tvThree,tvFour,tvFive,tvSix,tvSeven;
+        private TextView tvTwo, tvThree, tvFour, tvFive, tvSix, tvSeven;
 
         private LinearLayout linCat;
+
         public MyViewHolderone(View view) {
             super(view);
 
-            tvTwo = (TextView)view.findViewById(R.id.tvTwo);
-            tvThree = (TextView)view.findViewById(R.id.tvThree);
-            tvFour = (TextView)view.findViewById(R.id.tvFour);
-            tvFive = (TextView)view.findViewById(R.id.tvFive);
-            tvSix = (TextView)view.findViewById(R.id.tvSix);
-            tvSeven = (TextView)view.findViewById(R.id.tvSeven);
+            tvTwo = (TextView) view.findViewById(R.id.tvTwo);
+            tvThree = (TextView) view.findViewById(R.id.tvThree);
+            tvFour = (TextView) view.findViewById(R.id.tvFour);
+            tvFive = (TextView) view.findViewById(R.id.tvFive);
+            tvSix = (TextView) view.findViewById(R.id.tvSix);
+            tvSeven = (TextView) view.findViewById(R.id.tvSeven);
 //            btnAccept=(TextView)view.findViewById(R.id.btnAccept);
 //
 //
@@ -113,7 +112,6 @@ public class ViewOrderAdapter extends RecyclerView.Adapter<ViewOrderAdapter.MyVi
 //                    listener.adapterActionListener(LIST_TAG,pos);
 //                }
 //            });
-
 
 
 //            btnAccept.setOnClickListener(new View.OnClickListener() {

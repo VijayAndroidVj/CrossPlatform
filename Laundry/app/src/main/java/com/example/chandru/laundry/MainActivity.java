@@ -45,9 +45,10 @@ public class MainActivity extends AppCompatActivity {
     private List<landingcutomer> maintain = new ArrayList<>();
     private cutomerAdapter cAdapter;
     private RecyclerView recycler_view;
-    private String dataOne,uid;
+    private String dataOne, uid;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private LinearLayout opencusomer,openservice;
+    private LinearLayout opencusomer, openservice;
+    private LinearLayout opencusomer1, deliverycusomer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +61,10 @@ public class MainActivity extends AppCompatActivity {
         ImageView delivery = (ImageView) findViewById(R.id.btndelivery);
         ImageView addservice = (ImageView) findViewById(R.id.btnADDItem);
         ImageView additem = (ImageView) findViewById(R.id.btnaddproduct);
-        opencusomer =(LinearLayout)findViewById(R.id.opencusomer);
-        openservice =(LinearLayout)findViewById(R.id.openservice);
+        opencusomer = (LinearLayout) findViewById(R.id.opencusomer);
+        opencusomer1 = (LinearLayout) findViewById(R.id.opencusomer1);
+        deliverycusomer = (LinearLayout) findViewById(R.id.deliverycusomer);
+        openservice = (LinearLayout) findViewById(R.id.openservice);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
@@ -77,6 +80,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent addscat = new Intent(MainActivity.this, ViewCustomer.class);
+                startActivity(addscat);
+            }
+        });
+        opencusomer1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent addscat = new Intent(MainActivity.this, ViewOrders.class);
+                addscat.putExtra("order", 1);
+                startActivity(addscat);
+            }
+        });
+        deliverycusomer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent addscat = new Intent(MainActivity.this, ViewOrders.class);
+                addscat.putExtra("order", 2);
                 startActivity(addscat);
             }
         });
@@ -126,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if (CommonUtil.isNetworkAvailable(MainActivity.this)) {
-            String Url = "http://demo.adityametals.com/api/dashboard.php?user_id="+uid;
+            String Url = "http://demo.adityametals.com/api/dashboard.php?user_id=" + uid;
             new serverUpload().execute(Url);
         } else {
             Toast.makeText(MainActivity.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
@@ -137,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
             public void onRefresh() {
                 // Refresh items
                 if (CommonUtil.isNetworkAvailable(MainActivity.this)) {
-                    String Url = "http://demo.adityametals.com/api/dashboard.php?user_id="+uid;
+                    String Url = "http://demo.adityametals.com/api/dashboard.php?user_id=" + uid;
                     new serverUpload().execute(Url);
                 } else {
                     hideRefresh();

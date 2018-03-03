@@ -45,7 +45,7 @@ public class ViewLocation extends AppCompatActivity implements View.OnClickListe
     private List<vloation> maintain = new ArrayList<>();
     private ViewLocationAdapter bAdapter;
     private RecyclerView recycler_view;
-    private String dataOne,deleteId,dataTwo;
+    private String dataOne, deleteId, dataTwo;
     private FloatingActionButton fab;
 
 
@@ -96,14 +96,6 @@ public class ViewLocation extends AppCompatActivity implements View.OnClickListe
 //            Toast.makeText(ViewLocation.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
 //        }
 
-        if (CommonUtil.isNetworkAvailable(ViewLocation.this)) {
-            SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
-            String uid = (pref.getString("uid", ""));
-            String Url = "http://demo.adityametals.com/api/location.php?user_id="+uid;
-            new serverUpload().execute(Url);
-        } else {
-            Toast.makeText(ViewLocation.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
-        }
 
     }
 
@@ -136,7 +128,7 @@ public class ViewLocation extends AppCompatActivity implements View.OnClickListe
 
                     SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                     String uid = (pref.getString("uid", ""));
-                    String Url = "http://demo.adityametals.com/api/delete.php?table=laundry_location&id="+deleteId+"&user_id="+uid;
+                    String Url = "http://demo.adityametals.com/api/delete.php?table=location_details&id=" + deleteId + "&user_id=" + uid;
                     new serverDelete().execute(Url);
                 } else {
                     Toast.makeText(ViewLocation.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
@@ -163,8 +155,8 @@ public class ViewLocation extends AppCompatActivity implements View.OnClickListe
     public void adapterActionListener(int state, Object data) {
         if (state == deliverylistAdapter.LIST_TAG && data != null) {
             int pois = (int) data;
-            deleteId=maintain.get(pois).getId();
-            showMeetingtAlert(ViewLocation.this, "Delete", "Are you sure to delete  "+maintain.get(pois).getLocation_name()+"?");
+            deleteId = maintain.get(pois).getId();
+            showMeetingtAlert(ViewLocation.this, "Delete", "Are you sure to delete  " + maintain.get(pois).getLocation_name() + "?");
             // String Url = "http://demo.adityametals.com/api/items.php?service_id="+maintain.get(pois).getId();
             // new Order.update().execute(Url);
 
@@ -241,6 +233,22 @@ public class ViewLocation extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try {
+            if (CommonUtil.isNetworkAvailable(ViewLocation.this)) {
+                SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+                String uid = (pref.getString("uid", ""));
+                String Url = "http://demo.adityametals.com/api/location.php?user_id=" + uid;
+                new serverUpload().execute(Url);
+            } else {
+                Toast.makeText(ViewLocation.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     private class serverDelete extends AsyncTask<String, Void, Boolean> {
 
@@ -291,7 +299,7 @@ public class ViewLocation extends AppCompatActivity implements View.OnClickListe
                     if (CommonUtil.isNetworkAvailable(ViewLocation.this)) {
                         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                         String uid = (pref.getString("uid", ""));
-                        String Url = "http://demo.adityametals.com/api/location.php?user_id="+uid;
+                        String Url = "http://demo.adityametals.com/api/location.php?user_id=" + uid;
                         new serverUpload().execute(Url);
                     } else {
                         Toast.makeText(ViewLocation.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();

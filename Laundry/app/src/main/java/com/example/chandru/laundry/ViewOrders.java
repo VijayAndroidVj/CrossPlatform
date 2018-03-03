@@ -1,15 +1,22 @@
 package com.example.chandru.laundry;
 
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -34,12 +41,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewOrders extends AppCompatActivity implements View.OnClickListener, AdapterListener {
+public class ViewOrders extends AppCompatActivity implements View.OnClickListener, AdapterListener, SearchView.OnQueryTextListener {
     private List<deliverylist> maintain = new ArrayList<>();
     private ViewOrderAdapter bAdapter;
     private RecyclerView recycler_view;
-    private String dataOne,uid;
+    private String dataOne, uid;
     private SwipeRefreshLayout swipeRefreshLayout;
+    int type = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +61,14 @@ public class ViewOrders extends AppCompatActivity implements View.OnClickListene
             window.setStatusBarColor(this.getResources().getColor(R.color.background_color));
         }
 
+        type = getIntent().getIntExtra("order", 0);
+        if (type == 1) {
+            getSupportActionBar().setTitle("Open Orders");
+        } else if (type == 2) {
+            getSupportActionBar().setTitle("Delivered Orders");
+        } else {
+            getSupportActionBar().setTitle("Total Service");
+        }
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
         uid = (pref.getString("uid", ""));
 
@@ -60,7 +76,7 @@ public class ViewOrders extends AppCompatActivity implements View.OnClickListene
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
         if (CommonUtil.isNetworkAvailable(ViewOrders.this)) {
-            String Url = "http://demo.adityametals.com/api/order_list.php?user_id="+uid;
+            String Url = "http://demo.adityametals.com/api/order_list.php?user_id=" + uid;
             new serverUpload().execute(Url);
         } else {
             Toast.makeText(ViewOrders.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
@@ -73,7 +89,7 @@ public class ViewOrders extends AppCompatActivity implements View.OnClickListene
                 // Refresh items
 
                 if (CommonUtil.isNetworkAvailable(ViewOrders.this)) {
-                    String Url = "http://demo.adityametals.com/api/order_list.php?user_id="+uid;
+                    String Url = "http://demo.adityametals.com/api/order_list.php?user_id=" + uid;
                     new serverUpload().execute(Url);
                 } else {
                     hideRefresh();
@@ -186,7 +202,19 @@ public class ViewOrders extends AppCompatActivity implements View.OnClickListene
                     dboard.setLaundry_(jss.getString("laundry_"));
                     dboard.setCheck_(jss.getString("check_"));
                     dboard.setSummary(jss.getString("summary"));
-                    maintain.add(dboard);
+                    if (type == 1) {
+                        if (dboard.getDelivery_status().equalsIgnoreCase("Open")) {
+                            maintain.add(dboard);
+                        }
+                    } else if (type == 2) {
+                        if (dboard.getDelivery_status().equalsIgnoreCase("Delivered")) {
+                            maintain.add(dboard);
+                        }
+                    } else {
+                        maintain.add(dboard);
+                    }
+
+
                 }
                 recycler_view = (RecyclerView) findViewById(R.id.recycler_view);
                 LinearLayoutManager lmanager = new LinearLayoutManager(ViewOrders.this);
@@ -199,4 +227,51 @@ public class ViewOrders extends AppCompatActivity implements View.OnClickListene
             }
         }
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.search, menu);
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+
+        SearchManager searchManager = (SearchManager) ViewOrders.this.getSystemService(Context.SEARCH_SERVICE);
+
+        SearchView searchView = null;
+        if (searchItem != null) {
+            searchView = (SearchView) searchItem.getActionView();
+            searchView.setBackgroundColor(Color.parseColor("#35D15B"));
+            searchView.setOnQueryTextListener(ViewOrders.this);
+        }
+        if (searchView != null) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(ViewOrders.this.getComponentName()));
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        final List<deliverylist> filteredModelList = filter(maintain, newText);
+        bAdapter.setSearchResult(filteredModelList);
+        return true;
+    }
+
+    private List<deliverylist> filter(List<deliverylist> maintain, String newText) {
+        newText = newText.toLowerCase();
+        final List<deliverylist> filteredModelList = new ArrayList<>();
+        for (deliverylist model : maintain) {
+            final String text = model.getOrder_id().toLowerCase();
+            if (text.contains(newText)) {
+                filteredModelList.add(model);
+            }
+        }
+
+        return filteredModelList;
+    }
+
 }

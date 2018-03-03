@@ -35,8 +35,7 @@
         <activity
             android:name=".Order"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
-            android:name=".Delivery" />
+        <activity android:name=".Delivery" />
         <activity android:name=".DeliveryActivity" />
         <activity
             android:name=".AddService"
@@ -58,8 +57,7 @@
             android:name=".Aboutus"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".ViewCustomer" />
-        <activity android:name=".ViewOrders"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name=".ViewOrders" />
     </application>
 
 </manifest>
