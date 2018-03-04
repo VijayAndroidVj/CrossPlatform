@@ -1,6 +1,8 @@
 package com.example.chandru.laundry;
 
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -14,8 +16,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.chandru.laundry.Adapter.deliveryAdapter;
@@ -33,15 +37,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 public class DeliveryActivity extends AppCompatActivity implements View.OnClickListener, AdapterListener {
     private List<delivery> maintain = new ArrayList<>();
     private deliveryAdapter bAdapter;
     private RecyclerView recycler_view;
-    private String dataOne, dataTwos, Billno, bamt,uid;
+    private String dataOne, dataTwos, Billno, bamt,uid,dataTwo;
     private TextView cname, bill, phone, address, qty, amt, advance, balance,pickup,delivery;
+    private EditText editText3;
+    Calendar myCalendar = Calendar.getInstance();
+    private int mYear, mMonth, mDay, mHour, mMinute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +68,37 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
         balance = (TextView) findViewById(R.id.balance);
         pickup = (TextView) findViewById(R.id.pick);
         delivery = (TextView) findViewById(R.id.delivery);
+        editText3 = (EditText)findViewById(R.id.editText3);
+
+
+
+        editText3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                new DatePickerDialog(DeliveryActivity.this, ye, myCalendar
+                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+
+            }
+        });
+
+        findViewById(R.id.btnDeliveryupdate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (CommonUtil.isNetworkAvailable(DeliveryActivity.this)) {
+                    String bills = bill.getText().toString();
+                    String dastes = editText3.getText().toString();
+                    SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+                    String uid = (pref.getString("uid", ""));
+                    String Url = "http://demo.adityametals.com/api/update_delivery_date.php?bill="+bills+"&date="+dastes+"&user_id="+uid;
+                    new serverDateUpdate().execute(Url);
+                } else {
+                    Toast.makeText(DeliveryActivity.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
 
         SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
@@ -193,6 +234,7 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
                     balance.setText(bamt);
                     pickup.setText(pickupss);
                     delivery.setText(deliveryss);
+                    editText3.setText(deliveryss);
 
 
 //                    deliverylist dboard = new deliverylist();
@@ -252,6 +294,50 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
                 e.printStackTrace();
             }
         }
+    }
+
+    DatePickerDialog.OnDateSetListener ye = new DatePickerDialog.OnDateSetListener() {
+
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            // TODO Auto-generated method stub
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabelOne();
+        }
+
+    };
+
+    private void updateLabelOne() {
+
+        // Get Current Time
+        final Calendar c = Calendar.getInstance();
+        mHour = c.get(Calendar.HOUR_OF_DAY);
+        mMinute = c.get(Calendar.MINUTE);
+
+
+
+
+
+        // Launch Time Picker Dialog
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this,
+                new TimePickerDialog.OnTimeSetListener() {
+
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay,
+                                          int minute) {
+                        String myFormat = "dd-MM-yyyy"; //In which you need put here
+                        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+                        editText3.setText(sdf.format(myCalendar.getTime() )+","+hourOfDay + ":" + minute);
+                    }
+                }, mHour, mMinute, false);
+        timePickerDialog.show();
+
+
     }
 
 
@@ -317,6 +403,66 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
                 } else {
                     Toast.makeText(DeliveryActivity.this, "Could not Connect To the Server..", Toast.LENGTH_SHORT).show();
                 }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    private class serverDateUpdate extends AsyncTask<String, Void, Boolean> {
+
+        ProgressDialog dialog;
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new ProgressDialog(DeliveryActivity.this);
+            dialog.setMessage("Loading in.., please wait");
+            dialog.setTitle("");
+            // dialog.getWindow().getAttributes().windowAnimations = R.style.dialog_animation;
+            dialog.show();
+            dialog.setCancelable(false);
+
+
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            try {
+                //String url = params[0].replace(" ", "%20");
+                HttpGet httppost = new HttpGet(params[0]);
+                HttpClient httpclient = new DefaultHttpClient();
+                HttpResponse response = httpclient.execute(httppost);
+
+
+                HttpEntity entity = response.getEntity();
+                dataTwo = (EntityUtils.toString(entity));
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            dialog.dismiss();
+            try {
+                JSONObject jsono = new JSONObject(dataTwo);
+                String msg = jsono.getString("error");
+
+                if (msg.equals("false")) {
+                    Toast.makeText(DeliveryActivity.this, "Data deleted successfully!", Toast.LENGTH_SHORT).show();
+
+
+                } else {
+                    Toast.makeText(DeliveryActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                }
+
 
             } catch (JSONException e) {
                 e.printStackTrace();
