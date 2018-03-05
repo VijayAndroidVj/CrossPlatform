@@ -38,6 +38,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -92,6 +93,7 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
                     String dastes = editText3.getText().toString();
                     SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                     String uid = (pref.getString("uid", ""));
+
                     String Url = "http://demo.adityametals.com/api/update_delivery_date.php?bill=" + bills + "&date=" + dastes + "&user_id=" + uid;
                     new serverDateUpdate().execute(Url);
                 } else {
@@ -138,7 +140,11 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
                             }
                         }
                         //http://demo.adityametals.com/api/update_delivery.php?bill="+Billno+"&paid="+bamt+"&summary="+remark+"&recieve="+receive
-                        String Url = "http://demo.adityametals.com/api/update_delivery.php?bill=" + Billno + "&paid=" + bamt + "&summary=" + remark + "&recieve=" + receive + "&user_id=" + uid;
+                        if (!TextUtils.isEmpty(remark)) {
+                            remark = URLEncoder.encode(remark);
+
+                        }
+                        String Url = "http://demo.adityametals.com/api/update_delivery.php?bill=" + Billno + "&paid=" + bamt + "&summary='" + remark + "'&recieve=" + receive + "&user_id=" + uid;
                         new customerentry().execute(Url);
 
 //                        Toast.makeText(DeliveryActivity.this, "Delivered successfully", Toast.LENGTH_SHORT).show();
@@ -148,7 +154,7 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
 //                        finish();
 //                        findViewById(R.id.progress).setVisibility(View.GONE);
                     }
-                }, 1500);
+                }, 0);
             }
         });
 
@@ -353,12 +359,18 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
 
 
     public void next(View view) {
+
         EditText re = (EditText) findViewById(R.id.receive);
         EditText remar = (EditText) findViewById(R.id.remark);
         String receive = re.getText().toString();
         String remark = remar.getText().toString();
+        String Url = "http://demo.adityametals.com/api/update_delivery.php?bill=" + Billno + "&paid=" + bamt + "&recieve=" + receive + "&user_id=" + uid;
+        if (TextUtils.isEmpty(remark)) {
+            remark = URLEncoder.encode(remark);
+            Url = "http://demo.adityametals.com/api/update_delivery.php?bill=" + Billno + "&paid=" + bamt + "&summary='" + remark + "'&recieve=" + receive + "&user_id=" + uid;
+        }
         //http://demo.adityametals.com/api/update_delivery.php?bill="+Billno+"&paid="+bamt+"&summary="+remark+"&recieve="+receive
-        String Url = "http://demo.adityametals.com/api/update_delivery.php?bill=" + Billno + "&paid=" + bamt + "&summary=" + remark + "&recieve=" + receive + "&user_id=" + uid;
+
         new customerentry().execute(Url);
     }
 
