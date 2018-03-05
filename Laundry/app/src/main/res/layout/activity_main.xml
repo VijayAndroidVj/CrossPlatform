@@ -293,8 +293,8 @@
                         android:layout_height="match_parent"
                         android:layout_margin="10dp"
                         android:layout_weight="1"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="5dp"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
                         android:src="@drawable/shoppingbag" />
 
                     <TextView
@@ -324,8 +324,8 @@
 
                         android:layout_margin="10dp"
                         android:layout_weight="1"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="5dp"
+                        android:paddingBottom="10dp"
+                        android:paddingTop="10dp"
                         android:src="@drawable/ohistory" />
 
                     <TextView
