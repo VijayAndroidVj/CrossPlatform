@@ -207,7 +207,7 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
                         String myFormat = "dd-MM-yyyy"; //In which you need put here
                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
                         time = hourOfDay + ":" + minute + ":" + "00";
-                        editdate.setText(sdf.format(myCalendar.getTime()) + time);
+                        editdate.setText(sdf.format(myCalendar.getTime()) + " " + time);
                     }
                 }, mHour, mMinute, false);
         timePickerDialog.show();
@@ -338,33 +338,35 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
         public void onTextChanged(CharSequence s, int a, int b, int c) {
             // TODO Auto-generated method stub
             s = s.toString();
-
-            if (s.equals("")) {
-                for (int i = 0; i < billist.size(); i++) {
-                    int total = (int) Float.parseFloat(billist.get(i).getAmt());
-                    edittextTwo.setText("" + total);
-                }
-            } else {
-                if (!dontallowChange) {
-                    float f1 = Float.parseFloat((String) s);
-                    int cba = 0;
+            try {
+                if (s.equals("")) {
                     for (int i = 0; i < billist.size(); i++) {
-                        cba = cba + (int) Float.parseFloat(billist.get(i).getAmt());
+                        int total = (int) Float.parseFloat(billist.get(i).getAmt());
+                        edittextTwo.setText("" + total);
                     }
-                    f1 = cba - f1;
-                    if (f1 < 0) {
-                        dontallowChange = true;
-                        edittextOne.setText(s.toString().substring(0, s.toString().length() - 1));
-                        edittextOne.setSelection(edittextOne.getText().toString().length());
-                        dontallowChange = false;
-                        Toast.makeText(getApplicationContext(), "Maximum Limit Reached", Toast.LENGTH_SHORT).show();
-                    } else {
-                        edittextTwo.setText("" + ((int) f1));
+                } else {
+                    if (!dontallowChange) {
+                        float f1 = Float.parseFloat((String) s);
+                        int cba = 0;
+                        for (int i = 0; i < billist.size(); i++) {
+                            cba = cba + (int) Float.parseFloat(billist.get(i).getAmt());
+                        }
+                        f1 = cba - f1;
+                        if (f1 < 0) {
+                            dontallowChange = true;
+                            edittextOne.setText(s.toString().substring(0, s.toString().length() - 1));
+                            edittextOne.setSelection(edittextOne.getText().toString().length());
+                            dontallowChange = false;
+                            Toast.makeText(getApplicationContext(), "Maximum Limit Reached", Toast.LENGTH_SHORT).show();
+                        } else {
+                            edittextTwo.setText("" + ((int) f1));
+                        }
                     }
+
                 }
-
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
 
         }
     };
