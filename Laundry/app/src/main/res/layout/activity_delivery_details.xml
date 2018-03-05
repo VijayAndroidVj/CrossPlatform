@@ -342,12 +342,7 @@
                     android:padding="10dp"
                     android:weightSum="2">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
+
 
                         <TextView
                             android:layout_width="match_parent"
@@ -358,38 +353,46 @@
                             android:textSize="15sp" />
 
                         <TextView
+
                             android:id="@+id/qty"
+                            android:padding="3dp"
+                            android:background="@color/white_greyish"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textColor="@android:color/black" />
 
-                    </LinearLayout>
+                </LinearLayout>
+
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-
+                        android:layout_margin="5dp"
                         android:orientation="horizontal"
+                        android:padding="10dp"
                         android:weightSum="2">
+
+
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
+                            android:layout_weight="0.9"
                             android:text="Total  :"
                             android:textColor="@android:color/black"
                             android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/amt"
+                            android:padding="3dp"
+                            android:background="@color/white_greyish"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textColor="@android:color/black" />
 
-                    </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -400,12 +403,7 @@
                     android:padding="10dp"
                     android:weightSum="2">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
+
 
                         <TextView
                             android:layout_width="match_parent"
@@ -417,24 +415,29 @@
 
                         <TextView
                             android:id="@+id/advance"
+                            android:padding="3dp"
+                            android:background="@color/white_greyish"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textColor="@android:color/black" />
 
-                    </LinearLayout>
-
+                </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_margin="5dp"
                         android:orientation="horizontal"
+                        android:padding="10dp"
                         android:weightSum="2">
 
 
+
+
+
                         <LinearLayout
-                            android:layout_weight="1"
+                            android:layout_weight=".9"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
@@ -448,14 +451,18 @@
                                 android:textSize="14sp" />
                         </LinearLayout>
 
+
+
                         <TextView
                             android:id="@+id/balance"
+                            android:padding="3dp"
+                            android:background="@color/white_greyish"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textColor="@android:color/black" />
 
-                    </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -466,12 +473,7 @@
                     android:padding="10dp"
                     android:weightSum="2">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
+
 
                         <TextView
                             android:layout_width="match_parent"
@@ -483,18 +485,23 @@
 
                         <EditText
                             android:id="@+id/receive"
+                            android:padding="3dp"
+                            android:background="@color/white_greyish"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
 
-                    </LinearLayout>
+
+                </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_margin="5dp"
                         android:orientation="horizontal"
+                        android:padding="10dp"
                         android:weightSum="2">
+
 
                         <TextView
                             android:layout_width="match_parent"
@@ -505,12 +512,15 @@
                             android:textSize="14sp" />
 
                         <EditText
+
                             android:id="@+id/remark"
+                            android:padding="3dp"
+                            android:background="@color/white_greyish"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1" />
 
-                    </LinearLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -521,12 +531,7 @@
                     android:padding="10dp"
                     android:weightSum="2">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
+
 
                         <TextView
                             android:layout_width="match_parent"
@@ -538,6 +543,8 @@
 
                         <EditText
                             android:id="@+id/editText3"
+                            android:padding="3dp"
+                            android:background="@color/white_greyish"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -545,15 +552,14 @@
                             android:editable="false" />
 
                     </LinearLayout>
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:padding="10dp"
                         android:layout_margin="5dp"
                         android:orientation="horizontal"
+                        android:padding="10dp"
                         android:weightSum="2">
+
 
                         <Button
                             android:id="@+id/btnDeliveryupdate"
@@ -564,7 +570,6 @@
                             android:textColor="@color/white"
                             android:textSize="16dp" />
 
-                    </LinearLayout>
                 </LinearLayout>
 
                 <LinearLayout
