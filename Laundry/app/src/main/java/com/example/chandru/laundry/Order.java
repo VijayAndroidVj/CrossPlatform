@@ -13,10 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -75,14 +74,14 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
     private itemAdapter kAdapter;
     private billAdapter bAdapter;
     private RecyclerView recycler_view, recycler_view_final;
-    private String dataOne, dataOnes, itemData, dataTwos, name, customer, contact, address, datathree, serviceId, serviceName, Itemid,uid;
+    private String dataOne, dataOnes, itemData, dataTwos, name, customer, contact, address, datathree, serviceId, serviceName, Itemid, uid;
     private List<cat> maintain = new ArrayList<>();
     private List<item> maintainlist = new ArrayList<>();
     private List<bill> billist = new ArrayList<>();
     private int qty = 0;
     private float unit = 0, mul = 0;
     int minteger = 0;
-    String billno,time;
+    String billno, time;
     Calendar myCalendar = Calendar.getInstance();
     private int mYear, mMonth, mDay, mHour, mMinute;
 
@@ -109,6 +108,7 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
         editdate = (EditText) findViewById(R.id.editText4);
         edittextOne = (EditText) findViewById(R.id.editText1);
         edittextOne.addTextChangedListener(watch);
+        edittextOne.setText("0");
         edittextTwo = (TextView) findViewById(R.id.editText2);
         itemname = (TextView) findViewById(R.id.itemname);
         edittext.setOnClickListener(new View.OnClickListener() {
@@ -133,13 +133,13 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
             }
         });
         if (CommonUtil.isNetworkAvailable(Order.this)) {
-            String Url = "http://demo.adityametals.com/api/service.php?user_id="+uid;
+            String Url = "http://demo.adityametals.com/api/service.php?user_id=" + uid;
             new serverUpload().execute(Url);
             getDateTime();
 
 //            String Urlss = "http://demo.adityametals.com/api/items.php?service_id=5";
 //            new update().execute(Urlss);
-            new getBillNo().execute("http://demo.adityametals.com/api/bill_no.php?user_id="+uid);
+            new getBillNo().execute("http://demo.adityametals.com/api/bill_no.php?user_id=" + uid);
         } else {
             Toast.makeText(Order.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
         }
@@ -183,7 +183,6 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
     private void updateLabel() {
 
 
-
         String myFormat = "dd-MM-yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
@@ -198,9 +197,6 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
         mMinute = c.get(Calendar.MINUTE);
 
 
-
-
-
         // Launch Time Picker Dialog
         TimePickerDialog timePickerDialog = new TimePickerDialog(this,
                 new TimePickerDialog.OnTimeSetListener() {
@@ -210,8 +206,8 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
                                           int minute) {
                         String myFormat = "dd-MM-yyyy"; //In which you need put here
                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-                        time=hourOfDay + ":" + minute+ ":" + "00" ;
-                        editdate.setText(sdf.format(myCalendar.getTime() )+time);
+                        time = hourOfDay + ":" + minute + ":" + "00";
+                        editdate.setText(sdf.format(myCalendar.getTime()) + time);
                     }
                 }, mHour, mMinute, false);
         timePickerDialog.show();
@@ -258,7 +254,7 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
         amt.setText("" + mul + "0");
     }
 
-    public void  back (View view){
+    public void back(View view) {
 //        Intent backs = new Intent(Order.this,MainActivity.class);
 //        startActivity(backs);
         finish();
@@ -312,7 +308,7 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
             serviceId = "";
             serviceName = "";
             Itemid = "";
-            minteger =0;
+            minteger = 0;
             qty = 0;
             display(0);
 
@@ -377,15 +373,20 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
         // final String json =formatDataAsJSON();
         //Log.d("success",json);
 
+        editdate = (EditText) findViewById(R.id.editText4);
+        edittextOne = (EditText) findViewById(R.id.editText1);
+        edittextTwo = (TextView) findViewById(R.id.editText2);
+
         String picdate = edittext.getText().toString();
         String deldate = editdate.getText().toString();
         String adva = edittextOne.getText().toString();
         String bal = edittextTwo.getText().toString();
 
-        editdate = (EditText) findViewById(R.id.editText4);
-        edittextOne = (EditText) findViewById(R.id.editText1);
-        edittextTwo = (TextView) findViewById(R.id.editText2);
 
+        if (TextUtils.isEmpty(deldate)) {
+            Toast.makeText(Order.this, "Please add Delivery Date", Toast.LENGTH_SHORT).show();
+            return;
+        }
         int abc = 0;
         int cba = 0;
         for (int i = 0; i < billist.size(); i++) {
@@ -394,7 +395,7 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
             cba = cba + (int) Float.parseFloat(billist.get(i).getAmt());
 
         }
-        String Url = "http://demo.adityametals.com/api/add_joborder.php?bill=" + billno + "&user=" + name + "&customer=" + customer + "&contact=" + contact + "&address=" + contact + "&quantity=" + abc + "&amount=" + cba + "&advance=" + adva + "&balance=" + bal + "&delivery=" + deldate+ "&user_id=" + uid;
+        String Url = "http://demo.adityametals.com/api/add_joborder.php?bill=" + billno + "&user=" + name + "&customer=" + customer + "&contact=" + contact + "&address=" + contact + "&quantity=" + abc + "&amount=" + cba + "&advance=" + adva + "&balance=" + bal + "&delivery=" + deldate + "&user_id=" + uid;
         new customerentry().execute(Url);
 
     }
@@ -463,7 +464,7 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
                 lAdapter.notifyDataSetChanged();
 
 
-                String Url = "http://demo.adityametals.com/api/items.php?service_id=" + maintain.get(1).getId()+"&user_id="+uid;
+                String Url = "http://demo.adityametals.com/api/items.php?service_id=" + maintain.get(1).getId() + "&user_id=" + uid;
                 new update().execute(Url);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -472,17 +473,15 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
     }
 
 
-
-
     @Override
     public void adapterActionListener(int state, Object data) {
 
         if (state == catAdapter.LIST_TAG && data != null) {
             int pois = (int) data;
 
-            String Url = "http://demo.adityametals.com/api/items.php?service_id=" + maintain.get(pois).getId()+"&user_id="+uid;
+            String Url = "http://demo.adityametals.com/api/items.php?service_id=" + maintain.get(pois).getId() + "&user_id=" + uid;
             new update().execute(Url);
-            minteger =0;
+            minteger = 0;
             qty = 0;
             display(0);
         } else if (state == itemAdapter.LIST_TAGr && data != null) {
@@ -507,7 +506,7 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
             unitty.setText(maintainlist.get(pos).getLaundry_price());
             amt.setText(maintainlist.get(pos).getLaundry_price());
 
-            minteger =0;
+            minteger = 0;
             qty = 0;
             display(0);
         }
@@ -731,7 +730,7 @@ public class Order extends AppCompatActivity implements View.OnClickListener, Ad
             String jsonss = jsonOneArray.toString();
 //            jsonss = "\"" + jsonss + "\"";
             jsonss = URLEncoder.encode(jsonss);
-            String apiurl = "http://demo.adityametals.com/api/add_joborder_item.php?bill=" + billno + "&credintials=" + jsonss + "&user_id="+uid;
+            String apiurl = "http://demo.adityametals.com/api/add_joborder_item.php?bill=" + billno + "&credintials=" + jsonss + "&user_id=" + uid;
             new customerItem(billno).execute(apiurl);
         } catch (JSONException el) {
             el.printStackTrace();

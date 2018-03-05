@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -47,8 +48,8 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
     private List<delivery> maintain = new ArrayList<>();
     private deliveryAdapter bAdapter;
     private RecyclerView recycler_view;
-    private String dataOne, dataTwos, Billno, bamt,uid,dataTwo;
-    private TextView cname, bill, phone, address, qty, amt, advance, balance,pickup,delivery;
+    private String dataOne, dataTwos, Billno, bamt, uid, dataTwo;
+    private TextView cname, bill, phone, address, qty, amt, advance, balance, pickup, delivery;
     private EditText editText3;
     Calendar myCalendar = Calendar.getInstance();
     private int mYear, mMonth, mDay, mHour, mMinute;
@@ -68,8 +69,7 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
         balance = (TextView) findViewById(R.id.balance);
         pickup = (TextView) findViewById(R.id.pick);
         delivery = (TextView) findViewById(R.id.delivery);
-        editText3 = (EditText)findViewById(R.id.editText3);
-
+        editText3 = (EditText) findViewById(R.id.editText3);
 
 
         editText3.setOnClickListener(new View.OnClickListener() {
@@ -92,7 +92,7 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
                     String dastes = editText3.getText().toString();
                     SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                     String uid = (pref.getString("uid", ""));
-                    String Url = "http://demo.adityametals.com/api/update_delivery_date.php?bill="+bills+"&date="+dastes+"&user_id="+uid;
+                    String Url = "http://demo.adityametals.com/api/update_delivery_date.php?bill=" + bills + "&date=" + dastes + "&user_id=" + uid;
                     new serverDateUpdate().execute(Url);
                 } else {
                     Toast.makeText(DeliveryActivity.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
@@ -123,8 +123,22 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
                         EditText remar = (EditText) findViewById(R.id.remark);
                         String receive = re.getText().toString();
                         String remark = remar.getText().toString();
+                        if (TextUtils.isEmpty(receive)) {
+                            Toast.makeText(DeliveryActivity.this, "Please add Receive Amount", Toast.LENGTH_SHORT).show();
+                            return;
+                        } else {
+                            int receiveAmnt = Integer.valueOf(receive);
+                            if (bamt != null && bamt.length() > 0) {
+                                double balance = Double.valueOf(bamt);
+                                if (receiveAmnt < balance) {
+                                    Toast.makeText(DeliveryActivity.this, "Please enter balance amount.", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
+
+                            }
+                        }
                         //http://demo.adityametals.com/api/update_delivery.php?bill="+Billno+"&paid="+bamt+"&summary="+remark+"&recieve="+receive
-                        String Url = "http://demo.adityametals.com/api/update_delivery.php?bill=" + Billno + "&paid=" + bamt + "&summary=" + remark + "&recieve=" + receive+"&user_id="+uid;
+                        String Url = "http://demo.adityametals.com/api/update_delivery.php?bill=" + Billno + "&paid=" + bamt + "&summary=" + remark + "&recieve=" + receive + "&user_id=" + uid;
                         new customerentry().execute(Url);
 
 //                        Toast.makeText(DeliveryActivity.this, "Delivered successfully", Toast.LENGTH_SHORT).show();
@@ -147,7 +161,7 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
         Bundle bundle = getIntent().getExtras();
         String message = bundle.getString("message");
         if (CommonUtil.isNetworkAvailable(DeliveryActivity.this)) {
-            String Url = "http://demo.adityametals.com/api/view_order.php?bill_no=" + message+"&user_id="+uid;
+            String Url = "http://demo.adityametals.com/api/view_order.php?bill_no=" + message + "&user_id=" + uid;
             new serverUpload().execute(Url);
         } else {
             Toast.makeText(DeliveryActivity.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
@@ -319,9 +333,6 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
         mMinute = c.get(Calendar.MINUTE);
 
 
-
-
-
         // Launch Time Picker Dialog
         TimePickerDialog timePickerDialog = new TimePickerDialog(this,
                 new TimePickerDialog.OnTimeSetListener() {
@@ -332,7 +343,7 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
                         String myFormat = "dd-MM-yyyy"; //In which you need put here
                         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
-                        editText3.setText(sdf.format(myCalendar.getTime() )+","+hourOfDay + ":" + minute);
+                        editText3.setText(sdf.format(myCalendar.getTime()) + "," + hourOfDay + ":" + minute);
                     }
                 }, mHour, mMinute, false);
         timePickerDialog.show();
@@ -347,7 +358,7 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
         String receive = re.getText().toString();
         String remark = remar.getText().toString();
         //http://demo.adityametals.com/api/update_delivery.php?bill="+Billno+"&paid="+bamt+"&summary="+remark+"&recieve="+receive
-        String Url = "http://demo.adityametals.com/api/update_delivery.php?bill=" + Billno + "&paid=" + bamt + "&summary=" + remark + "&recieve=" + receive+"&user_id="+uid;
+        String Url = "http://demo.adityametals.com/api/update_delivery.php?bill=" + Billno + "&paid=" + bamt + "&summary=" + remark + "&recieve=" + receive + "&user_id=" + uid;
         new customerentry().execute(Url);
     }
 
