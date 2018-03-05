@@ -425,14 +425,24 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
+
+
+                        <LinearLayout
+                            android:weightSum="2"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:text="Advance "
+                                android:textColor="@android:color/black"
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+
 
                         <EditText
                             android:id="@+id/editText1"
@@ -441,22 +451,48 @@
                             android:layout_weight="1"
                             android:hint="Advance"
                             android:inputType="number" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:weightSum="2"
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:text="Balance :"
+                                android:textColor="@android:color/black"
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
 
                         <TextView
                             android:id="@+id/editText2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:background="@android:color/holo_orange_light"
+                            android:text="0"
+                            android:textColor="@android:color/black"
                             android:hint="Balance"
-                            android:textSize="18sp" />
+                            android:padding="3dp"
+                            android:textSize="18sp"/>
+                        </LinearLayout>
 
-                    </LinearLayout>
 
-                    <LinearLayout
+
+                <LinearLayout
+                    android:weightSum="2"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="Today date :"
+                        android:layout_weight="1"
+                        android:textColor="@android:color/black"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:layout_height="wrap_content" />
 
                         <EditText
                             android:id="@+id/editText3"
@@ -466,6 +502,19 @@
                             android:clickable="true"
                             android:editable="false"
                             android:hint="Pickupdate" />
+                </LinearLayout>
+                <LinearLayout
+                    android:weightSum="2"
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="Delivery date :"
+                        android:layout_weight="1"
+                        android:textColor="@android:color/black"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
 
                         <EditText
                             android:id="@+id/editText4"
@@ -475,16 +524,17 @@
                             android:clickable="true"
                             android:editable="false"
                             android:hint="Deliverydate" />
+                </LinearLayout>
 
-                    </LinearLayout>
 
+                </LinearLayout>
 
                     <!--<EditText-->
                     <!--android:id="@+id/editText4"-->
                     <!--android:layout_width="match_parent"-->
                     <!--android:layout_height="wrap_content"-->
                     <!--android:hint="Phone" />-->
-                </LinearLayout>
+
 
                 <LinearLayout
                     android:weightSum="1"
