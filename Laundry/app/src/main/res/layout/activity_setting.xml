@@ -4,41 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_margin="16dp"
+    android:orientation="vertical"
     tools:context="com.example.chandru.laundry.Setting">
 
     <Button
         android:id="@+id/btnservice"
-        android:text="View service"
-        android:textStyle="bold"
-        android:layout_margin="20dp"
-        android:textColor="@color/white"
-        android:background="@color/background_color"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:background="@color/background_color"
+        android:text="View service"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
 
     <Button
         android:id="@+id/btnlocation"
-        android:text="View location"
-        android:textStyle="bold"
-        android:layout_margin="20dp"
-        android:textColor="@color/white"
-        android:background="@color/background_color"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:background="@color/background_color"
+        android:text="View location"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/btnitem"
-        android:text="View laundry items"
-        android:textStyle="bold"
-        android:layout_margin="20dp"
-        android:textColor="@color/white"
-        android:background="@color/background_color"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
-
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:background="@color/background_color"
+        android:text="View laundry items"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
 
 </LinearLayout>

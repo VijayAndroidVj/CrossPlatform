@@ -102,7 +102,7 @@
             android:id="@+id/tv_splashscreen_appname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Laundry Management"
+            android:text="Young Stones Technologies"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textStyle="bold" />

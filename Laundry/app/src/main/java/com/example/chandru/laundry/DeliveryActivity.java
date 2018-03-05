@@ -456,7 +456,7 @@ public class DeliveryActivity extends AppCompatActivity implements View.OnClickL
                 String msg = jsono.getString("error");
 
                 if (msg.equals("false")) {
-                    Toast.makeText(DeliveryActivity.this, "Data deleted successfully!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DeliveryActivity.this, "Updated successfully!", Toast.LENGTH_SHORT).show();
 
 
                 } else {
