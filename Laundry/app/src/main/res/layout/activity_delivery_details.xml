@@ -512,6 +512,60 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight=".9"
+                            android:text="Delivery Date:"
+                            android:textColor="@android:color/black"
+                            android:textSize="15sp" />
+
+                        <EditText
+                            android:id="@+id/editText3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:clickable="true"
+                            android:editable="false" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:layout_margin="5dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <Button
+                            android:id="@+id/btnDeliveryupdate"
+                            android:layout_width="match_parent"
+                            android:layout_height="38dp"
+                            android:background="@android:color/holo_green_dark"
+                            android:text="Update Date"
+                            android:textColor="@color/white"
+                            android:textSize="16dp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:orientation="horizontal"
                     android:weightSum="2">
